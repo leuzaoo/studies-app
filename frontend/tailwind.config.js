@@ -12,8 +12,8 @@ export default {
         "terciary-grey": "#626262",
       },
       fontFamily: {
-        domine: ["Domine", "serif"],
         outfit: ["Outfit", "sans-serif"],
+        domine: ["Domine", "sans-serif"],
       },
     },
   },
