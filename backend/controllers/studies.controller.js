@@ -17,7 +17,9 @@ export const searchStudy = async (req, res) => {
       ],
     });
 
-    return res.json(studies);
+    console.log("Estudos encontrados:", studies);
+
+    return res.json({ studies });
   } catch (error) {
     console.error("Erro no controlador searchStudy:", error);
     res.status(500).json({ message: "Erro no servidor interno" });
