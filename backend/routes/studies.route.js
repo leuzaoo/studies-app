@@ -1,9 +1,10 @@
 import express from "express";
 
-import { searchStudy } from "../controllers/studies.controller.js";
+import { searchStudy, allStudies } from "../controllers/studies.controller.js";
 
 const router = express.Router();
 
+router.get("/all", allStudies);
 router.get("/search", searchStudy);
 
 export default router;

@@ -1,27 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
+import categories from "../../../backend/config/categories";
+import CategoryMenu from "../components/CategoryMenu";
 import SearchBar from "../components/SearchBar";
-import { Center } from "../components/Center";
 import Results from "../components/Results";
+import Center from "../components/Center";
+
+const fetchStudies = async (query = "", category = "Tudo") => {
+  const endpoint = query
+    ? `http://localhost:5000/api/v1/studies/search?q=${query}`
+    : category === "Tudo"
+    ? "http://localhost:5000/api/v1/studies/all"
+    : `http://localhost:5000/api/v1/studies/search?q=${category}`;
+
+  const response = await axios.get(endpoint);
+  return response.data.studies;
+};
 
 const Homepage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [results, setResults] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [selectedCategory, setSelectedCategory] = useState("Tudo");
+  const [results, setResults] = useState([]);
 
   const handleSearch = async (query) => {
-    if (query.trim() === "") {
+    if (!query.trim()) {
       setResults([]);
+      setIsSearchOpen(false);
       return;
     }
 
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/v1/studies/search?q=${query}`
-      );
-      console.log("Resposta da API:", response.data);
-      setResults(response.data.studies);
+      const studies = await fetchStudies(query);
+      setResults(studies);
       setIsSearchOpen(true);
     } catch (error) {
       console.error(
@@ -30,24 +43,50 @@ const Homepage = () => {
       );
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const studies = await fetchStudies("", selectedCategory);
+        setResults(studies);
+        setIsSearchOpen(false);
+      } catch (error) {
+        console.error(
+          "Erro ao buscar estudos:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    fetchData();
+  }, [selectedCategory]);
 
   return (
-    <Center className="font-outfit">
-      <div>
-        <h2 className="text-2xl font-medium">Descubra</h2>
-        <p className="text-sm text-medium-grey">
-          Selecione o tema do estudo que deseja ver
-        </p>
-      </div>
+    <>
+      <Center className="font-outfit">
+        <div>
+          <h2 className="text-2xl font-medium">Descubra</h2>
+          <p className="text-sm text-medium-grey">
+            Selecione o tema do estudo que deseja ver
+          </p>
+        </div>
 
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSearch={handleSearch}
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onSearch={handleSearch}
+        />
+      </Center>
+
+      <CategoryMenu
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onCategorySelect={setSelectedCategory}
       />
 
-      {isSearchOpen && <Results results={results} />}
-    </Center>
+      <Center>
+        <Results results={results} />
+      </Center>
+    </>
   );
 };
 

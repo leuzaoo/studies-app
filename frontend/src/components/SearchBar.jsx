@@ -21,7 +21,7 @@ const SearchBar = ({ searchQuery, setSearchQuery, onSearch }) => {
       <button onClick={() => onSearch(searchQuery)}>
         <Search
           color="grey"
-          className="absolute right-4 top-2 z-50 bg-transparent"
+          className="absolute right-4 top-2 z-10 bg-transparent"
         />
       </button>
     </div>

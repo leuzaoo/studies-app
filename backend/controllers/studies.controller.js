@@ -1,5 +1,15 @@
 import Study from "../models/study.model.js";
 
+export const allStudies = async (req, res) => {
+  try {
+    const studies = await Study.find({});
+    return res.json({ studies });
+  } catch (error) {
+    console.error("Erro no controlador allStudies:", error);
+    res.status(500).json({ message: "Erro no servidor interno" });
+  }
+};
+
 export const searchStudy = async (req, res) => {
   const searchQuery = req.query.q?.toString().toLowerCase();
 
@@ -14,6 +24,8 @@ export const searchStudy = async (req, res) => {
       $or: [
         { title: { $regex: searchQuery, $options: "i" } },
         { category: { $regex: searchQuery, $options: "i" } },
+        { content: { $regex: searchQuery, $options: "i" } },
+        { tags: { $regex: searchQuery, $options: "i" } },
       ],
     });
 

@@ -1,6 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Center } from "./Center";
+import Center from "./Center";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
