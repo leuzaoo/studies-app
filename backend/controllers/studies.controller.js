@@ -2,7 +2,7 @@ import Study from "../models/study.model.js";
 
 export const allStudies = async (req, res) => {
   try {
-    const studies = await Study.find({});
+    const studies = await Study.find({}).populate("author", "username");
     return res.json({ studies });
   } catch (error) {
     console.error("Erro no controlador allStudies:", error);

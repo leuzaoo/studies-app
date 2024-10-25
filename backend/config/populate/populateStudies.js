@@ -20,7 +20,7 @@ const populateStudies = async () => {
       title: "Corinthians: A História de um Time Gigante",
       content:
         "O Corinthians é um dos times mais populares do Brasil, com uma rica história de conquistas e uma enorme torcida.",
-      category: "Sports",
+      category: "Esportes",
       tags: ["futebol", "Corinthians", "esporte"],
       author: "671ba94d4c7bc99e378bb01f",
       isPublished: true,
@@ -31,7 +31,7 @@ const populateStudies = async () => {
       title: "Nazismo: Um Estudo sobre uma Ideologia Perigosa",
       content:
         "O nazismo foi um regime totalitário que governou a Alemanha de 1933 a 1945, caracterizado pela perseguição a minorias e pela guerra.",
-      category: "Politics",
+      category: "Política",
       tags: ["nazismo", "história", "política"],
       author: "671ba94d4c7bc99e378bb01f",
       isPublished: true,
