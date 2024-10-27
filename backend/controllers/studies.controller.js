@@ -27,9 +27,7 @@ export const searchStudy = async (req, res) => {
         { content: { $regex: searchQuery, $options: "i" } },
         { tags: { $regex: searchQuery, $options: "i" } },
       ],
-    });
-
-    console.log("Estudos encontrados:", studies);
+    }).populate("author", "username");
 
     return res.json({ studies });
   } catch (error) {

@@ -5,6 +5,7 @@ import categories from "../../../backend/config/categories";
 import CategoryMenu from "../components/CategoryMenu";
 import SearchBar from "../components/SearchBar";
 import Results from "../components/Results";
+import Navbar from "../components/Navbar";
 import Center from "../components/Center";
 
 const fetchStudies = async (query = "", category = "Tudo") => {
@@ -43,6 +44,7 @@ const Homepage = () => {
       );
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,6 +64,7 @@ const Homepage = () => {
 
   return (
     <>
+      <Navbar />
       <Center className="font-outfit">
         <div>
           <h2 className="text-2xl font-medium">Descubra</h2>
