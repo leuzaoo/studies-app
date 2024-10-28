@@ -23,7 +23,7 @@ const Results = ({ results }) => {
                   <div className="flex items-center">
                     <img src="/user.jpg" className="w-6 h-6 rounded-full" />
                     <p className="ml-2 text-terciary-grey font-medium lowercase text-[12px]">
-                      <span className="mr-2">{study.author.username}</span>•
+                      <span className="mr-2">{study.author?.username}</span>•
                       <span className="ml-2">
                         {formatDate(study.createdAt)}
                       </span>

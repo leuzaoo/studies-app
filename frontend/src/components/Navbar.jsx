@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { useAuthStore } from "../store/authStore";
+
 import { Menu, X } from "lucide-react";
 import Center from "./Center";
 
@@ -18,7 +20,10 @@ const Navbar = () => {
       <Center>
         <header>
           <nav className="flex items-center justify-between">
-            <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            <Link to={"/"}>
+              <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            </Link>
+
             <button onClick={toggleMenu} className="relative">
               <Menu
                 size={40}
@@ -41,9 +46,12 @@ const Navbar = () => {
               }`}
             >
               <ul className="flex flex-col p-6 space-y-4">
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                <Link
+                  to={"/about-me"}
+                  className="text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                >
                   Minha conta
-                </li>
+                </Link>
                 <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
                   Meus estudos
                 </li>
