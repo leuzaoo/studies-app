@@ -31,12 +31,34 @@ export const useAuthStore = create((set) => ({
         user: response.data.user,
         isAuthenticated: true,
         isLoading: false,
-        error: null,
-        message: response.data.message,
       });
     } catch (error) {
       set({
         error: error.response.data.message || "Erro ao criar a conta.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  login: async (username, password) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.post(`${API_URL}/login`, {
+        username,
+        password,
+      });
+
+      set({
+        user: response.data.user,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null,
+      });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Erro ao tentar fazer login.",
         isLoading: false,
       });
       throw error;
@@ -51,9 +73,8 @@ export const useAuthStore = create((set) => ({
       const response = await axios.get(`${API_URL}/check-auth`);
       set({
         user: response.data.user,
-        isAuthenticated: false,
-        isCheckingAuth: true,
-        error: null,
+        isAuthenticated: true,
+        isCheckingAuth: false,
       });
     } catch (error) {
       set({

@@ -5,12 +5,13 @@ import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 import Homepage from "./pages/Homepage";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthStore();
 
   if (!isAuthenticated) {
-    return <Navigate to={"/signup"} replace />;
+    return <Navigate to={"/login"} replace />;
   }
 
   return children;
@@ -51,6 +52,14 @@ function App() {
           element={
             <RedirectAuthenticatedUser>
               <Signup />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RedirectAuthenticatedUser>
+              <Login />
             </RedirectAuthenticatedUser>
           }
         />

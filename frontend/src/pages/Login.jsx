@@ -1,58 +1,40 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { XCircle } from "lucide-react";
-
-import { useAuthStore } from "../store/authStore";
 import Button from "../components/Button";
 import Center from "../components/Center";
 import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
+import { XCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const Signup = () => {
-  const [name, setName] = useState("");
+const Login = () => {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+  const { login, isLoading, error } = useAuthStore();
 
-  const { signup, error, isLoading } = useAuthStore();
-
-  const handleSignUp = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signup(name, username, email, password);
-      navigate("/");
-    } catch (error) {}
+
+    await login(username, password);
   };
 
   return (
     <Center>
       <section>
-        <h1 className="mx-auto leading-none mt-[60px] w-[190px] font-medium text-[40px]">
-          Crie agora sua conta!
+        <h1 className="mx-auto leading-none mt-[60px] w-[210px] font-medium text-[40px]">
+          Acesse aqui sua conta!
         </h1>
       </section>
-      <form onSubmit={handleSignUp} className="mt-10 flex flex-col">
+      <form onSubmit={handleLogin} className="mt-10 flex flex-col">
         <div className="space-y-3">
-          <Input
-            type="text"
-            placeholder="Nome e sobrenome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
           <Input
             type="text"
             placeholder="Nome de usuário"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+
           <Input
             type="password"
             placeholder="Senha"
@@ -69,20 +51,20 @@ const Signup = () => {
         )}
 
         <div className="mt-5 text-center">
-          <Button primary content={"Criar conta"} />
+          <Button primary content={"Entrar"} />
           <p className="text-primary-dark font-medium text-sm my-2 text-center">
-            já possui uma conta?
+            não possui uma conta?
           </p>
-          <Link to={"/login"}>
-            <Button content={"Fazer login"} />
+          <Link to={"/signup"}>
+            <Button content={"Criar conta"} />
           </Link>
         </div>
       </form>
-      <footer className="mt-[160px] text-center">
+      <footer className="mt-[264px] text-center">
         <h1 className="text-primary-dark text-sm">feito por Leonardo Costa.</h1>
       </footer>
     </Center>
   );
 };
 
-export default Signup;
+export default Login;
