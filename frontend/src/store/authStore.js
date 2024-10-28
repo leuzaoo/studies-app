@@ -3,12 +3,15 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "http://localhost:5000";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000/api/v1/auth"
+    : "/api/v1/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
-  isChecking: true,
+  isCheckingAuth: true,
   isLoading: false,
   error: null,
   message: null,
@@ -17,7 +20,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.post(`${API_URL}/api/v1/auth/signup`, {
+      const response = await axios.post(`${API_URL}/signup`, {
         name,
         username,
         email,
@@ -37,6 +40,27 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
       throw error;
+    }
+  },
+
+  authCheck: async () => {
+    await new Promise((resolver) => setTimeout(resolver, 1000));
+    set({ isCheckingAuth: true, error: null });
+
+    try {
+      const response = await axios.get(`${API_URL}/check-auth`);
+      set({
+        user: response.data.user,
+        isAuthenticated: false,
+        isCheckingAuth: true,
+        error: null,
+      });
+    } catch (error) {
+      set({
+        isAuthenticated: false,
+        isCheckingAuth: false,
+        error: null,
+      });
     }
   },
 }));
