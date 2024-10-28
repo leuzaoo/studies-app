@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 import Homepage from "./pages/Homepage";
+import AboutMe from "./pages/AboutMe";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 
@@ -44,6 +45,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Homepage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about-me"
+          element={
+            <ProtectedRoute>
+              <AboutMe />
             </ProtectedRoute>
           }
         />
