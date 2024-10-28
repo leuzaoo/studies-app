@@ -1,16 +1,71 @@
-import { Routes, Route } from "react-router-dom";
-import Homepage from "./pages/Homepage";
-import Navbar from "./components/Navbar";
-import Test from "./pages/Test";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function App() {
+import LoadingSpinner from "./components/LoadingSpiner";
+import { useAuthStore } from "./store/authStore";
+import Homepage from "./pages/Homepage";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to={"/login"} replace />;
+  }
+
+  return children;
+};
+
+const RedirectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated } = useAuthStore();
+
+  if (isAuthenticated) {
+    return <Navigate to={"/"} replace />;
+  }
+
+  return children;
+};
+
+function App() {
+  const { isCheckingAuth, authCheck } = useAuthStore();
+
+  useEffect(() => {
+    authCheck();
+  }, [authCheck]);
+
+  if (isCheckingAuth) return <LoadingSpinner />;
+
   return (
     <>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/test" element={<Test />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Homepage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <RedirectAuthenticatedUser>
+              <Signup />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RedirectAuthenticatedUser>
+              <Login />
+            </RedirectAuthenticatedUser>
+          }
+        />
       </Routes>
     </>
   );
 }
+
+export default App;

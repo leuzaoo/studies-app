@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import generateTokenAndSetCookie from "../config/generateToken.js";
 import User from "../models/user.model.js";
 
 export const signup = async (req, res) => {
@@ -44,12 +45,12 @@ export const signup = async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
+      expiresIn: "7d",
     });
 
     res.cookie("jwt-studies", token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 3,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     });
@@ -61,10 +62,61 @@ export const signup = async (req, res) => {
   }
 };
 
-export const login = (req, res) => {
-  res.send("login");
+export const login = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Usário não encontrado." });
+    }
+
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        success: false,
+        message: "Usuário encontrar mas a senha está incorreta.",
+      });
+    }
+
+    generateTokenAndSetCookie(user.id, res);
+
+    res.status(200).json({
+      success: true,
+      message: "Login feito com sucesso.",
+      user: {
+        ...user._doc,
+        password: undefined,
+      },
+    });
+  } catch (error) {
+    console.log("Erro no controlador de Login:", error.message);
+    res
+      .status(400)
+      .json({ success: false, message: "Erro no servidor interno." });
+  }
 };
 
 export const logout = (req, res) => {
   res.send("logout");
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    const user = await User.findOne(req.userId).select("-password");
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Usuário não encontrado." });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.log("Erro no controlador 'checkAuth': ", error);
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
