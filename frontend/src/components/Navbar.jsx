@@ -1,5 +1,7 @@
-import { Menu, X } from "lucide-react";
 import { useState } from "react";
+
+import { useAuthStore } from "../store/authStore";
+import { Menu, X } from "lucide-react";
 import Center from "./Center";
 
 const Navbar = () => {
@@ -8,6 +10,8 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const { logout } = useAuthStore();
 
   return (
     <>
@@ -46,7 +50,11 @@ const Navbar = () => {
                 <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
                   Configurações
                 </li>
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+
+                <li
+                  onClick={logout}
+                  className="text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                >
                   Sair da conta
                 </li>
               </ul>

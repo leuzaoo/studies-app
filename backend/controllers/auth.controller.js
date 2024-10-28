@@ -102,7 +102,17 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.send("logout");
+  try {
+    res.clearCookie("jwt-studies");
+    res
+      .status(200)
+      .json({ success: true, message: "Logout feito com sucesso." });
+  } catch (error) {
+    console.log("Erro no controlador de logout.", error.message);
+    res
+      .status(500)
+      .json({ success: false, message: "Erro no servidor interno." });
+  }
 };
 
 export const checkAuth = async (req, res) => {

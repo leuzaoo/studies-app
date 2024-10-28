@@ -4,7 +4,7 @@ import { formatDate } from "../utils/formatDate";
 
 const Results = ({ results }) => {
   return (
-    <div className="mt-4">
+    <div>
       <h3 className="font-semibold text-2xl">Resultados</h3>
       <ul>
         {Array.isArray(results) && results.length > 0 ? (
