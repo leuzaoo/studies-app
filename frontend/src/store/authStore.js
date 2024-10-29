@@ -99,4 +99,24 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
+  updateUserProfile: async (updatedData) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.put(`${API_URL}/about-me`, updatedData);
+      set({
+        user: response.data.user,
+        isLoading: false,
+        error: null,
+        message: response.data.message || "Perfil atualizado com sucesso.",
+      });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Erro ao atualizar o perfil.",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
 }));
