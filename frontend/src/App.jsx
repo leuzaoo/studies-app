@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 
+import "react-toastify/dist/ReactToastify.css";
+
 import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 import Homepage from "./pages/Homepage";

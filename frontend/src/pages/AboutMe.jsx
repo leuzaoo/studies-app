@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useAuthStore } from "../store/authStore";
+import { ToastContainer } from "react-toastify";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import TitlePage from "../components/TitlePage";
@@ -40,7 +41,6 @@ const AboutMe = () => {
 
     try {
       await updateUserProfile(updatedData);
-      alert("Perfil atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar perfil:", error);
     }
@@ -55,10 +55,10 @@ const AboutMe = () => {
 
   return (
     <>
+      <ToastContainer autoClose={2000} />
       <Navbar />
       <Center>
         <TitlePage text="Sobre mim" />
-
         <form onSubmit={handleSubmit}>
           <div className="mt-2">
             <LabelFormTitle htmlFor="fotoPerfil" text="Foto do perfil" />
