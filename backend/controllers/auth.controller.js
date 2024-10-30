@@ -9,9 +9,7 @@ export const signup = async (req, res) => {
     const { name, username, email, password } = req.body;
 
     if (!name || !username || !email || !password) {
-      return res
-        .status(400)
-        .json({ msg: "Todos os campos devem ser preenchidos" });
+      return res.status(400).json({ message: "Preencha todos os campos." });
     }
 
     const existingEmail = await User.findOne({ email });
@@ -66,6 +64,13 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Preencha todos os campos.",
+      });
+    }
+
     const user = await User.findOne({ username: username });
 
     if (!user) {
@@ -79,7 +84,7 @@ export const login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(400).json({
         success: false,
-        message: "Usuário encontrar mas a senha está incorreta.",
+        message: "Usuário encontrado mas a senha está incorreta.",
       });
     }
 

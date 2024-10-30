@@ -39,8 +39,8 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
     } catch (error) {
+      toast.error(error.response.data.message || "Erro ao criar a conta.");
       set({
-        error: error.response.data.message || "Erro ao criar a conta.",
         isLoading: false,
       });
       throw error;
@@ -63,10 +63,13 @@ export const useAuthStore = create((set) => ({
         error: null,
       });
     } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Erro ao fazer login. Tente novamente."
+      );
       set({
-        error: error.response?.data?.message || "Erro ao tentar fazer login.",
         isLoading: false,
       });
+
       throw error;
     }
   },
