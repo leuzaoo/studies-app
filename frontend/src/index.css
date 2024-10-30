@@ -5,3 +5,9 @@
 * {
   @apply bg-primary-bg text-primary-dark font-outfit;
 }
+
+.custom-editor .ql-editor {
+  font-size: 16px;
+  line-height: 1.6;
+  @apply text-primary-dark;
+}

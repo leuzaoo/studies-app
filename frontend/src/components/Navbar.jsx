@@ -4,7 +4,15 @@ import { useState } from "react";
 
 import { useAuthStore } from "../store/authStore";
 
-import { LogOut, Menu, X } from "lucide-react";
+import {
+  LogOut,
+  Menu,
+  NotebookIcon,
+  NotebookPen,
+  Settings2Icon,
+  User,
+  X,
+} from "lucide-react";
 import Center from "./Center";
 
 const Navbar = () => {
@@ -46,18 +54,28 @@ const Navbar = () => {
                 isMenuOpen ? "translate-x-0" : "translate-x-full"
               }`}
             >
-              <ul className="flex flex-col justify-between h-full p-6 space-y-4">
-                <div className="flex flex-col space-y-4">
+              <ul className="flex flex-col justify-between h-full p-6">
+                <div className="flex flex-col space-y-6">
+                  <Link
+                    to={"/new-study"}
+                    className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                  >
+                    <NotebookPen />
+                    Novo estudo
+                  </Link>
                   <Link
                     to={"/about-me"}
-                    className="text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                    className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer"
                   >
+                    <User />
                     Minha conta
                   </Link>
-                  <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                  <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                    <NotebookIcon />
                     Meus estudos
                   </li>
-                  <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                  <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                    <Settings2Icon />
                     Configurações
                   </li>
                 </div>
