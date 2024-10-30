@@ -1,5 +1,10 @@
-import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useState } from "react";
+
+import { useAuthStore } from "../store/authStore";
+
+import { LogOut, Menu, X } from "lucide-react";
 import Center from "./Center";
 
 const Navbar = () => {
@@ -9,12 +14,17 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const { logout } = useAuthStore();
+
   return (
     <>
       <Center>
         <header>
           <nav className="flex items-center justify-between">
-            <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            <Link to={"/"}>
+              <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            </Link>
+
             <button onClick={toggleMenu} className="relative">
               <Menu
                 size={40}
@@ -36,19 +46,30 @@ const Navbar = () => {
                 isMenuOpen ? "translate-x-0" : "translate-x-full"
               }`}
             >
-              <ul className="flex flex-col p-6 space-y-4">
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                  Minha conta
-                </li>
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                  Meus estudos
-                </li>
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                  Configurações
-                </li>
-                <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+              <ul className="flex flex-col justify-between h-full p-6 space-y-4">
+                <div className="flex flex-col space-y-4">
+                  <Link
+                    to={"/about-me"}
+                    className="text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                  >
+                    Minha conta
+                  </Link>
+                  <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                    Meus estudos
+                  </li>
+                  <li className="text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                    Configurações
+                  </li>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={logout}
+                  className="flex items-center gap-4 bg-red-100 max-w-max px-4 py-2 rounded-lg mx-auto  text-red-600 text-lg font-semibold cursor-pointer"
+                >
                   Sair da conta
-                </li>
+                  <LogOut className="bg-transparent" color="red" />
+                </motion.button>
               </ul>
             </div>
 

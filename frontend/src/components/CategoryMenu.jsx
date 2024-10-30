@@ -1,6 +1,6 @@
 const CategoryMenu = ({ categories, selectedCategory, onCategorySelect }) => {
   return (
-    <div className="px-5 pb-3 flex overflow-x-auto space-x-4">
+    <div className="px-5 pb-3 flex overflow-x-auto space-x-4 ">
       {categories.map((category) => (
         <button
           key={category}

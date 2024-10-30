@@ -1,6 +1,10 @@
+import { motion } from "framer-motion";
+
 const Button = ({ onClick, primary, content }) => {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
       className={`${
         primary
           ? "bg-primary-orange text-white font-medium"
@@ -9,7 +13,7 @@ const Button = ({ onClick, primary, content }) => {
       onClick={onClick}
     >
       {content}
-    </button>
+    </motion.button>
   );
 };
 

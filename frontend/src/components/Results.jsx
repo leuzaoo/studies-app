@@ -4,7 +4,7 @@ import { formatDate } from "../utils/formatDate";
 
 const Results = ({ results }) => {
   return (
-    <div className="mt-4">
+    <div>
       <h3 className="font-semibold text-2xl">Resultados</h3>
       <ul>
         {Array.isArray(results) && results.length > 0 ? (
@@ -23,7 +23,7 @@ const Results = ({ results }) => {
                   <div className="flex items-center">
                     <img src="/user.jpg" className="w-6 h-6 rounded-full" />
                     <p className="ml-2 text-terciary-grey font-medium lowercase text-[12px]">
-                      <span className="mr-2">{study.author.username}</span>•
+                      <span className="mr-2">{study.author?.username}</span>•
                       <span className="ml-2">
                         {formatDate(study.createdAt)}
                       </span>

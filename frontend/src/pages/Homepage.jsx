@@ -4,6 +4,7 @@ import axios from "axios";
 import categories from "../../../backend/config/categories";
 import CategoryMenu from "../components/CategoryMenu";
 import SearchBar from "../components/SearchBar";
+import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
@@ -67,7 +68,7 @@ const Homepage = () => {
       <Navbar />
       <Center className="font-outfit">
         <div>
-          <h2 className="text-2xl font-medium">Descubra</h2>
+          <TitlePage text={"Descubra"} />
           <p className="text-sm text-medium-grey">
             Selecione o tema do estudo que deseja ver
           </p>
