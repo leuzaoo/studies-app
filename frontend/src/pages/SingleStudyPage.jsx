@@ -3,33 +3,26 @@ import { useParams } from "react-router-dom";
 import { useStudyStore } from "../store/studyStore.js";
 
 const SingleStudyPage = () => {
-  const { studyId } = useParams();
+  const { id } = useParams();
+
   const { fetchSingleStudy, isLoading, error } = useStudyStore();
   const [study, setStudy] = useState(null);
 
   useEffect(() => {
     const getStudy = async () => {
-      console.log("studyId:", studyId);
-      if (!studyId) {
-        console.error("studyId é undefined");
-        return;
-      }
-
       try {
-        const fetchedStudy = await fetchSingleStudy(studyId);
+        const fetchedStudy = await fetchSingleStudy(id);
         setStudy(fetchedStudy);
       } catch (error) {
         console.error("Erro ao buscar estudo:", error);
       }
     };
 
-    if (studyId) {
+    if (id) {
       getStudy();
     }
-  }, [studyId, fetchSingleStudy]);
+  }, [id, fetchSingleStudy]);
 
-  if (isLoading) return <div>Carregando...</div>;
-  if (error) return <div>Erro: {error}</div>;
   if (!study) return <div>Estudo não encontrado.</div>;
 
   return (

@@ -43,9 +43,9 @@ export const useStudyStore = create((set) => ({
     }
   },
 
-  fetchSingleStudy: async (studyId) => {
+  fetchSingleStudy: async (id) => {
     try {
-      const response = await axios.get(`${STUDIES_API_URL}/posted/${studyId}`);
+      const response = await axios.get(`${STUDIES_API_URL}/posted/${id}`);
 
       set({ study: response.data.study });
       return response.data.study;
