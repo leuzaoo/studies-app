@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  @apply bg-primary-bg text-primary-dark font-outfit;
+  @apply text-primary-dark font-outfit;
 }
 
 .custom-editor .ql-editor {

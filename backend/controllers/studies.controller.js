@@ -38,9 +38,9 @@ export const searchStudy = async (req, res) => {
 
 export const createStudy = async (req, res) => {
   try {
-    const { title, content, category, tags } = req.body;
+    const { title, content, category, tags = [] } = req.body;
 
-    if (!title || !content || !category || !tags) {
+    if (!title || !content || !category) {
       return res
         .status(400)
         .json({ message: "Preencha todos os campos obrigatórios." });
