@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
+
+import MyStudies from "./pages/MyStudies";
 import Homepage from "./pages/Homepage";
 import NewStudy from "./pages/NewStudy";
 import AboutMe from "./pages/AboutMe";
@@ -51,6 +53,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/about-me"
           element={
@@ -59,6 +62,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/new-study"
           element={
@@ -67,6 +71,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/my-studies"
+          element={
+            <ProtectedRoute>
+              <MyStudies />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/signup"
           element={
@@ -75,6 +89,7 @@ function App() {
             </RedirectAuthenticatedUser>
           }
         />
+
         <Route
           path="/login"
           element={
