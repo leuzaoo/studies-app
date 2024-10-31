@@ -38,7 +38,7 @@ export const searchStudy = async (req, res) => {
 
 export const createStudy = async (req, res) => {
   try {
-    const { title, content, category, tags = [] } = req.body;
+    const { title, content, category, tags } = req.body;
 
     if (!title || !content || !category) {
       return res
@@ -55,7 +55,6 @@ export const createStudy = async (req, res) => {
     });
 
     await newStudy.save();
-
     return res.status(201).json({ message: "Estudo criado com sucesso." });
   } catch (error) {
     console.error("Erro no controlador createStudy:", error);
