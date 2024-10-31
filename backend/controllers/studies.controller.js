@@ -1,5 +1,4 @@
 import Study from "../models/study.model.js";
-import { toast } from "react-toastify";
 
 export const allStudies = async (req, res) => {
   try {
@@ -57,7 +56,6 @@ export const createStudy = async (req, res) => {
 
     await newStudy.save();
 
-    toast.success("Estudo criado com sucesso.");
     return res.status(201).json({ message: "Estudo criado com sucesso." });
   } catch (error) {
     console.error("Erro no controlador createStudy:", error);
