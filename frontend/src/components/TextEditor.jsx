@@ -1,27 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 
-import Button from "./Button";
-
-const TextEditor = ({ onSave }) => {
-  const [content, setContent] = useState("");
-
-  const handleContentChange = (value) => {
-    setContent(value);
-  };
-
-  const handleSave = () => {
-    onSave(content);
-  };
-
+const TextEditor = ({ value, onChange }) => {
   return (
     <>
       <ReactQuill
-        value={content}
+        value={value}
+        onChange={onChange}
         className="custom-editor"
-        onChange={handleContentChange}
         modules={{
           toolbar: [
             ["bold", "italic", "underline"],
@@ -32,9 +20,6 @@ const TextEditor = ({ onSave }) => {
         }}
         placeholder="Comece a escrever seu artigo aqui..."
       />
-      <div className="flex items-center mt-5">
-        <Button primary content={"Salvar"} onClick={handleSave} />
-      </div>
     </>
   );
 };
