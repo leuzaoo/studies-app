@@ -30,9 +30,7 @@ const SingleStudyPage = () => {
       <h1>{study.title}</h1>
       <p>{study.category}</p>
       <p>{study.tags}</p>
-      <textarea name="" id="" className="h-[300px] border border-black">
-        {study.content}
-      </textarea>
+      <div dangerouslySetInnerHTML={{ __html: study.content }} />
     </>
   );
 };
