@@ -55,7 +55,7 @@ const NewStudy = () => {
 
             <LabelFormTitle text={"Tags"} />
             <Select
-              showArrow={false}
+              suffixIcon={null}
               mode="tags"
               style={{ width: "100%", marginBottom: 12 }}
               placeholder="Guerra, Nazismo, Judeus"
