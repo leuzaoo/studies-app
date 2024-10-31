@@ -10,7 +10,7 @@ const Results = ({ results }) => {
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
-              <Link to={"/study/" + study._id} className="flex">
+              <Link to={"/studies/posted/" + study._id} className="flex">
                 <img
                   src={`./banner.jpg`}
                   className="object-cover h-[100px] w-[100px] shadow-md rounded-[20px]"

@@ -61,3 +61,21 @@ export const createStudy = async (req, res) => {
     res.status(500).json({ message: "Erro no servidor interno" });
   }
 };
+
+export const getStudyById = async (req, res) => {
+  try {
+    const study = await Study.findById(req.params.id).populate(
+      "author",
+      "username"
+    );
+    if (!study) {
+      return res
+        .status(404)
+        .json({ message: "Estudo não encontrado ou inexistente." });
+    }
+    return res.json({ study });
+  } catch (error) {
+    console.error("Erro no controlador getStudyById:", error);
+    res.status(500).json({ message: "Erro no servidor interno" });
+  }
+};

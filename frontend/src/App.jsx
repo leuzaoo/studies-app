@@ -83,7 +83,7 @@ function App() {
         />
 
         <Route
-          path="/studies/:id"
+          path="/studies/posted/:studyId"
           element={
             <ProtectedRoute>
               <SingleStudyPage />
