@@ -33,11 +33,10 @@ const Signup = () => {
     <>
       <ToastContainer autoClose={2000} />
       <Center>
-        <section>
-          <h1 className="mx-auto leading-none mt-[60px] w-[190px] font-medium text-[40px]">
-            Crie agora sua conta!
-          </h1>
-        </section>
+        <h1 className="mx-auto leading-none mt-[60px] w-[190px] font-medium text-[40px]">
+          Crie agora sua conta!
+        </h1>
+
         <form onSubmit={handleSignUp} className="mt-10 flex flex-col">
           <div className="space-y-3">
             <Input
@@ -74,7 +73,7 @@ const Signup = () => {
           )}
 
           <div className="mt-5 text-center">
-            <Button primary content={"Criar conta"} />
+            <Button type="submit" primary content={"Criar conta"} />
             <p className="text-primary-dark font-medium text-sm my-2 text-center">
               já possui uma conta?
             </p>

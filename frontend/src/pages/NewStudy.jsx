@@ -1,0 +1,103 @@
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import { Select } from "antd";
+
+import LabelFormTitle from "../components/LabelFormTitle";
+import TextEditor from "../components/TextEditor";
+import { useAuthStore } from "../store/authStore";
+import TitlePage from "../components/TitlePage";
+import Navbar from "../components/Navbar";
+import Button from "../components/Button";
+import Center from "../components/Center";
+import Input from "../components/Input";
+
+const NewStudy = () => {
+  const [category, setCategory] = useState();
+  const [content, setContent] = useState();
+  const [title, setTitle] = useState();
+  const [tags, setTags] = useState([]);
+
+  const { createStudy, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleChange = (value) => {
+    setCategory(value);
+    console.log(`selected ${value}`);
+  };
+
+  const handleTagsChange = (value) => {
+    setTags(value);
+    console.log("Tags:", value);
+  };
+
+  const handleCreateStudy = async (e) => {
+    e.preventDefault();
+
+    try {
+      await createStudy(title, content, category, tags);
+      navigate("/my-studies");
+    } catch (error) {
+      console.log("Erro ao clicar no botão de criar estudo: ", error);
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer />
+      <Navbar />
+      <div className="max-w-4xl mx-auto ">
+        <Center>
+          <TitlePage text={"Criar novo estudo"} />
+          <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
+            <LabelFormTitle text={"Título"} />
+            <Input
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              type="text"
+              className={"mb-3"}
+              placeholder={"Você sabe tudo sobre o nazismo?"}
+            />
+
+            <LabelFormTitle text={"Categoria"} />
+            <Select
+              defaultValue=""
+              style={{
+                width: 160,
+                marginBottom: 12,
+              }}
+              onChange={handleChange}
+              options={[
+                { value: "Política", label: "Política" },
+                { value: "Esportes", label: "Esportes" },
+                { value: "Programação", label: "Programação" },
+                { value: "Ciência", label: "Ciência" },
+                { value: "História", label: "História" },
+                { value: "Arte", label: "Arte" },
+                { value: "Outros", label: "Outros" },
+              ]}
+            />
+
+            <LabelFormTitle text={"Tags"} />
+            <Select
+              suffixIcon={null}
+              mode="tags"
+              style={{ width: "100%", marginBottom: 12 }}
+              placeholder="Guerra, Nazismo, Judeus"
+              onChange={handleTagsChange}
+              value={tags}
+              notFoundContent={null}
+            />
+
+            <TextEditor value={content} onChange={setContent} />
+
+            <Button className="mt-5" type="submit" content={"Finalizar"} />
+          </form>
+        </Center>
+      </div>
+    </>
+  );
+};
+
+export default NewStudy;
