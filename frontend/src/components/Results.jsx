@@ -6,7 +6,7 @@ const Results = ({ results }) => {
   return (
     <div>
       <h3 className="font-semibold text-2xl">Resultados</h3>
-      <ul>
+      <ul className="list-none p-0">
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
