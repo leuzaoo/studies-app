@@ -23,6 +23,7 @@ export const useStudyStore = create((set) => ({
       throw error;
     }
   },
+
   createStudy: async (title, content, category, tags) => {
     set({ isLoading: true, error: null });
 
@@ -52,6 +53,21 @@ export const useStudyStore = create((set) => ({
     } catch (error) {
       set({ error: error.response?.data?.message || "Erro ao buscar estudo" });
       throw error;
+    }
+  },
+
+  fetchUserStudies: async () => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.get(`${STUDIES_API_URL}/user-studies`);
+      set({ studies: response.data.userStudies, isLoading: false });
+    } catch (error) {
+      console.error("Erro ao buscar estudos do usuário:", error);
+      set({
+        error: error.response?.data?.message || "Erro ao buscar estudos",
+        isLoading: false,
+      });
     }
   },
 }));

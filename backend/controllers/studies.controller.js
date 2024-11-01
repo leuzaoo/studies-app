@@ -79,3 +79,24 @@ export const getStudyById = async (req, res) => {
     res.status(500).json({ message: "Erro no servidor interno" });
   }
 };
+
+export const getUserStudies = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const userStudies = await Study.find({ author: userId }).populate(
+      "author",
+      "username"
+    );
+
+    if (!userStudies.length) {
+      return res
+        .status(404)
+        .json({ message: "Você ainda não criou nenhum estudo." });
+    }
+
+    res.status(200).json({ userStudies });
+  } catch (error) {
+    console.error("Erro no controlador getUserStudies:", error);
+    res.status(500).json({ message: "Erro no servidor interno" });
+  }
+};
