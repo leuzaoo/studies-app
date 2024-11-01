@@ -6,7 +6,7 @@ export const formatDate = (dateString) => {
 
   return date.toLocaleString("pt-BR", {
     year: "numeric",
-    month: "2-digit",
+    month: "long",
     day: "numeric",
     // hour: "2-digit",
     // minute: "2-digit",

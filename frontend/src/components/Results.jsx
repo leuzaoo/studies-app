@@ -4,13 +4,13 @@ import { formatDate } from "../utils/formatDate";
 
 const Results = ({ results }) => {
   return (
-    <div>
+    <div className="my-5">
       <h3 className="font-semibold text-2xl">Resultados</h3>
-      <ul>
+      <ul className="list-none p-0">
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
-              <Link to={"/study/" + study._id} className="flex">
+              <Link to={"/studies/posted/" + study._id} className="flex py-3">
                 <img
                   src={`./banner.jpg`}
                   className="object-cover h-[100px] w-[100px] shadow-md rounded-[20px]"

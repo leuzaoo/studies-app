@@ -79,15 +79,13 @@ const Homepage = () => {
           setSearchQuery={setSearchQuery}
           onSearch={handleSearch}
         />
-      </Center>
 
-      <CategoryMenu
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategorySelect={setSelectedCategory}
-      />
+        <CategoryMenu
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onCategorySelect={setSelectedCategory}
+        />
 
-      <Center>
         <Results results={results} />
       </Center>
     </>

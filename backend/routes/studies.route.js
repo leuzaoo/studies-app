@@ -5,12 +5,14 @@ import {
   searchStudy,
   allStudies,
   createStudy,
+  getStudyById,
 } from "../controllers/studies.controller.js";
 
 const router = express.Router();
 
-router.get("/all", verifyToken, allStudies);
 router.get("/search", verifyToken, searchStudy);
+router.get("/posted/:id", verifyToken, getStudyById);
+router.get("/all", verifyToken, allStudies);
 
 router.post("/new-study", verifyToken, createStudy);
 

@@ -53,6 +53,7 @@ const NewStudy = () => {
           <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
             <LabelFormTitle text={"Título"} />
             <Input
+              maxLength={60}
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               type="text"

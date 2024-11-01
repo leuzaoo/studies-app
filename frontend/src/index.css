@@ -3,11 +3,16 @@
 @tailwind utilities;
 
 * {
-  @apply text-primary-dark font-outfit;
+  @apply text-primary-dark;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
 }
 
 .custom-editor .ql-editor {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.6;
+  font-family: "Domine", sans-serif;
   @apply text-primary-dark;
 }
