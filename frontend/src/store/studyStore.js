@@ -12,6 +12,7 @@ export const useStudyStore = create((set) => ({
   isLoading: false,
   error: null,
   message: null,
+
   fetchStudies: async () => {
     set({ isLoading: true, error: null });
 
@@ -24,12 +25,13 @@ export const useStudyStore = create((set) => ({
     }
   },
 
-  createStudy: async (title, content, category, tags) => {
+  createStudy: async (title, description, content, category, tags) => {
     set({ isLoading: true, error: null });
 
     try {
       const response = await axios.post(`${STUDIES_API_URL}/new-study`, {
         title,
+        description,
         content,
         category,
         tags,

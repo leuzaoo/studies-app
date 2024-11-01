@@ -38,9 +38,9 @@ export const searchStudy = async (req, res) => {
 
 export const createStudy = async (req, res) => {
   try {
-    const { title, content, category, tags } = req.body;
+    const { title, description, content, category, tags } = req.body;
 
-    if (!title || !content || !category) {
+    if (!title || !content || !category || !description) {
       return res
         .status(400)
         .json({ message: "Preencha todos os campos obrigatórios." });
@@ -49,6 +49,7 @@ export const createStudy = async (req, res) => {
     const newStudy = new Study({
       title,
       content,
+      description,
       category,
       tags,
       author: req.user._id,
