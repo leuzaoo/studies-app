@@ -3,14 +3,15 @@ import { useEffect } from "react";
 
 import { useStudyStore } from "../store/studyStore";
 
-import StudyCard from "../components/StudyCard";
 import TitlePage from "../components/TitlePage";
+import StudyCard from "../components/StudyCard";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
 
 const MyStudies = () => {
   const { fetchUserStudies, studies, error, isLoading } = useStudyStore();
 
+  console.log(studies);
   useEffect(() => {
     fetchUserStudies();
   }, [fetchUserStudies]);
@@ -32,6 +33,8 @@ const MyStudies = () => {
                 key={study._id}
                 _id={study._id}
                 category={study.category}
+                username={study.author.username}
+                createdAt={study.createdAt}
                 title={study.title}
                 content={study.content}
               />
