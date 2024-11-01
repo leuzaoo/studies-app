@@ -70,10 +70,12 @@ const Navbar = () => {
                     <User />
                     Minha conta
                   </Link>
-                  <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                    <NotebookIcon />
-                    Meus estudos
-                  </li>
+                  <Link to={"/my-studies"}>
+                    <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
+                      <NotebookIcon />
+                      Meus estudos
+                    </li>
+                  </Link>
                   <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
                     <Settings2Icon />
                     Configurações

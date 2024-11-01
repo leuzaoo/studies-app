@@ -35,26 +35,28 @@ const SingleStudyPage = () => {
     <>
       <Navbar />
       <Center>
-        <p className="font-extralight text-terciary-grey">{study.category}</p>
-        <h1 className="font-bold text-2xl">{study.title}</h1>
-        <div className="mt-3 mb-5 flex gap-3 items-center">
-          <img
-            src={study?.user?.avatar || "/user.jpg"}
-            className="size-10 rounded-full shadow-md"
-            alt="user profile image"
-          />
-          <div>
-            <p className="text-sm">{study.author.username}</p>
-            <span className="text-sm font-extralight text-terciary-grey">
-              {formatDate(study.createdAt)}
-            </span>
+        <div className="max-w-screen-sm mx-auto">
+          <p className="font-extralight text-terciary-grey">{study.category}</p>
+          <h1 className="font-bold text-2xl">{study.title}</h1>
+          <div className="mt-3 mb-5 flex gap-3 items-center">
+            <img
+              src={study?.user?.avatar || "/user.jpg"}
+              className="size-10 rounded-full shadow-md"
+              alt="user profile image"
+            />
+            <div>
+              <p className="text-sm">{study.author.username}</p>
+              <span className="text-sm font-extralight text-terciary-grey">
+                {formatDate(study.createdAt)}
+              </span>
+            </div>
           </div>
+          <div className="h-[1px] bg-black opacity-20 mb-5" />
+          <div
+            className={`${styles.content}`}
+            dangerouslySetInnerHTML={{ __html: study.content }}
+          />
         </div>
-        <div className="h-[1px] bg-black opacity-20 mb-5" />
-        <div
-          className={`${styles.content}`}
-          dangerouslySetInnerHTML={{ __html: study.content }}
-        />
       </Center>
     </>
   );
