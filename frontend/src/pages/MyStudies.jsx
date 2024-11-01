@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import { useStudyStore } from "../store/studyStore";
 
+import StudyCard from "../components/StudyCard";
 import TitlePage from "../components/TitlePage";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
@@ -27,20 +28,13 @@ const MyStudies = () => {
             <p>{error}</p>
           ) : studies.length > 0 ? (
             studies.map((study) => (
-              <div
+              <StudyCard
                 key={study._id}
-                className="p-4 mb-4 border rounded-md shadow-sm"
-              >
-                <h2 className="text-lg font-bold">{study.title}</h2>
-                <p className="text-sm text-gray-500">{study.category}</p>
-                <p className="mt-2">{study.content.substring(0, 100)}...</p>
-                <a
-                  href={`/studies/${study._id}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  Ver mais
-                </a>
-              </div>
+                _id={study._id}
+                category={study.category}
+                title={study.title}
+                content={study.content}
+              />
             ))
           ) : (
             <p>Você ainda não criou nenhum estudo.</p>
