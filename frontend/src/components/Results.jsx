@@ -1,7 +1,6 @@
 import StudyCard from "./StudyCard";
 
 const Results = ({ results }) => {
-  console.log(results);
   return (
     <div className="my-5">
       <h3 className="font-semibold text-2xl">Resultados</h3>
