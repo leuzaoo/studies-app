@@ -11,7 +11,6 @@ import Center from "../components/Center";
 const MyStudies = () => {
   const { fetchUserStudies, studies, error, isLoading } = useStudyStore();
 
-  console.log(studies);
   useEffect(() => {
     fetchUserStudies();
   }, [fetchUserStudies]);
