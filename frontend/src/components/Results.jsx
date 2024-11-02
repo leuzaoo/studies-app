@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-import { formatDate } from "../utils/formatDate";
+import StudyCard from "./StudyCard";
 
 const Results = ({ results }) => {
   return (
@@ -10,27 +8,15 @@ const Results = ({ results }) => {
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
-              <Link to={"/studies/posted/" + study._id} className="flex py-3">
-                <img
-                  src={`./banner.jpg`}
-                  className="object-cover h-[100px] w-[100px] shadow-md rounded-[20px]"
-                />
-                <div className="flex flex-col justify-between ml-4">
-                  <span className="text-terciary-grey font-medium text-sm">
-                    {study.category}
-                  </span>
-                  <p className="font-semibold">{study.title}</p>
-                  <div className="flex items-center">
-                    <img src="/user.jpg" className="w-6 h-6 rounded-full" />
-                    <p className="ml-2 text-terciary-grey font-medium lowercase text-[12px]">
-                      <span className="mr-2">{study.author?.username}</span>•
-                      <span className="ml-2">
-                        {formatDate(study.createdAt)}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </Link>
+              <StudyCard
+                _id={study._id}
+                key={study._id}
+                title={study.title}
+                description={study.description}
+                username={study.author.username}
+                category={study.category}
+                createdAt={study.createdAt}
+              />
             </li>
           ))
         ) : (

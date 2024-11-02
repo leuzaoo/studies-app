@@ -5,8 +5,8 @@ import { useState } from "react";
 import { Select } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
+import { useStudyStore } from "../store/studyStore";
 import TextEditor from "../components/TextEditor";
-import { useAuthStore } from "../store/authStore";
 import TitlePage from "../components/TitlePage";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
@@ -14,12 +14,13 @@ import Center from "../components/Center";
 import Input from "../components/Input";
 
 const NewStudy = () => {
+  const [description, setDescription] = useState();
   const [category, setCategory] = useState();
   const [content, setContent] = useState();
   const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
 
-  const { createStudy, error, isLoading } = useAuthStore();
+  const { createStudy, error, isLoading } = useStudyStore();
   const navigate = useNavigate();
 
   const handleChange = (value) => {
@@ -36,7 +37,7 @@ const NewStudy = () => {
     e.preventDefault();
 
     try {
-      await createStudy(title, content, category, tags);
+      await createStudy(title, description, content, category, tags);
       navigate("/my-studies");
     } catch (error) {
       console.log("Erro ao clicar no botão de criar estudo: ", error);
@@ -53,12 +54,20 @@ const NewStudy = () => {
           <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
             <LabelFormTitle text={"Título"} />
             <Input
-              maxLength={60}
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               type="text"
               className={"mb-3"}
               placeholder={"Você sabe tudo sobre o nazismo?"}
+            />
+
+            <LabelFormTitle text={"Descrição"} />
+            <Input
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+              type="text"
+              className={"mb-3"}
+              placeholder={"Aqui tem o que você nunca ouviu"}
             />
 
             <LabelFormTitle text={"Categoria"} />

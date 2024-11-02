@@ -6,12 +6,14 @@ import {
   allStudies,
   createStudy,
   getStudyById,
+  getUserStudies,
 } from "../controllers/studies.controller.js";
 
 const router = express.Router();
 
-router.get("/search", verifyToken, searchStudy);
+router.get("/user-studies", verifyToken, getUserStudies);
 router.get("/posted/:id", verifyToken, getStudyById);
+router.get("/search", verifyToken, searchStudy);
 router.get("/all", verifyToken, allStudies);
 
 router.post("/new-study", verifyToken, createStudy);

@@ -8,6 +8,10 @@ const studySchema = new mongoose.Schema(
       trim: true,
       maxlength: 150,
     },
+    description: {
+      type: String,
+      trim: true,
+    },
     content: {
       type: String,
       required: true,

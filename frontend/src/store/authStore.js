@@ -135,30 +135,4 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
-
-  createStudy: async (title, content, category, tags) => {
-    set({ isLoading: true, error: null });
-
-    try {
-      const response = await axios.post(`${STUDIES_API_URL}/new-study`, {
-        title,
-        content,
-        category,
-        tags,
-      });
-
-      set({
-        isLoading: false,
-        error: null,
-      });
-
-      toast.success(response.data.message || "Estudo criado com sucesso.");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao criar o estudo.");
-      set({
-        isLoading: false,
-      });
-      throw error;
-    }
-  },
 }));
