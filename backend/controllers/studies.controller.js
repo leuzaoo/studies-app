@@ -112,7 +112,9 @@ export const deleteStudy = async (req, res) => {
     }
 
     if (study.author.toString() !== req.user._id.toString()) {
-      return res.status(401).json({ message: "Não autorizado." });
+      return res
+        .status(401)
+        .json({ message: "Sem permissão para excluir este conteúdo." });
     }
 
     await Study.findByIdAndDelete(req.params.id);
