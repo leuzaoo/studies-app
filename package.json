@@ -17,7 +17,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.7.2"
+    "mongoose": "^8.7.2",
+    "prop-types": "^15.8.1",
+    "react-confirm-alert": "^3.0.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
