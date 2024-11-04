@@ -7,6 +7,7 @@ import {
   createStudy,
   getStudyById,
   getUserStudies,
+  deleteStudy,
 } from "../controllers/studies.controller.js";
 
 const router = express.Router();
@@ -17,5 +18,7 @@ router.get("/search", verifyToken, searchStudy);
 router.get("/all", verifyToken, allStudies);
 
 router.post("/new-study", verifyToken, createStudy);
+
+router.delete("/:id", verifyToken, deleteStudy);
 
 export default router;

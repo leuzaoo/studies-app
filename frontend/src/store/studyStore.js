@@ -72,4 +72,14 @@ export const useStudyStore = create((set) => ({
       });
     }
   },
+
+  deleteStudy: async (id) => {
+    try {
+      const response = await axios.delete(`${STUDIES_API_URL}/${id}`);
+      toast.success(response.data.message || "Estudo excluído com sucesso.");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Erro ao excluir o estudo");
+      throw error;
+    }
+  },
 }));

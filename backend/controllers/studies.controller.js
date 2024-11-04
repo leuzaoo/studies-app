@@ -101,3 +101,24 @@ export const getUserStudies = async (req, res) => {
     res.status(500).json({ message: "Erro no servidor interno" });
   }
 };
+
+export const deleteStudy = async (req, res) => {
+  try {
+    const study = await Study.findById(req.params.id);
+    if (!study) {
+      return res
+        .status(404)
+        .json({ message: "Estudo não encontrado ou inexistente." });
+    }
+
+    if (study.author.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: "Não autorizado." });
+    }
+
+    await Study.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ message: "Estudo excluído com sucesso." });
+  } catch (error) {
+    console.error("Erro no controlador deleteStudy:", error);
+    res.status(500).json({ message: "Erro no servidor interno" });
+  }
+};
