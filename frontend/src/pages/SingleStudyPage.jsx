@@ -1,5 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 
@@ -60,6 +59,9 @@ const SingleStudyPage = () => {
                 </span>
               </div>
             </div>
+            <Link to={`/edit-study/${id}`} className="text-sm hover:underline">
+              Editar
+            </Link>
           </div>
           <div className="h-[1px] bg-black opacity-20 mb-5" />
           <div
