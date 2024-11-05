@@ -21,7 +21,7 @@ const Results = ({ results }) => {
           ))
         ) : (
           <li className="text-sm text-gray-500">
-            Nenhum resultado encontrado.
+            Carregando estudo. Se demorar e não carregar, avise-nos.
           </li>
         )}
       </ul>

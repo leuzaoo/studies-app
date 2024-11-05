@@ -31,7 +31,12 @@ const SingleStudyPage = () => {
     }
   }, [id, fetchSingleStudy]);
 
-  if (!study) return <div>Estudo não encontrado.</div>;
+  if (!study)
+    return (
+      <div>
+        Carregando estudo. Se não carregar o estudo selecionado, avise-nos.
+      </div>
+    );
 
   return (
     <>
