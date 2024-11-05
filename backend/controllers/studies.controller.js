@@ -127,18 +127,27 @@ export const deleteStudy = async (req, res) => {
 
 export const updateStudy = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedData = req.body;
+    const allowedFields = ["title", "description", "content"];
 
-    const updatedStudy = await Study.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
+    const updatedData = {};
 
-    if (!updatedStudy) {
-      return res.status(404).json({ error: "Estudo não encontrado" });
+    for (const field of allowedFields) {
+      if (req.body[field]) {
+        updatedData[field] = req.body[field];
+      }
     }
 
-    res.json(updatedStudy);
+    const savedStudy = await Study.findByIdAndUpdate(
+      req.params.id,
+      { $set: updatedData },
+      { new: true }
+    );
+
+    if (!savedStudy) {
+      return res.status(404).json({ message: "Estudo não encontrado." });
+    }
+
+    res.json(savedStudy);
   } catch (error) {
     console.error("Erro ao atualizar estudo:", error);
     res.status(500).json({ error: "Erro ao atualizar estudo" });

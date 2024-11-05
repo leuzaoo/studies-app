@@ -20,7 +20,7 @@ router.get("/all", verifyToken, allStudies);
 
 router.post("/new-study", verifyToken, createStudy);
 
-router.put("/studies/:id", verifyToken, updateStudy);
+router.put("/study/update/:id", verifyToken, updateStudy);
 
 router.delete("/:id", verifyToken, deleteStudy);
 
