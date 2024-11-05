@@ -20,7 +20,7 @@ const NewStudy = () => {
   const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
 
-  const { createStudy, error, isLoading } = useStudyStore();
+  const { createStudy } = useStudyStore();
   const navigate = useNavigate();
 
   const handleChange = (value) => {
