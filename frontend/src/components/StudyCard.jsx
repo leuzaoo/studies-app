@@ -18,15 +18,15 @@ const StudyCard = ({
           className="object-cover h-[100px] w-[100px] shadow-md rounded-[20px]"
         />
         <div className="flex flex-col justify-between ml-4">
-          <span className="text-terciary-grey font-medium text-sm">
+          <span className="text-terciary-grey font-light text-sm">
             {category}
           </span>
 
-          <h2 className="font-semibold">{title}</h2>
-          <p className="text-sm">{description}</p>
+          <h2 className="font-semibold md:text-xl">{title}</h2>
+          <p className="text-sm md:text-base font-medium">{description}</p>
           <div className="flex items-center">
             <img src="/user.jpg" className="w-6 h-6 rounded-full" />
-            <p className="ml-2 text-terciary-grey font-medium lowercase text-[12px]">
+            <p className="ml-2 font-light text-terciary-grey lowercase text-[12px] md:text-sm">
               <span className="mr-2">{username}</span>•
               <span className="ml-2">{formatDate(createdAt)}</span>
             </p>

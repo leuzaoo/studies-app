@@ -1,0 +1,28 @@
+/* Adicione esse CSS ao seu arquivo CSS global ou crie um novo */
+.react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.7); /* Alterar o fundo */
+}
+
+.react-confirm-alert-body {
+  font-family: "Outfit", sans-serif;
+  max-width: 400px;
+  border-radius: 12px; /* Bordas arredondadas */
+
+  h1 {
+    font-size: 18px;
+  }
+}
+
+.react-confirm-alert .react-confirm-alert-button-group button {
+  font-family: "Outfit", sans-serif;
+  color: #fff;
+  border: none;
+  padding: 4px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.react-confirm-alert .react-confirm-alert-button-group button:hover {
+  background-color: rgb(239 68 68);
+}

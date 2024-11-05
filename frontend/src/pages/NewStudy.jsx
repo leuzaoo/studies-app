@@ -1,7 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 import { Select } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
@@ -20,17 +19,15 @@ const NewStudy = () => {
   const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
 
-  const { createStudy, error, isLoading } = useStudyStore();
+  const { createStudy } = useStudyStore();
   const navigate = useNavigate();
 
   const handleChange = (value) => {
     setCategory(value);
-    console.log(`selected ${value}`);
   };
 
   const handleTagsChange = (value) => {
     setTags(value);
-    console.log("Tags:", value);
   };
 
   const handleCreateStudy = async (e) => {
@@ -58,7 +55,7 @@ const NewStudy = () => {
               value={title}
               type="text"
               className={"mb-3"}
-              placeholder={"Você sabe tudo sobre o nazismo?"}
+              placeholder={"Coloque aqui um título interessante"}
             />
 
             <LabelFormTitle text={"Descrição"} />
@@ -67,7 +64,7 @@ const NewStudy = () => {
               value={description}
               type="text"
               className={"mb-3"}
-              placeholder={"Aqui tem o que você nunca ouviu"}
+              placeholder={"Resuma rapidamente o que você quer contar"}
             />
 
             <LabelFormTitle text={"Categoria"} />
@@ -76,6 +73,7 @@ const NewStudy = () => {
               style={{
                 width: 160,
                 marginBottom: 12,
+                fontSize: 20,
               }}
               onChange={handleChange}
               options={[
@@ -93,7 +91,7 @@ const NewStudy = () => {
             <Select
               suffixIcon={null}
               mode="tags"
-              style={{ width: "100%", marginBottom: 12 }}
+              style={{ width: "100%", marginBottom: 14 }}
               placeholder="Guerra, Nazismo, Judeus"
               onChange={handleTagsChange}
               value={tags}

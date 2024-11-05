@@ -9,7 +9,7 @@ const Input = ({ type, placeholder, value, onChange, className }) => {
       placeholder={placeholder}
       className={
         className +
-        " w-full border border-secondary-grey rounded-xl pl-5 h-[40px] text-sm outline-none focus:border-primary-dark"
+        " w-full border placeholder:font-light placeholder:text-base border-secondary-grey rounded-xl pl-5 h-[40px] text-sm md:text-lg outline-none focus:border-primary-dark"
       }
     />
   );

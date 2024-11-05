@@ -7,6 +7,7 @@ import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 
 import SingleStudyPage from "./pages/SingleStudyPage";
+import EditStudyPage from "./pages/EditStudyPage";
 import MyStudies from "./pages/MyStudies";
 import Homepage from "./pages/Homepage";
 import NewStudy from "./pages/NewStudy";
@@ -69,6 +70,15 @@ function App() {
           element={
             <ProtectedRoute>
               <NewStudy />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-study/:id"
+          element={
+            <ProtectedRoute>
+              <EditStudyPage />
             </ProtectedRoute>
           }
         />
