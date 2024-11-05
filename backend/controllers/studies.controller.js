@@ -124,3 +124,23 @@ export const deleteStudy = async (req, res) => {
     res.status(500).json({ message: "Erro no servidor interno" });
   }
 };
+
+export const updateStudy = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedStudy = await Study.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+
+    if (!updatedStudy) {
+      return res.status(404).json({ error: "Estudo não encontrado" });
+    }
+
+    res.json(updatedStudy);
+  } catch (error) {
+    console.error("Erro ao atualizar estudo:", error);
+    res.status(500).json({ error: "Erro ao atualizar estudo" });
+  }
+};

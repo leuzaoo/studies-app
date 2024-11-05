@@ -73,6 +73,15 @@ export const useStudyStore = create((set) => ({
     }
   },
 
+  updateStudy: async (id, updatedData) => {
+    try {
+      await axios.put(`${STUDIES_API_URL}/${id}`, updatedData);
+    } catch (error) {
+      console.error("Erro ao atualizar estudo:", error);
+      throw error;
+    }
+  },
+
   deleteStudy: async (id) => {
     try {
       const response = await axios.delete(`${STUDIES_API_URL}/${id}`);
