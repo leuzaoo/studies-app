@@ -127,7 +127,13 @@ export const deleteStudy = async (req, res) => {
 
 export const updateStudy = async (req, res) => {
   try {
-    const allowedFields = ["title", "description", "content"];
+    const allowedFields = [
+      "title",
+      "description",
+      "content",
+      "category",
+      "tags",
+    ];
 
     const updatedData = {};
 
@@ -137,15 +143,25 @@ export const updateStudy = async (req, res) => {
       }
     }
 
+    // Verifique se o estudo existe
+    const study = await Study.findById(req.params.id);
+    if (!study) {
+      return res.status(404).json({ message: "Estudo não encontrado." });
+    }
+
+    // Verifique se o usuário autenticado é o autor do estudo
+    if (study.author.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "Sem permissão para editar este estudo." });
+    }
+
+    // Atualize o estudo com os novos dados
     const savedStudy = await Study.findByIdAndUpdate(
       req.params.id,
       { $set: updatedData },
       { new: true }
     );
-
-    if (!savedStudy) {
-      return res.status(404).json({ message: "Estudo não encontrado." });
-    }
 
     res.json(savedStudy);
   } catch (error) {
