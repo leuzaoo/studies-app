@@ -8,6 +8,7 @@ import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
+import { useAuthStore } from "../store/authStore";
 
 const fetchStudies = async (query = "", category = "Tudo") => {
   const endpoint = query
@@ -26,6 +27,9 @@ const Homepage = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
+
+  const { user } = useAuthStore();
+  console.log("user", user);
 
   const handleSearch = async (query) => {
     if (!query.trim()) {

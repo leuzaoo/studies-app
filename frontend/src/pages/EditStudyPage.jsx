@@ -5,6 +5,7 @@ import { Select } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import { useStudyStore } from "../store/studyStore.js";
+import { useAuthStore } from "../store/authStore.js";
 import TextEditor from "../components/TextEditor";
 import TitlePage from "../components/TitlePage";
 import Center from "../components/Center.jsx";
@@ -13,7 +14,10 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 
 const EditStudyPage = () => {
-  const { fetchSingleStudy, updateStudy, study } = useStudyStore();
+  const { fetchSingleStudy, updateStudy, study, isCheckingAuth } =
+    useStudyStore();
+  const { user } = useAuthStore();
+  const userId = user._id;
 
   const [title, setTitle] = useState(study?.title || "");
   const [description, setDescription] = useState(study?.description || "");
@@ -21,27 +25,38 @@ const EditStudyPage = () => {
   const [category, setCategory] = useState(study?.category || "");
   const [tags, setTags] = useState(study?.tags || "");
 
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getStudy = async () => {
       try {
-        const fetchedStudy = await fetchSingleStudy(id);
-        setTitle(fetchedStudy.title);
-        setDescription(fetchedStudy.description);
-        setContent(fetchedStudy.content);
-        setCategory(fetchedStudy.category);
-        setTags(fetchedStudy.tags);
+        if (user.author._id && id) {
+          const fetchedStudy = await fetchSingleStudy(id);
+
+          if (fetchedStudy.author._id === userId) {
+            setIsAuthorized(true);
+            setTitle(fetchedStudy.title);
+            setDescription(fetchedStudy.description);
+            setContent(fetchedStudy.content);
+            setCategory(fetchedStudy.category);
+            setTags(fetchedStudy.tags);
+          } else {
+            toast.error("Você não tem permissão para editar este estudo.");
+            navigate("/unauthorized");
+          }
+        }
       } catch (error) {
         console.error("Erro ao buscar estudo:", error);
       }
     };
 
-    if (id) {
+    if (!isCheckingAuth && id) {
       getStudy();
     }
-  }, [id, fetchSingleStudy]);
+  }, [id, fetchSingleStudy, userId, user, isCheckingAuth, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +85,18 @@ const EditStudyPage = () => {
   const handleTagsChange = (value) => {
     setTags(value);
   };
+
+  if (!isAuthorized) {
+    return (
+      <>
+        <Navbar />
+        <ToastContainer />
+        <Center>
+          <h2>Você não tem permissão para editar este conteúdo</h2>
+        </Center>
+      </>
+    );
+  }
 
   return (
     <>
