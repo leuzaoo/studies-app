@@ -1,15 +1,18 @@
 import { ToastContainer } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "../assets/singleStudyPage.module.css";
 import { useStudyStore } from "../store/studyStore.js";
 import { formatDate } from "../utils/formatDate.js";
 
+import ProgressBar from "../components/ProgressBar.jsx";
 import Center from "../components/Center.jsx";
 import Navbar from "../components/Navbar.jsx";
 
 const SingleStudyPage = () => {
+  const mainRef = useRef(null);
+
   const { id } = useParams();
 
   const { fetchSingleStudy } = useStudyStore();
@@ -41,8 +44,10 @@ const SingleStudyPage = () => {
     <>
       <ToastContainer />
       <Navbar />
+
       <Center>
-        <div className="max-w-screen-sm mx-auto">
+        <div ref={mainRef} className="max-w-screen-sm mx-auto">
+          <ProgressBar target={mainRef}/>
           <p className="font-extralight text-terciary-grey">{study.category}</p>
           <h1 className="font-bold text-2xl">{study.title}</h1>
           <div className="mt-3 mb-5 flex gap-3 items-center justify-between">

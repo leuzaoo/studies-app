@@ -21,7 +21,7 @@ const Results = ({ results }) => {
           ))
         ) : (
           <li className="text-sm text-gray-500">
-            Carregando estudo. Se demorar e não carregar, avise-nos.
+            Não foi encontrado estudos com esses filtros.
           </li>
         )}
       </ul>

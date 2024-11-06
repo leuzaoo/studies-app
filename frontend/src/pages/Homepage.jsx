@@ -16,16 +16,14 @@ const Homepage = () => {
 
   const { fetchStudies } = useStudyStore();
 
-  // Função de busca chamada pelo SearchBar
   const handleSearch = async (query) => {
     if (!query.trim()) {
-      setResults([]); // Se a pesquisa estiver vazia, limpa os resultados
+      setResults([]);
       setIsSearchOpen(false);
       return;
     }
 
     try {
-      // Busca estudos com base na query
       const studies = await fetchStudies(query, selectedCategory);
       setResults(studies);
       setIsSearchOpen(true);
@@ -37,11 +35,9 @@ const Homepage = () => {
     }
   };
 
-  // Efetua a busca ao mudar a categoria selecionada
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Busca estudos com base na categoria selecionada
         const studies = await fetchStudies("", selectedCategory);
         setResults(studies);
         setIsSearchOpen(false);
@@ -70,13 +66,13 @@ const Homepage = () => {
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          onSearch={handleSearch} // Passando a função de busca para o SearchBar
+          onSearch={handleSearch}
         />
 
         <CategoryMenu
           categories={categories}
           selectedCategory={selectedCategory}
-          onCategorySelect={setSelectedCategory} // Atualizando a categoria selecionada
+          onCategorySelect={setSelectedCategory}
         />
 
         <Results results={results} />
