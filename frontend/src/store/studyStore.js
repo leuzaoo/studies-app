@@ -54,7 +54,7 @@ export const useStudyStore = create((set) => ({
   fetchSingleStudy: async (id) => {
     try {
       const response = await axios.get(`${STUDIES_API_URL}/posted/${id}`);
-      set({ study: response.data.study });
+      // set({ study: response.data.study });
       return response.data.study;
     } catch (error) {
       const errorMessage = handleApiError(error, "Erro ao buscar estudo");

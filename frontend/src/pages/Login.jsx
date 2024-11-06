@@ -63,11 +63,11 @@ const Login = () => {
             </Link>
           </div>
         </form>
-        <footer className="mt-[264px] text-center">
+        {/* <footer className="mt-[264px] text-center">
           <h1 className="text-primary-dark text-sm">
             feito por Leonardo Costa.
           </h1>
-        </footer>
+        </footer> */}
       </Center>
     </>
   );
