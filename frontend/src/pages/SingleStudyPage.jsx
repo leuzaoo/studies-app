@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import styles from "../assets/singleStudyPage.module.css";
