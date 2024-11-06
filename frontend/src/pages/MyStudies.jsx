@@ -1,8 +1,8 @@
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Edit3, Trash2 } from "lucide-react";
 import "../assets/react-alert.css";
 import { useEffect } from "react";
 
@@ -16,8 +16,6 @@ import Center from "../components/Center";
 const MyStudies = () => {
   const { fetchUserStudies, deleteStudy, studies, error, isLoading } =
     useStudyStore();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserStudies();
@@ -73,12 +71,22 @@ const MyStudies = () => {
                   title={study.title}
                   content={study.content}
                 />
-                <button
-                  onClick={() => handleDelete(study._id)}
-                  className="flex items-center gap-3 bg-red-500 text-sm text-white px-3 py-2 rounded hover:bg-red-300 transition-all duration-200"
-                >
-                  <Trash2 color="white" size={16} />
-                </button>
+                <div className="flex items-center gap-3">
+                  <Link
+                    to={`/edit-study/${study._id}`}
+                    className="text-sm hover:underline"
+                  >
+                    <button className="bg-primary-dark p-2 rounded hover:bg-terciary-grey">
+                      <Edit3 size={16} color="white" />
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(study._id)}
+                    className="flex items-center gap-3 bg-red-500 text-sm text-white p-2 rounded hover:bg-red-300 transition-all duration-200"
+                  >
+                    <Trash2 color="white" size={16} />
+                  </button>
+                </div>
               </div>
             ))
           ) : (

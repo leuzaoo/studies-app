@@ -59,9 +59,6 @@ const SingleStudyPage = () => {
                 </span>
               </div>
             </div>
-            <Link to={`/edit-study/${id}`} className="text-sm hover:underline">
-              Editar
-            </Link>
           </div>
           <div className="h-[1px] bg-black opacity-20 mb-5" />
           <div
