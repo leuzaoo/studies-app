@@ -7,6 +7,13 @@ const STUDIES_API_URL =
     ? "http://localhost:5000/api/v1/studies"
     : "/api/v1/studies";
 
+const handleApiError = (error, defaultMessage) => {
+  const errorMessage = error.response?.data?.message || defaultMessage;
+  toast.error(errorMessage);
+  console.error(errorMessage);
+  return errorMessage;
+};
+
 export const useStudyStore = create((set) => ({
   studies: [],
   isLoading: false,
@@ -20,8 +27,8 @@ export const useStudyStore = create((set) => ({
       const response = await axios.get(STUDIES_API_URL);
       set({ studies: response.data.studies, isLoading: false });
     } catch (error) {
-      set({ error: error.response.data.message, isLoading: false });
-      throw error;
+      const errorMessage = handleApiError(error, "Erro ao buscar estudos");
+      set({ error: errorMessage, isLoading: false });
     }
   },
 
@@ -36,25 +43,23 @@ export const useStudyStore = create((set) => ({
         category,
         tags,
       });
-
-      set({ isLoading: false, error: null });
+      set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao criar o estudo");
-      set({ isLoading: false, error: error.response?.data?.message });
-      throw error;
+      const errorMessage = handleApiError(error, "Erro ao criar o estudo");
+      set({ error: errorMessage, isLoading: false });
     }
   },
 
   fetchSingleStudy: async (id) => {
     try {
       const response = await axios.get(`${STUDIES_API_URL}/posted/${id}`);
-
-      set({ study: response.data.study });
+      // set({ study: response.data.study });
       return response.data.study;
     } catch (error) {
-      set({ error: error.response?.data?.message || "Erro ao buscar estudo" });
-      throw error;
+      const errorMessage = handleApiError(error, "Erro ao buscar estudo");
+      set({ error: errorMessage });
+      throw new Error(errorMessage);
     }
   },
 
@@ -65,30 +70,44 @@ export const useStudyStore = create((set) => ({
       const response = await axios.get(`${STUDIES_API_URL}/user-studies`);
       set({ studies: response.data.userStudies, isLoading: false });
     } catch (error) {
-      console.error("Erro ao buscar estudos do usuário:", error);
-      set({
-        error: error.response?.data?.message || "Erro ao buscar estudos",
-        isLoading: false,
-      });
+      const errorMessage = handleApiError(
+        error,
+        "Erro ao buscar estudos do usuário"
+      );
+      set({ error: errorMessage, isLoading: false });
     }
   },
 
   updateStudy: async (id, updatedData) => {
+    set({ isLoading: true, error: null });
+
     try {
-      await axios.put(`${STUDIES_API_URL}/${id}`, updatedData);
+      const response = await axios.put(
+        `${STUDIES_API_URL}/posted/edit/${id}`,
+        updatedData
+      );
+
+      set((state) => ({
+        studies: state.studies.map((study) =>
+          study._id === id ? { ...study, ...updatedData } : study
+        ),
+        isLoading: false,
+      }));
+
+      toast.success(response.data.message || "Estudo atualizado com sucesso");
     } catch (error) {
-      console.error("Erro ao atualizar estudo:", error);
-      throw error;
+      const errorMessage = handleApiError(error, "Erro ao atualizar o estudo");
+      set({ error: errorMessage });
     }
   },
 
   deleteStudy: async (id) => {
     try {
       const response = await axios.delete(`${STUDIES_API_URL}/${id}`);
-      toast.success(response.data.message || "Estudo excluído com sucesso.");
+      toast.success(response.data.message || "Estudo excluído com sucesso");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Erro ao excluir o estudo");
-      throw error;
+      const errorMessage = handleApiError(error, "Erro ao excluir o estudo");
+      set({ error: errorMessage });
     }
   },
 }));

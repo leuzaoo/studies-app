@@ -53,7 +53,13 @@ export const signup = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
     });
 
-    res.status(201).json({ message: "Usário criado com sucesso." });
+    res.status(201).json({
+      message: "Usuário criado com sucesso.",
+      user: {
+        ...user._doc,
+        password: undefined,
+      },
+    });
   } catch (error) {
     console.log("Erro ao criar o usário", error.message);
     res.status(500).json({ message: "Erro no servidor interno." });

@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import styles from "../assets/singleStudyPage.module.css";
@@ -59,9 +59,6 @@ const SingleStudyPage = () => {
                 </span>
               </div>
             </div>
-            <Link to={`/edit-study/${id}`} className="text-sm hover:underline">
-              Editar
-            </Link>
           </div>
           <div className="h-[1px] bg-black opacity-20 mb-5" />
           <div

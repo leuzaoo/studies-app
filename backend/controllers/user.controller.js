@@ -12,6 +12,7 @@ export const updatedProfile = async (req, res) => {
     ];
 
     const updatedData = {};
+
     for (const field of allowedFields) {
       if (req.body[field]) {
         updatedData[field] = req.body[field];

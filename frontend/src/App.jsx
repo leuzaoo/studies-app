@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 
+import UnauthorizedEditPage from "./pages/UnauthorizedEditPage";
 import SingleStudyPage from "./pages/SingleStudyPage";
 import EditStudyPage from "./pages/EditStudyPage";
 import MyStudies from "./pages/MyStudies";
@@ -79,6 +80,15 @@ function App() {
           element={
             <ProtectedRoute>
               <EditStudyPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-study/unauthorized"
+          element={
+            <ProtectedRoute>
+              <UnauthorizedEditPage />
             </ProtectedRoute>
           }
         />
