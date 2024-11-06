@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 
-import UnauthorizedEditPage from "./pages/UnauthorizedEditPage";
 import SingleStudyPage from "./pages/SingleStudyPage";
 import EditStudyPage from "./pages/EditStudyPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import MyStudies from "./pages/MyStudies";
 import Homepage from "./pages/Homepage";
 import NewStudy from "./pages/NewStudy";
@@ -56,8 +56,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="*" element={<Navigate to="/" replace />} />
 
         <Route
           path="/about-me"
@@ -130,6 +128,8 @@ function App() {
             </RedirectAuthenticatedUser>
           }
         />
+
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
