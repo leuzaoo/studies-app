@@ -89,12 +89,6 @@ export const getUserStudies = async (req, res) => {
       "username"
     );
 
-    if (!userStudies.length) {
-      return res
-        .status(404)
-        .json({ message: "Você ainda não criou nenhum estudo." });
-    }
-
     res.status(200).json({ userStudies });
   } catch (error) {
     console.error("Erro no controlador getUserStudies:", error);
