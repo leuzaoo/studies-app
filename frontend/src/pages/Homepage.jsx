@@ -1,25 +1,13 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import categories from "../../../backend/config/categories";
 import CategoryMenu from "../components/CategoryMenu";
+import { useStudyStore } from "../store/studyStore";
 import SearchBar from "../components/SearchBar";
 import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
-import { useAuthStore } from "../store/authStore";
-
-const fetchStudies = async (query = "", category = "Tudo") => {
-  const endpoint = query
-    ? `http://localhost:5000/api/v1/studies/search?q=${query}`
-    : category === "Tudo"
-    ? "http://localhost:5000/api/v1/studies/all"
-    : `http://localhost:5000/api/v1/studies/search?q=${category}`;
-
-  const response = await axios.get(endpoint);
-  return response.data.studies;
-};
 
 const Homepage = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -28,8 +16,7 @@ const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
 
-  const { user } = useAuthStore();
-  console.log("user", user);
+  const { fetchStudies } = useStudyStore();
 
   const handleSearch = async (query) => {
     if (!query.trim()) {

@@ -20,11 +20,17 @@ export const useStudyStore = create((set) => ({
   error: null,
   message: null,
 
-  fetchStudies: async () => {
+  fetchStudies: async (query = "", category = "Tudo") => {
     set({ isLoading: true, error: null });
 
+    const endpoint = query
+      ? `${STUDIES_API_URL}/search?q=${query}`
+      : category === "Tudo"
+      ? `${STUDIES_API_URL}/all`
+      : `${STUDIES_API_URL}/search?q=${category}`;
+
     try {
-      const response = await axios.get(STUDIES_API_URL);
+      const response = await axios.get(endpoint);
       set({ studies: response.data.studies, isLoading: false });
     } catch (error) {
       const errorMessage = handleApiError(error, "Erro ao buscar estudos");
