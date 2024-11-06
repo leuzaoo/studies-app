@@ -85,15 +85,6 @@ function App() {
         />
 
         <Route
-          path="/edit-study/unauthorized"
-          element={
-            <ProtectedRoute>
-              <UnauthorizedEditPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path="/my-studies"
           element={
             <ProtectedRoute>
