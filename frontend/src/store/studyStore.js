@@ -87,7 +87,6 @@ export const useStudyStore = create((set) => ({
         updatedData
       );
 
-      // Atualize o estudo no estado `studies` após a atualização
       set((state) => ({
         studies: state.studies.map((study) =>
           study._id === id ? { ...study, ...updatedData } : study

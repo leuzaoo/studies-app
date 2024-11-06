@@ -143,20 +143,17 @@ export const updateStudy = async (req, res) => {
       }
     }
 
-    // Verifique se o estudo existe
     const study = await Study.findById(req.params.id);
     if (!study) {
       return res.status(404).json({ message: "Estudo não encontrado." });
     }
 
-    // Verifique se o usuário autenticado é o autor do estudo
     if (study.author.toString() !== req.user._id.toString()) {
       return res
         .status(403)
         .json({ message: "Sem permissão para editar este estudo." });
     }
 
-    // Atualize o estudo com os novos dados
     const savedStudy = await Study.findByIdAndUpdate(
       req.params.id,
       { $set: updatedData },
