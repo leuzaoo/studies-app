@@ -10,7 +10,7 @@ const TextArea = ({ type, id, placeholder, value, onChange, className }) => {
       placeholder={placeholder}
       className={
         className +
-        " pt-3 px-5 w-full border border-secondary-grey rounded-xl h-[180px] text-sm outline-none focus:border-primary-dark"
+        " pt-3 px-5 w-full border border-secondary-grey rounded-xl h-[180px] text-sm md:text-lg placeholder:text-sm md:placeholder:text-base outline-none focus:border-primary-dark"
       }
     />
   );

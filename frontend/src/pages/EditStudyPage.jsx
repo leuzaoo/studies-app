@@ -63,6 +63,14 @@ const EditStudyPage = () => {
     }
   };
 
+  const handleChange = (value) => {
+    setCategory(value);
+  };
+
+  const handleTagsChange = (value) => {
+    setTags(value);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -70,10 +78,10 @@ const EditStudyPage = () => {
       <Center>
         <TitlePage text={"Modo de edição"} />
         <form onSubmit={handleSubmit}>
-          <div className="my-5">
+          <div className="flex flex-col my-5">
             <LabelFormTitle text={"Título"} />
             <Input
-              className={"mb-5"}
+              className={"mb-3"}
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -81,10 +89,30 @@ const EditStudyPage = () => {
 
             <LabelFormTitle text={"Descrição"} />
             <Input
-              className={"mb-5"}
+              className={"mb-3"}
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <LabelFormTitle text={"Categoria"} />
+            <Select
+              value={category}
+              style={{
+                width: 160,
+                marginBottom: 12,
+                fontSize: 20,
+              }}
+              onChange={handleChange}
+              options={[
+                { value: "Política", label: "Política" },
+                { value: "Esportes", label: "Esportes" },
+                { value: "Programação", label: "Programação" },
+                { value: "Ciência", label: "Ciência" },
+                { value: "História", label: "História" },
+                { value: "Arte", label: "Arte" },
+                { value: "Outros", label: "Outros" },
+              ]}
             />
 
             <LabelFormTitle text={"Tags"} />

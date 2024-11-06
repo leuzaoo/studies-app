@@ -77,7 +77,7 @@ const AboutMe = () => {
                   // onChange={handleProfilePictureChange}
                 />
                 <label
-                  className="text-sm cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                  className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
                   htmlFor="fotoPerfil"
                 >
                   Alterar imagem
@@ -85,7 +85,7 @@ const AboutMe = () => {
               </div>
               <button
                 type="button"
-                className="text-sm cursor-pointer bg-red-100 text-red-600 px-2 py-2 rounded-lg hover:bg-red-200 transition-all duration-200"
+                className="text-sm cursor-pointer md:text-base bg-red-100 text-red-600 px-2 py-2 rounded-lg hover:bg-red-200 transition-all duration-200"
                 onClick={() => setProfilePicture(null)}
               >
                 Remover imagem
@@ -140,7 +140,7 @@ const AboutMe = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="text-sm h-8 max-w-max px-3 rounded-lg bg-cyan-600 text-primary-bg"
+              className="text-sm md:text-base h-8 max-w-max px-3 rounded-lg bg-cyan-600 text-primary-bg"
               type="submit"
               disabled={isLoading}
             >
