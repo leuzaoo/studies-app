@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import categories from "../../../backend/config/categories";
 import CategoryMenu from "../components/CategoryMenu";
 import { useStudyStore } from "../store/studyStore";
@@ -12,21 +11,22 @@ import Center from "../components/Center";
 const Homepage = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
 
   const { fetchStudies } = useStudyStore();
 
+  // Função de busca chamada pelo SearchBar
   const handleSearch = async (query) => {
     if (!query.trim()) {
-      setResults([]);
+      setResults([]); // Se a pesquisa estiver vazia, limpa os resultados
       setIsSearchOpen(false);
       return;
     }
 
     try {
-      const studies = await fetchStudies(query);
+      // Busca estudos com base na query
+      const studies = await fetchStudies(query, selectedCategory);
       setResults(studies);
       setIsSearchOpen(true);
     } catch (error) {
@@ -37,9 +37,11 @@ const Homepage = () => {
     }
   };
 
+  // Efetua a busca ao mudar a categoria selecionada
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Busca estudos com base na categoria selecionada
         const studies = await fetchStudies("", selectedCategory);
         setResults(studies);
         setIsSearchOpen(false);
@@ -52,7 +54,7 @@ const Homepage = () => {
     };
 
     fetchData();
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchStudies]);
 
   return (
     <>
@@ -68,13 +70,13 @@ const Homepage = () => {
         <SearchBar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          onSearch={handleSearch}
+          onSearch={handleSearch} // Passando a função de busca para o SearchBar
         />
 
         <CategoryMenu
           categories={categories}
           selectedCategory={selectedCategory}
-          onCategorySelect={setSelectedCategory}
+          onCategorySelect={setSelectedCategory} // Atualizando a categoria selecionada
         />
 
         <Results results={results} />

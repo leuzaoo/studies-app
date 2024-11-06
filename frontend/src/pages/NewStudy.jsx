@@ -92,7 +92,7 @@ const NewStudy = () => {
               suffixIcon={null}
               mode="tags"
               style={{ width: "100%", marginBottom: 14 }}
-              placeholder="Guerra, Nazismo, Judeus"
+              placeholder="Termos para os usuários encontrarem o seu estudo"
               onChange={handleTagsChange}
               value={tags}
               notFoundContent={null}

@@ -32,9 +32,11 @@ export const useStudyStore = create((set) => ({
     try {
       const response = await axios.get(endpoint);
       set({ studies: response.data.studies, isLoading: false });
+      return response.data.studies;
     } catch (error) {
       const errorMessage = handleApiError(error, "Erro ao buscar estudos");
       set({ error: errorMessage, isLoading: false });
+      throw new Error(errorMessage);
     }
   },
 
