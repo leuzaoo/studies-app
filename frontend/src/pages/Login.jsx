@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { ToastContainer } from "react-toastify";
+import { XCircle } from "lucide-react";
+
+import { useAuthStore } from "../store/authStore";
 import Button from "../components/Button";
 import Center from "../components/Center";
 import Input from "../components/Input";
-import { useAuthStore } from "../store/authStore";
-import { XCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -23,52 +24,66 @@ const Login = () => {
   return (
     <>
       <ToastContainer autoClose={2000} />
-      <Center>
-        <section>
-          <h1 className="mx-auto leading-none mt-[60px] w-[210px] font-medium text-[40px]">
+      <div className="relative w-screen h-screen">
+        {/* Imagem de fundo */}
+        <img
+          src="/login-bg.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+          alt="Login Background"
+        />
+        {/* Overlay escurecido */}
+        <div className="absolute inset-0 bg-black/50"></div>
+
+        {/* Formulário centralizado sobre a imagem */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-bg px-6 py-10 min-w-[350px] rounded-2xl shadow-lg">
+          <h1 className="text-center text-[32px] font-medium max-w-[190px] mx-auto leading-none">
             Acesse aqui sua conta!
           </h1>
-        </section>
-        <form onSubmit={handleLogin} className="mt-10 flex flex-col">
-          <div className="space-y-3">
-            <Input
-              type="text"
-              placeholder="Nome de usuário"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
 
-            <Input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <form
+            onSubmit={handleLogin}
+            className="mt-8 flex flex-col max-w-[400px] mx-auto"
+          >
+            <div className="space-y-3">
+              <Input
+                type="text"
+                placeholder="Nome de usuário"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-          {error && (
-            <div className="flex items-center gap-2 text-sm mb-6">
-              <XCircle className="text-red-600 size-5" />
-              <p className="text-red-600 font-semibold">{error}</p>
+              <Input
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-          )}
 
-          <div className="mt-5 text-center">
-            <Button primary content={"Entrar"} />
-            <p className="text-primary-dark font-medium text-sm my-2 text-center">
-              não possui uma conta?
-            </p>
-            <Link to={"/signup"}>
-              <Button content={"Criar conta"} />
-            </Link>
-          </div>
-        </form>
-        {/* <footer className="mt-[264px] text-center">
-          <h1 className="text-primary-dark text-sm">
-            feito por Leonardo Costa.
-          </h1>
-        </footer> */}
-      </Center>
+            {error && (
+              <div className="flex items-center gap-2 text-sm mt-4 mb-6 text-red-600">
+                <XCircle className="size-5" />
+                <p className="font-semibold">{error}</p>
+              </div>
+            )}
+
+            <div className="mt-5 text-center">
+              {isLoading ? (
+                <Button disabled content={"Carregando..."} />
+              ) : (
+                <Button content={"Entrar"} primary />
+              )}
+
+              <p className="text-primary-dark font-medium text-sm my-3">
+                Não possui uma conta?
+              </p>
+              <Link to={"/signup"}>
+                <Button content={"Criar conta"} />
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
     </>
   );
 };
