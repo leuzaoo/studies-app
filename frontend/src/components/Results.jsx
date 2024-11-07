@@ -1,4 +1,4 @@
-import StudyCard from "./StudyCard";
+import HomepageStudyCard from "./HomepageStudyCard";
 
 const Results = ({ results }) => {
   return (
@@ -8,13 +8,14 @@ const Results = ({ results }) => {
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
-              <StudyCard
+              <HomepageStudyCard
                 _id={study._id}
                 key={study._id}
                 title={study.title}
+                // bannerImage={study.bannerImage}
+                // userImage={study.userImage}
                 description={study.description}
                 username={study.author.username}
-                category={study.category}
                 createdAt={study.createdAt}
               />
             </li>

@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
+        <nav className="bg-primary-bg px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
           <Link to={"/"}>
             <h1 className="text-3xl font-domine font-bold">studies.</h1>
           </Link>

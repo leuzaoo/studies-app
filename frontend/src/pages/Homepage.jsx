@@ -55,7 +55,7 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <Center className="font-outfit">
+      <Center className="bg-primary-bg font-outfit">
         <div>
           <TitlePage text={"Descubra"} />
           <p className="text-sm text-medium-grey">
