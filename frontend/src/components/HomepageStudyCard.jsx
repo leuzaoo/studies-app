@@ -21,7 +21,7 @@ const HomepageStudyCard = ({
           <h2 className="font-semibold text-lg md:text-xl leading-none">
             {title}
           </h2>
-          <p className="leading-none text-sm md:text-base font-light">
+          <p className="font-domine leading-none text-sm md:text-base font-light">
             {description}
           </p>
           <div className="flex items-center">
