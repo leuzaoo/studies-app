@@ -15,13 +15,11 @@ const HomepageStudyCard = ({
     <>
       <Link
         to={"/studies/posted/" + _id}
-        className="flex gap-5 items-center py-3"
+        className="flex gap-10 items-center justify-between py-3"
       >
-        <div className="flex flex-col justify-between gap-3">
-          <h2 className="font-semibold text-lg md:text-xl leading-none">
-            {title}
-          </h2>
-          <p className="font-domine leading-none text-sm md:text-base font-light">
+        <div className="flex flex-col justify-between gap-3 max-w-[520px]">
+          <h2 className="font-semibold  md:text-2xl leading-none">{title}</h2>
+          <p className="font-domine leading-none text-[12px] md:text-base font-light">
             {description}
           </p>
           <div className="flex items-center">
@@ -29,7 +27,7 @@ const HomepageStudyCard = ({
               src={`${userImage || "./user.jpg"} `}
               className="w-6 h-6 rounded-full"
             /> */}
-            <p className="font-light text-terciary-grey lowercase text-[12px] md:text-sm">
+            <p className="font-extralight text-terciary-grey lowercase text-[12px] md:text-sm">
               <span className="mr-2">{username}</span>•
               <span className="ml-2">{formatDate(createdAt)}</span>
             </p>
@@ -37,7 +35,7 @@ const HomepageStudyCard = ({
         </div>
         <img
           src={`${bannerImage || "./banner.jpg"} `}
-          className="object-cover h-[80px] w-[80px] shadow-md rounded-xl"
+          className="object-cover h-[60px] w-[60px] md:h-[100px] md:w-[100px] shadow-md rounded-xl"
         />
       </Link>
     </>

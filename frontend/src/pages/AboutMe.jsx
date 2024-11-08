@@ -58,7 +58,7 @@ const AboutMe = () => {
     <>
       <ToastContainer autoClose={2000} />
       <Navbar />
-      <Center>
+      <Center className={"bg-primary-bg"}>
         <TitlePage text="Sobre mim" />
         <form onSubmit={handleSubmit}>
           <div className="mt-2">
@@ -99,7 +99,7 @@ const AboutMe = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-semibold bg-primary-bg"
             />
           </div>
 
@@ -109,7 +109,7 @@ const AboutMe = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-semibold bg-primary-bg"
             />
           </div>
 
@@ -119,7 +119,7 @@ const AboutMe = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-semibold bg-primary-bg"
             />
           </div>
 
@@ -129,7 +129,7 @@ const AboutMe = () => {
               type="text"
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-semibold bg-primary-bg"
             />
           </div>
 
