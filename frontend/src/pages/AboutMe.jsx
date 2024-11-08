@@ -65,7 +65,7 @@ const AboutMe = () => {
             <LabelFormTitle htmlFor="fotoPerfil" text="Foto do perfil" />
             <div className="flex items-center mt-2 gap-5 max-w-max">
               <img
-                src={user?.avatar || "./user.jpg"}
+                src={user?.userImage || "./avatar2.png"}
                 className="size-10 rounded-full shadow-md"
                 alt="user profile image"
               />

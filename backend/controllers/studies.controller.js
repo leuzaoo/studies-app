@@ -2,7 +2,11 @@ import Study from "../models/study.model.js";
 
 export const allStudies = async (req, res) => {
   try {
-    const studies = await Study.find({}).populate("author", "username");
+    const studies = await Study.find({}).populate(
+      "author",
+      "username userImage"
+    );
+
     return res.json({ studies });
   } catch (error) {
     console.error("Erro no controlador allStudies:", error);
@@ -27,7 +31,7 @@ export const searchStudy = async (req, res) => {
         { content: { $regex: searchQuery, $options: "i" } },
         { tags: { $regex: searchQuery, $options: "i" } },
       ],
-    }).populate("author", "username");
+    }).populate("author", "username userImage");
 
     return res.json({ studies });
   } catch (error) {
@@ -67,7 +71,7 @@ export const getStudyById = async (req, res) => {
   try {
     const study = await Study.findById(req.params.id).populate(
       "author",
-      "username"
+      "username userImage"
     );
     if (!study) {
       return res
@@ -86,7 +90,7 @@ export const getUserStudies = async (req, res) => {
     const userId = req.user._id;
     const userStudies = await Study.find({ author: userId }).populate(
       "author",
-      "username"
+      "username userImage"
     );
 
     res.status(200).json({ userStudies });
