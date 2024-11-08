@@ -52,7 +52,7 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
-            <ul className="flex flex-col justify-between h-full p-6">
+            <ul className="flex flex-col justify-between h-full p-6 bg-primary-bg">
               <div className="flex flex-col space-y-6 font-light">
                 <Link
                   to={"/new-study"}
@@ -83,14 +83,14 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={logout}
-                className="flex items-center gap-2 bg-red-100 max-w-max px-3 py-1 rounded-lg mx-auto text-red-600 font-light cursor-pointer"
+                className="flex items-center gap-2 bg-primary-orange max-w-max px-3 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
               >
                 Sair
                 <LogOut
-                  size={20}
+                  size={16}
                   className="bg-transparent"
-                  color="red"
-                  strokeWidth={1}
+                  color="white"
+                  strokeWidth={2}
                 />
               </motion.button>
             </ul>

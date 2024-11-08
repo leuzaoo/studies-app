@@ -1,7 +1,8 @@
 import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer } from "react-toastify";
-import { Edit3, Trash2 } from "lucide-react";
+import { Edit3, Ellipsis, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Dropdown, Menu, Space } from "antd";
 import { useEffect } from "react";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -12,8 +13,10 @@ import { useStudyStore } from "../store/studyStore";
 import TitlePage from "../components/TitlePage";
 import Navbar from "../components/Navbar";
 import Center from "../components/Center";
+import { useAuthStore } from "../store/authStore";
 
 const MyStudies = () => {
+  const { user } = useAuthStore();
   const { fetchUserStudies, deleteStudy, studies, error, isLoading } =
     useStudyStore();
 
@@ -75,22 +78,34 @@ const MyStudies = () => {
           title={study.title}
           content={study.content}
         />
-        <div className="flex items-center gap-3">
-          <Link
-            to={`/edit-study/${study._id}`}
-            className="text-sm hover:underline"
-          >
-            <button className="bg-primary-dark p-2 rounded-full hover:bg-terciary-grey">
-              <Edit3 size={16} color="white" />
-            </button>
-          </Link>
-          <button
-            onClick={() => handleDelete(study._id)}
-            className="flex items-center gap-3 bg-red-500 text-sm text-white p-2 rounded-full hover:bg-red-300 transition-all duration-200"
-          >
-            <Trash2 color="white" size={16} />
-          </button>
-        </div>
+
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="edit">
+                <Link to={`/edit-study/${study._id}`}>
+                  <Edit3 size={16} className="mr-2" />
+                  Editar
+                </Link>
+              </Menu.Item>
+              <Menu.Item
+                key="delete"
+                onClick={() => handleDelete(study._id)}
+                danger
+              >
+                <Trash2 size={16} className="mr-2" />
+                Excluir
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <Ellipsis className="cursor-pointer" />
+            </Space>
+          </a>
+        </Dropdown>
       </div>
     ));
   };
@@ -99,8 +114,17 @@ const MyStudies = () => {
     <>
       <ToastContainer />
       <Navbar />
-      <Center>
-        <TitlePage text="Meus estudos" />
+      <Center className={"bg-primary-bg"}>
+        <TitlePage text="Meus estudos" className={"hidden"} />
+        <div className="mt-5 flex items-center justify-start gap-5">
+          <img
+            src={`${user?.userImage || "/user.jpg"}`}
+            className="size-10 rounded-full"
+            alt="User image"
+          />
+          <p className="text-2xl font-semibold">{user?.name}</p>
+        </div>
+        <div className="w-full h-[1px] bg-terciary-grey opacity-10 mt-5" />
         <div className="mt-5">{renderStudies()}</div>
       </Center>
     </>

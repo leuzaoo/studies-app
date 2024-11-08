@@ -69,7 +69,7 @@ const Login = () => {
 
             <div className="mt-5 text-center">
               {isLoading ? (
-                <Button disabled content={"Carregando..."} />
+                <Button disabled primary content={"Carregando..."} />
               ) : (
                 <Button content={"Entrar"} primary />
               )}

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Select } from "antd";
 
+import InputNewStudy from "../components/InputNewStudy.jsx";
 import LabelFormTitle from "../components/LabelFormTitle";
 import { useStudyStore } from "../store/studyStore.js";
 import { useAuthStore } from "../store/authStore.js";
@@ -11,7 +12,6 @@ import TitlePage from "../components/TitlePage";
 import Center from "../components/Center.jsx";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
-import Input from "../components/Input";
 
 const EditStudyPage = () => {
   const { fetchSingleStudy, updateStudy } = useStudyStore();
@@ -82,23 +82,23 @@ const EditStudyPage = () => {
     <>
       <ToastContainer />
       <Navbar />
-      <Center>
+      <Center className={"bg-primary-bg"}>
         {loadedStudy ? (
           <>
             <TitlePage text={"Modo de edição"} />
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col my-5">
                 <LabelFormTitle text={"Título"} />
-                <Input
-                  className={"mb-3"}
+                <InputNewStudy
+                  className={"mb-3 bg-primary-bg"}
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <LabelFormTitle text={"Descrição"} />
-                <Input
-                  className={"mb-3"}
+                <InputNewStudy
+                  className={"mb-3 bg-primary-bg"}
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

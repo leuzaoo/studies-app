@@ -99,7 +99,7 @@ const AboutMe = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-2 font-semibold bg-primary-bg"
+              className="mt-2 font-bold bg-primary-bg font-domine"
             />
           </div>
 
@@ -109,7 +109,7 @@ const AboutMe = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-2 font-semibold bg-primary-bg"
+              className="mt-2 font-bold bg-primary-bg font-domine"
             />
           </div>
 
@@ -119,7 +119,7 @@ const AboutMe = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 font-semibold bg-primary-bg"
+              className="mt-2 font-bold bg-primary-bg font-domine"
             />
           </div>
 
@@ -129,7 +129,7 @@ const AboutMe = () => {
               type="text"
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="mt-2 font-semibold bg-primary-bg"
+              className="mt-2 font-bold bg-primary-bg font-domine"
             />
           </div>
 
