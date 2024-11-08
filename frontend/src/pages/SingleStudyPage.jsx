@@ -45,8 +45,8 @@ const SingleStudyPage = () => {
       <ToastContainer />
       <Navbar />
 
-      <Center className={"bg-primary-bg"}>
-        <div ref={mainRef} className="max-w-screen-sm mx-auto bg-primary-bg">
+      <Center>
+        <div ref={mainRef} className="max-w-screen-sm mx-auto">
           <ProgressBar target={mainRef} />
           <p className="font-extralight text-terciary-grey">{study.category}</p>
           <h1 className="font-bold text-2xl">{study.title}</h1>

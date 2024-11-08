@@ -114,15 +114,15 @@ const MyStudies = () => {
     <>
       <ToastContainer />
       <Navbar />
-      <Center className={"bg-primary-bg"}>
+      <Center>
         <TitlePage text="Meus estudos" className={"hidden"} />
-        <div className="mt-5 flex items-center justify-start gap-5">
+        <div className="flex items-center justify-start gap-5">
           <img
             src={`${user?.userImage || "/user.jpg"}`}
             className="size-10 rounded-full"
             alt="User image"
           />
-          <p className="text-2xl font-semibold">{user?.name}</p>
+          <p className="text-2xl font-semibold">{user?.username}</p>
         </div>
         <div className="w-full h-[1px] bg-terciary-grey opacity-10 mt-5" />
         <div className="mt-5">{renderStudies()}</div>

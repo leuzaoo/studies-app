@@ -82,7 +82,7 @@ const EditStudyPage = () => {
     <>
       <ToastContainer />
       <Navbar />
-      <Center className={"bg-primary-bg"}>
+      <Center>
         {loadedStudy ? (
           <>
             <TitlePage text={"Modo de edição"} />
@@ -90,7 +90,7 @@ const EditStudyPage = () => {
               <div className="flex flex-col my-5">
                 <LabelFormTitle text={"Título"} />
                 <InputNewStudy
-                  className={"mb-3 bg-primary-bg"}
+                  className={"mb-3"}
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -98,7 +98,7 @@ const EditStudyPage = () => {
 
                 <LabelFormTitle text={"Descrição"} />
                 <InputNewStudy
-                  className={"mb-3 bg-primary-bg"}
+                  className={"mb-3"}
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

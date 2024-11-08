@@ -25,17 +25,15 @@ const Login = () => {
     <>
       <ToastContainer autoClose={2000} />
       <div className="relative w-screen h-screen">
-        {/* Imagem de fundo */}
         <img
           src="/login-bg.jpg"
           className="absolute inset-0 w-full h-full object-cover"
           alt="Login Background"
         />
-        {/* Overlay escurecido */}
+
         <div className="absolute inset-0 bg-black/50"></div>
 
-        {/* Formulário centralizado sobre a imagem */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-bg px-6 py-10 min-w-[350px] rounded-2xl shadow-lg">
+        <div className="bg-white/85 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-6 py-10 min-w-[350px] rounded-2xl shadow-lg">
           <h1 className="text-center text-[32px] font-medium max-w-[190px] mx-auto leading-none">
             Acesse aqui sua conta!
           </h1>

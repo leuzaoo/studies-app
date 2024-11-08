@@ -39,7 +39,7 @@ const Signup = () => {
 
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary-bg px-6 py-10 min-w-[350px] rounded-2xl shadow-lg">
+        <div className="bg-white/85 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-6 py-10 min-w-[350px] rounded-2xl shadow-lg">
           <h1 className="text-center text-[32px] font-medium max-w-[190px] mx-auto leading-none">
             Crie agora sua conta!
           </h1>

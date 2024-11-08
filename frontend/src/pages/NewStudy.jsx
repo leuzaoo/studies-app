@@ -46,7 +46,7 @@ const NewStudy = () => {
       <ToastContainer />
       <Navbar />
       <div className="max-w-4xl mx-auto">
-        <Center className="bg-primary-bg">
+        <Center>
           <TitlePage text={"Criar novo estudo"} />
           <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
             <LabelFormTitle text={"Título"} />
@@ -95,7 +95,6 @@ const NewStudy = () => {
               style={{
                 width: "100%",
                 marginBottom: 14,
-                backgroundColor: "#FFFEFA",
               }}
               placeholder="Termos para os usuários encontrarem o seu estudo"
               onChange={handleTagsChange}

@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="bg-primary-bg px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
+        <nav className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
           <Link to={"/"}>
             <h1 className="text-3xl font-domine font-bold">studies.</h1>
           </Link>
@@ -52,7 +52,7 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
-            <ul className="flex flex-col justify-between h-full p-6 bg-primary-bg">
+            <ul className="flex flex-col justify-between h-full p-6">
               <div className="flex flex-col space-y-6 font-light">
                 <Link
                   to={"/new-study"}

@@ -9,7 +9,7 @@ const InputNewStudy = ({ type, placeholder, value, onChange, className }) => {
       placeholder={placeholder}
       className={
         className +
-        " w-full bg-primary-bg border-b md:text-lg border-secondary-grey pl-2 h-[40px] outline-none focus:border-primary-dark"
+        " w-full border-b md:text-lg border-secondary-grey pl-2 h-[40px] outline-none focus:border-primary-dark"
       }
     />
   );
