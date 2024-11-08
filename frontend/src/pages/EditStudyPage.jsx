@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Select } from "antd";
 
+import InputNewStudy from "../components/InputNewStudy.jsx";
 import LabelFormTitle from "../components/LabelFormTitle";
 import { useStudyStore } from "../store/studyStore.js";
 import { useAuthStore } from "../store/authStore.js";
@@ -11,7 +12,6 @@ import TitlePage from "../components/TitlePage";
 import Center from "../components/Center.jsx";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
-import Input from "../components/Input";
 
 const EditStudyPage = () => {
   const { fetchSingleStudy, updateStudy } = useStudyStore();
@@ -89,7 +89,7 @@ const EditStudyPage = () => {
             <form onSubmit={handleSubmit}>
               <div className="flex flex-col my-5">
                 <LabelFormTitle text={"Título"} />
-                <Input
+                <InputNewStudy
                   className={"mb-3"}
                   type="text"
                   value={title}
@@ -97,7 +97,7 @@ const EditStudyPage = () => {
                 />
 
                 <LabelFormTitle text={"Descrição"} />
-                <Input
+                <InputNewStudy
                   className={"mb-3"}
                   type="text"
                   value={description}

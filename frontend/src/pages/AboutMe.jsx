@@ -59,9 +59,9 @@ const AboutMe = () => {
       <ToastContainer autoClose={2000} />
       <Navbar />
       <Center>
-        <TitlePage text="Sobre mim" />
+        <TitlePage text="Sobre mim" className={"hidden"} />
         <form onSubmit={handleSubmit}>
-          <div className="mt-2">
+          <div>
             <LabelFormTitle htmlFor="fotoPerfil" text="Foto do perfil" />
             <div className="flex items-center mt-2 gap-5 max-w-max">
               <img
@@ -99,7 +99,7 @@ const AboutMe = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-bold font-domine"
             />
           </div>
 
@@ -109,7 +109,7 @@ const AboutMe = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-bold font-domine"
             />
           </div>
 
@@ -119,7 +119,7 @@ const AboutMe = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-bold font-domine"
             />
           </div>
 
@@ -129,7 +129,7 @@ const AboutMe = () => {
               type="text"
               value={about}
               onChange={(e) => setAbout(e.target.value)}
-              className="mt-2 font-semibold"
+              className="mt-2 font-bold font-domine"
             />
           </div>
 

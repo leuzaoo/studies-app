@@ -16,3 +16,9 @@ body {
   font-family: "Domine", sans-serif;
   @apply text-primary-dark;
 }
+
+.ant-select-selector {
+  border: none !important;
+  border-bottom: 1px solid #c5c5c5 !important;
+  border-radius: 0 !important;
+}

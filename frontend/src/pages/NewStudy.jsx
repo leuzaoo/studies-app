@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Select } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
+import InputNewStudy from "../components/InputNewStudy";
 import { useStudyStore } from "../store/studyStore";
 import TextEditor from "../components/TextEditor";
 import TitlePage from "../components/TitlePage";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import Center from "../components/Center";
-import Input from "../components/Input";
 
 const NewStudy = () => {
   const [description, setDescription] = useState();
@@ -45,26 +45,26 @@ const NewStudy = () => {
     <>
       <ToastContainer />
       <Navbar />
-      <div className="max-w-4xl mx-auto ">
+      <div className="max-w-4xl mx-auto">
         <Center>
           <TitlePage text={"Criar novo estudo"} />
           <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
             <LabelFormTitle text={"Título"} />
-            <Input
+            <InputNewStudy
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               type="text"
               className={"mb-3"}
-              placeholder={"Coloque aqui um título interessante"}
+              placeholder={"Escreva um título interessante"}
             />
 
             <LabelFormTitle text={"Descrição"} />
-            <Input
+            <InputNewStudy
               onChange={(e) => setDescription(e.target.value)}
               value={description}
               type="text"
               className={"mb-3"}
-              placeholder={"Resuma rapidamente o que você quer contar"}
+              placeholder={"Resuma o que você quer contar"}
             />
 
             <LabelFormTitle text={"Categoria"} />
@@ -89,9 +89,13 @@ const NewStudy = () => {
 
             <LabelFormTitle text={"Tags"} />
             <Select
+              allowClear
               suffixIcon={null}
               mode="tags"
-              style={{ width: "100%", marginBottom: 14 }}
+              style={{
+                width: "100%",
+                marginBottom: 14,
+              }}
               placeholder="Termos para os usuários encontrarem o seu estudo"
               onChange={handleTagsChange}
               value={tags}

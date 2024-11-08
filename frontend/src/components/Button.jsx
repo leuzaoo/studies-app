@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 
-const Button = ({ onClick, primary, content, type, className }) => {
+const Button = ({ onClick, disabled, primary, content, type, className }) => {
   return (
     <motion.button
       type={type}
+      disabled={disabled}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className={`${

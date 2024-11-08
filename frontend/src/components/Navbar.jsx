@@ -53,29 +53,29 @@ const Navbar = () => {
             }`}
           >
             <ul className="flex flex-col justify-between h-full p-6">
-              <div className="flex flex-col space-y-6">
+              <div className="flex flex-col space-y-6 font-light">
                 <Link
                   to={"/new-study"}
-                  className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                  className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer"
                 >
-                  <NotebookPen />
+                  <NotebookPen strokeWidth={1} />
                   Novo estudo
                 </Link>
                 <Link
                   to={"/about-me"}
-                  className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer"
+                  className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer"
                 >
-                  <User />
+                  <User strokeWidth={1} />
                   Minha conta
                 </Link>
                 <Link to={"/my-studies"}>
-                  <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                    <NotebookIcon />
+                  <li className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer">
+                    <NotebookIcon strokeWidth={1} />
                     Meus estudos
                   </li>
                 </Link>
-                <li className="flex items-center gap-3 text-lg font-semibold hover:text-gray-500 cursor-pointer">
-                  <Settings2Icon />
+                <li className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer">
+                  <Settings2Icon strokeWidth={1} />
                   Configurações
                 </li>
               </div>
@@ -83,10 +83,15 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={logout}
-                className="flex items-center gap-4 bg-red-100 max-w-max px-4 py-2 rounded-lg mx-auto text-red-600 text-lg font-semibold cursor-pointer"
+                className="flex items-center gap-2 bg-primary-orange max-w-max px-3 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
               >
-                Sair da conta
-                <LogOut className="bg-transparent" color="red" />
+                Sair
+                <LogOut
+                  size={16}
+                  className="bg-transparent"
+                  color="white"
+                  strokeWidth={2}
+                />
               </motion.button>
             </ul>
           </div>

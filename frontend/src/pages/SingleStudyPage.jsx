@@ -47,7 +47,7 @@ const SingleStudyPage = () => {
 
       <Center>
         <div ref={mainRef} className="max-w-screen-sm mx-auto">
-          <ProgressBar target={mainRef}/>
+          <ProgressBar target={mainRef} />
           <p className="font-extralight text-terciary-grey">{study.category}</p>
           <h1 className="font-bold text-2xl">{study.title}</h1>
           <div className="mt-3 mb-5 flex gap-3 items-center justify-between">
