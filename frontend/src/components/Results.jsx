@@ -13,7 +13,7 @@ const Results = ({ results }) => {
                 key={study._id}
                 title={study.title}
                 // bannerImage={study.bannerImage}
-                // userImage={study.userImage}
+                userImage={study.author.userImage}
                 description={study.description}
                 username={study.author.username}
                 createdAt={study.createdAt}

@@ -22,11 +22,11 @@ const HomepageStudyCard = ({
           <p className="font-domine leading-none text-[12px] md:text-base font-light">
             {description}
           </p>
-          <div className="flex items-center">
-            {/* <img
-              src={`${userImage || "./user.jpg"} `}
+          <div className="flex gap-2 items-center">
+            <img
+              src={`${userImage || "./avatar2.png"} `}
               className="w-6 h-6 rounded-full"
-            /> */}
+            />
             <p className="font-extralight text-terciary-grey lowercase text-[12px] md:text-sm">
               <span className="mr-2">{username}</span>•
               <span className="ml-2">{formatDate(createdAt)}</span>

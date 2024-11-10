@@ -53,7 +53,7 @@ const SingleStudyPage = () => {
           <div className="mt-3 mb-5 flex gap-3 items-center justify-between">
             <div className="flex items-center gap-3">
               <img
-                src={study?.user?.avatar || "/user.jpg"}
+                src={study?.author?.userImage || "/avatar2.png"}
                 className="size-10 rounded-full shadow-md"
                 alt="user profile image"
               />
