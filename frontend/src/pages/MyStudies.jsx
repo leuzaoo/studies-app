@@ -10,10 +10,10 @@ import "../assets/react-alert.css";
 
 import MyStudiesStudyCard from "../components/MyStudiesStudyCard";
 import { useStudyStore } from "../store/studyStore";
-import TitlePage from "../components/TitlePage";
-import Navbar from "../components/Navbar";
-import Center from "../components/Center";
 import { useAuthStore } from "../store/authStore";
+import TitlePage from "../components/TitlePage";
+import Navbar from "../components/navbar/Navbar";
+import Center from "../components/Center";
 
 const MyStudies = () => {
   const { user } = useAuthStore();

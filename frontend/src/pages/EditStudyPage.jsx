@@ -7,10 +7,10 @@ import InputNewStudy from "../components/InputNewStudy.jsx";
 import LabelFormTitle from "../components/LabelFormTitle";
 import { useStudyStore } from "../store/studyStore.js";
 import { useAuthStore } from "../store/authStore.js";
+import Navbar from "../components/navbar/Navbar.jsx";
 import TextEditor from "../components/TextEditor";
 import TitlePage from "../components/TitlePage";
 import Center from "../components/Center.jsx";
-import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 
 const EditStudyPage = () => {

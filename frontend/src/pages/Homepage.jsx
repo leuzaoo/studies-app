@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import categories from "../../../backend/config/categories";
 import CategoryMenu from "../components/CategoryMenu";
 import { useStudyStore } from "../store/studyStore";
+import Navbar from "../components/navbar/Navbar";
 import SearchBar from "../components/SearchBar";
 import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
-import Navbar from "../components/Navbar";
 import Center from "../components/Center";
 
 const Homepage = () => {

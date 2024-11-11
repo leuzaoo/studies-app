@@ -7,8 +7,8 @@ import LabelFormTitle from "../components/LabelFormTitle";
 import InputNewStudy from "../components/InputNewStudy";
 import { useStudyStore } from "../store/studyStore";
 import TextEditor from "../components/TextEditor";
+import Navbar from "../components/navbar/Navbar";
 import TitlePage from "../components/TitlePage";
-import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import Center from "../components/Center";
 
