@@ -31,6 +31,18 @@ export const updatedProfile = async (req, res) => {
         .json({ message: "Nome de usuário contém caracteres inválidos." });
     }
 
+    if (updatedData.username) {
+      const existingUsername = await User.findOne({
+        username: updatedData.username,
+      });
+
+      if (existingUsername) {
+        return res
+          .status(400)
+          .json({ message: "Este nome de usuário está em uso." });
+      }
+    }
+
     if (updatedData.email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(updatedData.email.trim())) {
@@ -41,6 +53,14 @@ export const updatedProfile = async (req, res) => {
     }
 
     if (req.file) {
+      const MAX_FILE_SIZE = 2 * 1024 * 1024;
+
+      if (req.file.size > MAX_FILE_SIZE) {
+        return res
+          .status(400)
+          .json({ message: "A imagem deve ter no máximo 2MB." });
+      }
+
       try {
         const result = await cloudinary.uploader.upload(req.file.path, {
           folder: "user_images",
