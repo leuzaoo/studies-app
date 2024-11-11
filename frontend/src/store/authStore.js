@@ -110,8 +110,6 @@ export const useAuthStore = create((set) => ({
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
 
-        const response = await axios.get(`${AUTH_API_URL}/check-auth`);
-
         set({
           user: parsedUser,
           isAuthenticated: true,
@@ -150,6 +148,7 @@ export const useAuthStore = create((set) => ({
       toast.error(
         error.response?.data?.message || "Erro ao atualizar o perfil."
       );
+
       set({
         isLoading: false,
       });
