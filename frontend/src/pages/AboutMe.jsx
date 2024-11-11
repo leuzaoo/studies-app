@@ -18,7 +18,18 @@ const AboutMe = () => {
   const [username, setUsername] = useState(user?.username || "");
   const [email, setEmail] = useState(user?.email || "");
   const [about, setAbout] = useState(user?.about || "");
-  // const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -37,7 +48,7 @@ const AboutMe = () => {
       username,
       email,
       about,
-      // ...(profilePicture && { avatar: profilePicture }), // Caso a imagem seja atualizada
+      userImage: profilePicture,
     };
 
     try {
@@ -46,13 +57,6 @@ const AboutMe = () => {
       console.error("Erro ao atualizar perfil:", error);
     }
   };
-
-  // const handleProfilePictureChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setProfilePicture(file);
-  //   }
-  // };
 
   return (
     <>
@@ -74,7 +78,7 @@ const AboutMe = () => {
                   type="file"
                   id="fotoPerfil"
                   className="hidden"
-                  // onChange={handleProfilePictureChange}
+                  onChange={handleProfilePictureChange}
                 />
                 <label
                   className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
