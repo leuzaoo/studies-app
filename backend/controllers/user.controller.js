@@ -31,7 +31,6 @@ export const updatedProfile = async (req, res) => {
         .json({ message: "Nome de usuário contém caracteres inválidos." });
     }
 
-    // Validação de email
     if (updatedData.email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(updatedData.email.trim())) {
@@ -41,7 +40,6 @@ export const updatedProfile = async (req, res) => {
       return res.status(400).json({ message: "Email é obrigatório." });
     }
 
-    // Upload de imagens para Cloudinary
     try {
       if (req.body.userImage && req.body.userImage.startsWith("data:image")) {
         const result = await cloudinary.uploader.upload(req.body.userImage, {
