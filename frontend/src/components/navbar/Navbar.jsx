@@ -28,7 +28,7 @@ const Navbar = () => {
 
           <div onClick={toggleMenu} className="flex items-center space-x-4">
             <img
-              src={user?.avatar || "./avatar1.png"}
+              src={user?.userImage || "./avatar1.png"}
               alt="user img"
               className="hidden xl:block size-9 rounded-full object-cover cursor-pointer"
             />
