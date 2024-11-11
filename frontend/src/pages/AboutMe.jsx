@@ -22,6 +22,7 @@ const AboutMe = () => {
 
   const handleProfilePictureChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -37,6 +38,7 @@ const AboutMe = () => {
       setUsername(user.username);
       setEmail(user.email);
       setAbout(user.about);
+      setProfilePicture(user.userImage);
     }
   }, [user]);
 
@@ -60,7 +62,7 @@ const AboutMe = () => {
 
   return (
     <>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={1500} />
       <Navbar />
       <Center>
         <TitlePage text="Sobre mim" className={"hidden"} />
@@ -69,7 +71,7 @@ const AboutMe = () => {
             <LabelFormTitle htmlFor="fotoPerfil" text="Foto do perfil" />
             <div className="flex items-center mt-2 gap-5 max-w-max">
               <img
-                src={user?.userImage || "./avatar2.png"}
+                src={profilePicture || user?.userImage || "./avatar2.png"}
                 className="size-10 rounded-full shadow-md"
                 alt="user profile image"
               />
