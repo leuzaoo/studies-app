@@ -22,7 +22,7 @@ const Navbar = () => {
             <h1 className="text-3xl font-domine font-bold">studies.</h1>
           </Link>
 
-          <Link to={"/new-study"}>
+          <Link to={"/new-study"} className="hidden xl:block">
             <NotebookPen strokeWidth={1} size={36} />
           </Link>
 
