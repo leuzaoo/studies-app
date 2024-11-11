@@ -5,10 +5,10 @@ import { useAuthStore } from "../store/authStore";
 import { ToastContainer } from "react-toastify";
 
 import LabelFormTitle from "../components/LabelFormTitle";
+import Navbar from "../components/navbar/Navbar";
 import TitlePage from "../components/TitlePage";
 import TextArea from "../components/TextArea";
 import Center from "../components/Center";
-import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 
 const AboutMe = () => {
