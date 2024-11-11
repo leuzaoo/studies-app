@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useAuthStore } from "../../store/authStore";
 
-import { LucideMenu, X } from "lucide-react";
+import { LucideMenu, NotebookPen, X } from "lucide-react";
 import MenuItems from "./MenuItems";
 
 const Navbar = () => {
@@ -20,6 +20,10 @@ const Navbar = () => {
         <nav className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
           <Link to={"/"}>
             <h1 className="text-3xl font-domine font-bold">studies.</h1>
+          </Link>
+
+          <Link to={"/new-study"}>
+            <NotebookPen strokeWidth={1} size={36} />
           </Link>
 
           <div onClick={toggleMenu} className="flex items-center space-x-4">
