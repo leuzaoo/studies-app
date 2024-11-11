@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Menu } from "antd";
 
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../../store/authStore";
 
 import {
   LogOut,
-  Menu,
+  LucideMenu,
   NotebookIcon,
   NotebookPen,
   Settings2Icon,
@@ -16,6 +17,7 @@ import {
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useAuthStore();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,21 +33,29 @@ const Navbar = () => {
             <h1 className="text-3xl font-domine font-bold">studies.</h1>
           </Link>
 
-          <button onClick={toggleMenu} className="relative">
-            <Menu
-              size={40}
-              className={`absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
-                isMenuOpen ? "opacity-0" : "opacity-100"
-              }`}
+          <div onClick={toggleMenu} className="flex items-center space-x-4">
+            <img
+              src={user?.avatar || "./avatar1.png"}
+              alt="user img"
+              className="hidden xl:block size-9 rounded-full object-cover cursor-pointer"
             />
 
-            <X
-              size={40}
-              className={`z-50 absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
-                isMenuOpen ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          </button>
+            <button className="relative">
+              <LucideMenu
+                size={40}
+                className={`xl:hidden absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
+                  isMenuOpen ? "opacity-0" : "opacity-100"
+                }`}
+              />
+
+              <X
+                size={40}
+                className={`z-50 absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
+                  isMenuOpen ? "opacity-100" : "opacity-0"
+                } xl:hidden`}
+              />
+            </button>
+          </div>
 
           <div
             className={`fixed top-0 right-0 h-full bg-white shadow-lg w-4/5 max-w-xs transition-transform duration-300 ease-in-out z-40 ${
