@@ -43,15 +43,15 @@ export const updatedProfile = async (req, res) => {
     if (req.file) {
       try {
         const result = await cloudinary.uploader.upload(req.file.path, {
-
           folder: "user_images",
           allowed_formats: ["jpg", "png", "jpeg"],
         });
+
         updatedData.userImage = result.secure_url;
-      } catch (uploadError) {
+      } catch (error) {
         return res
           .status(400)
-          .json({ message: "Erro ao fazer upload da imagem." });
+          .json({ message: "Erro ao fazer upload da imagem.", error });
       }
     }
 
