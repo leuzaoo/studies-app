@@ -1,8 +1,9 @@
+import imageCompression from "browser-image-compression";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+import { toast, ToastContainer } from "react-toastify";
 import { useAuthStore } from "../store/authStore";
-import { ToastContainer } from "react-toastify";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import Navbar from "../components/navbar/Navbar";
@@ -20,10 +21,43 @@ const AboutMe = () => {
   const [about, setAbout] = useState(user?.about || "");
   const [profilePicture, setProfilePicture] = useState("");
 
-  const handleProfilePictureChange = (e) => {
+  const handleProfilePictureChange = async (e) => {
     const file = e.target.files[0];
+    const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error("O tamanho da imagem deve ser no máximo 2MB.");
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        toast.error("Formato da imagem inválido.");
+        return;
+      }
+
+      if (file) {
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true,
+        };
+
+        try {
+          const compressedFile = await imageCompression(file, options);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setProfilePicture(reader.result);
+          };
+          reader.readAsDataURL(compressedFile);
+        } catch (error) {
+          console.error("Erro ao compressar imagem:", error);
+          toast.error(
+            "Erro ao processar a imagem. Tente novamente mais tarde."
+          );
+        }
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePicture(reader.result);
