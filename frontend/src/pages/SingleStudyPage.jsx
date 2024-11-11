@@ -8,7 +8,7 @@ import { formatDate } from "../utils/formatDate.js";
 
 import ProgressBar from "../components/ProgressBar.jsx";
 import Center from "../components/Center.jsx";
-import Navbar from "../components/Navbar.jsx";
+import Navbar from "../components/navbar/Navbar.jsx";
 
 const SingleStudyPage = () => {
   const mainRef = useRef(null);
