@@ -11,8 +11,8 @@ import "../assets/react-alert.css";
 import MyStudiesStudyCard from "../components/MyStudiesStudyCard";
 import { useStudyStore } from "../store/studyStore";
 import { useAuthStore } from "../store/authStore";
-import TitlePage from "../components/TitlePage";
 import Navbar from "../components/navbar/Navbar";
+import TitlePage from "../components/TitlePage";
 import Center from "../components/Center";
 
 const MyStudies = () => {
