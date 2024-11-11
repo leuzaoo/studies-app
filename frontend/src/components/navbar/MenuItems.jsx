@@ -20,30 +20,30 @@ const MenuItems = ({ isMenuOpen }) => {
         isMenuOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <ul className="flex flex-col justify-between h-full p-6">
+      <ul className="flex flex-col justify-between h-full p-7">
         <div className="flex flex-col space-y-6 font-light">
           <Link
-            to={"/new-study"}
-            className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer"
+            to={"/about-me"}
+            className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
           >
-            <NotebookPen strokeWidth={1} />
-            Novo estudo
+            <User strokeWidth={1} size={24} />
+            Perfil
           </Link>
           <Link
-            to={"/about-me"}
-            className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer"
+            to={"/new-study"}
+            className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
           >
-            <User strokeWidth={1} />
-            Minha conta
+            <NotebookPen strokeWidth={1} size={24} />
+            Criar estudo
           </Link>
           <Link to={"/my-studies"}>
-            <li className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer">
-              <NotebookIcon strokeWidth={1} />
-              Meus estudos
+            <li className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer">
+              <NotebookIcon strokeWidth={1} size={24} />
+              Estudoteca
             </li>
           </Link>
-          <li className="flex items-center gap-3 text-lg hover:text-gray-500 cursor-pointer">
-            <Settings2Icon strokeWidth={1} />
+          <li className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer">
+            <Settings2Icon strokeWidth={1} size={24} />
             Configurações
           </li>
         </div>
@@ -51,7 +51,7 @@ const MenuItems = ({ isMenuOpen }) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={logout}
-          className="flex items-center gap-2 bg-primary-orange max-w-max px-3 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
+          className="flex items-center gap-3 bg-primary-orange max-w-max px-4 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
         >
           Sair
           <LogOut
