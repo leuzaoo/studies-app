@@ -31,7 +31,6 @@ export const updatedProfile = async (req, res) => {
         .json({ message: "Nome de usuário contém caracteres inválidos." });
     }
 
-    // Validação de email
     if (updatedData.email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(updatedData.email.trim())) {
@@ -41,32 +40,18 @@ export const updatedProfile = async (req, res) => {
       return res.status(400).json({ message: "Email é obrigatório." });
     }
 
-    // Upload de imagens para Cloudinary
-    try {
-      if (req.body.userImage && req.body.userImage.startsWith("data:image")) {
-        const result = await cloudinary.uploader.upload(req.body.userImage, {
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
           folder: "user_images",
           allowed_formats: ["jpg", "png", "jpeg"],
-          transformation: [{ width: 300, height: 300, crop: "limit" }],
         });
         updatedData.userImage = result.secure_url;
+      } catch (uploadError) {
+        return res
+          .status(400)
+          .json({ message: "Erro ao fazer upload da imagem." });
       }
-
-      if (
-        req.body.bannerImage &&
-        req.body.bannerImage.startsWith("data:image")
-      ) {
-        const result = await cloudinary.uploader.upload(req.body.bannerImage, {
-          folder: "banner_images",
-          allowed_formats: ["jpg", "png", "jpeg"],
-          transformation: [{ width: 800, height: 300, crop: "limit" }],
-        });
-        updatedData.bannerImage = result.secure_url;
-      }
-    } catch (err) {
-      return res
-        .status(400)
-        .json({ message: "Erro ao fazer upload da imagem." });
     }
 
     const user = await User.findByIdAndUpdate(
