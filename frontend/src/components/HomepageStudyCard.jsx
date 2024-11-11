@@ -20,7 +20,9 @@ const HomepageStudyCard = ({
         <div className="flex flex-col justify-between gap-3 max-w-[520px]">
           <h2 className="font-semibold  md:text-2xl leading-none">{title}</h2>
           <p className="font-domine leading-none text-[12px] md:text-base font-light">
-            {description}
+            {description.length > 100
+              ? description.substring(0, 100) + "..."
+              : description}
           </p>
           <div className="flex gap-2 items-center">
             <img

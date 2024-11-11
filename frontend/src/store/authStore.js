@@ -37,6 +37,8 @@ export const useAuthStore = create((set) => ({
         password,
       });
 
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -59,6 +61,8 @@ export const useAuthStore = create((set) => ({
         username,
         password,
       });
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       set({
         user: response.data.user,
@@ -83,6 +87,9 @@ export const useAuthStore = create((set) => ({
 
     try {
       await axios.post(`${AUTH_API_URL}/logout`);
+
+      localStorage.removeItem("user");
+
       set({ user: null, isAuthenticated: false, isLoading: false });
     } catch (error) {
       set({
@@ -98,12 +105,21 @@ export const useAuthStore = create((set) => ({
     set({ isCheckingAuth: true, error: null });
 
     try {
-      const response = await axios.get(`${AUTH_API_URL}/check-auth`);
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isCheckingAuth: false,
-      });
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+
+        const response = await axios.get(`${AUTH_API_URL}/check-auth`);
+
+        set({
+          user: parsedUser,
+          isAuthenticated: true,
+          isCheckingAuth: false,
+        });
+      } else {
+        throw new Error("Usuário não encontrado.");
+      }
     } catch (error) {
       set({
         isAuthenticated: false,
@@ -118,8 +134,13 @@ export const useAuthStore = create((set) => ({
 
     try {
       const response = await axios.put(`${USER_API_URL}/about-me`, updatedData);
+
+      const updatedUser = response.data.user;
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
       set({
-        user: response.data.user,
+        user: updatedUser,
         isLoading: false,
         error: null,
       });
