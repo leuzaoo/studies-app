@@ -73,8 +73,8 @@ const MyStudies = () => {
         <MyStudiesStudyCard
           _id={study._id}
           category={study.category}
-          username={study.author.username}
           createdAt={study.createdAt}
+          bannerImage={study.author.bannerImage}
           title={study.title}
           content={study.content}
         />
@@ -118,10 +118,15 @@ const MyStudies = () => {
         <div className="flex items-center justify-start gap-5">
           <img
             src={`${user?.userImage || "/user.jpg"}`}
-            className="size-10 rounded-full"
+            className="size-16 rounded-full"
             alt="User image"
           />
-          <p className="text-2xl font-semibold">{user?.username}</p>
+          <div className="flex flex-col md:flex-row md:items-end space-x-2">
+            <p className="text-right text-terciary-grey font-light">
+              vendo como:
+            </p>
+            <p className="text-4xl font-semibold">{user?.username}</p>
+          </div>
         </div>
         <div className="w-full h-[1px] bg-terciary-grey opacity-10 mt-5" />
         <div className="mt-5">{renderStudies()}</div>
