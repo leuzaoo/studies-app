@@ -81,19 +81,18 @@ const MyStudies = () => {
 
         <Dropdown
           overlay={
-            <Menu>
+            <Menu className="flex flex-col space-y-1">
+              <Menu.Item key="read">
+                <Link to={`/studies/posted/${study._id}`}>Ler</Link>
+              </Menu.Item>
               <Menu.Item key="edit">
-                <Link to={`/edit-study/${study._id}`}>
-                  <Edit3 size={16} className="mr-2" />
-                  Editar
-                </Link>
+                <Link to={`/edit-study/${study._id}`}>Editar</Link>
               </Menu.Item>
               <Menu.Item
                 key="delete"
                 onClick={() => handleDelete(study._id)}
                 danger
               >
-                <Trash2 size={16} className="mr-2" />
                 Excluir
               </Menu.Item>
             </Menu>
