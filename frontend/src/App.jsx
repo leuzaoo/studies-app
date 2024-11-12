@@ -58,51 +58,6 @@ function App() {
         />
 
         <Route
-          path="/about-me"
-          element={
-            <ProtectedRoute>
-              <AboutMe />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/new-study"
-          element={
-            <ProtectedRoute>
-              <NewStudy />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/edit-study/:id"
-          element={
-            <ProtectedRoute>
-              <EditStudyPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/my-studies"
-          element={
-            <ProtectedRoute>
-              <MyStudies />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/studies/posted/:id"
-          element={
-            <ProtectedRoute>
-              <SingleStudyPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path="/signup"
           element={
             <RedirectAuthenticatedUser>
@@ -117,6 +72,51 @@ function App() {
             <RedirectAuthenticatedUser>
               <Login />
             </RedirectAuthenticatedUser>
+          }
+        />
+
+        <Route
+          path="/new-study"
+          element={
+            <ProtectedRoute>
+              <NewStudy />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/study/:id"
+          element={
+            <ProtectedRoute>
+              <SingleStudyPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/study/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditStudyPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/about-me"
+          element={
+            <ProtectedRoute>
+              <AboutMe />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-studies"
+          element={
+            <ProtectedRoute>
+              <MyStudies />
+            </ProtectedRoute>
           }
         />
 

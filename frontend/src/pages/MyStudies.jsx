@@ -83,10 +83,10 @@ const MyStudies = () => {
           overlay={
             <Menu className="flex flex-col space-y-1">
               <Menu.Item key="read">
-                <Link to={`/studies/posted/${study._id}`}>Ler</Link>
+                <Link to={`/study/${study._id}`}>Ler</Link>
               </Menu.Item>
               <Menu.Item key="edit">
-                <Link to={`/edit-study/${study._id}`}>Editar</Link>
+                <Link to={`/study/edit/${study._id}`}>Editar</Link>
               </Menu.Item>
               <Menu.Item
                 key="delete"

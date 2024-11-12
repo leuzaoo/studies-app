@@ -13,7 +13,7 @@ const MyStudiesStudyCard = ({
 }) => {
   return (
     <>
-      <Link to={"/studies/posted/" + _id} className="flex gap-5 items-center">
+      <Link to={"/study/" + _id} className="flex gap-5 items-center">
         <div className="flex flex-col justify-between">
           <h2 className="font-semibold text-lg md:text-xl leading-none">
             {title}
