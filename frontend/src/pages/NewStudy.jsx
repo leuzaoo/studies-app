@@ -1,4 +1,5 @@
-import { ToastContainer } from "react-toastify";
+import imageCompression from "browser-image-compression";
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Select } from "antd";
@@ -13,14 +14,52 @@ import Button from "../components/Button";
 import Center from "../components/Center";
 
 const NewStudy = () => {
+  const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [category, setCategory] = useState();
+  const [bannerImage, setBannerImage] = useState();
   const [content, setContent] = useState();
-  const [title, setTitle] = useState();
   const [tags, setTags] = useState([]);
 
   const { createStudy } = useStudyStore();
   const navigate = useNavigate();
+
+  const handleBannerImageChange = async (e) => {
+    const file = e.target.files[0];
+    const MAX_FILE_SIZE = 4 * 1024 * 1024;
+
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error("O tamanho da imagem deve ser máximo de 4MB.");
+        return;
+      }
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Formato da imagem inválido. Use JPEG, PNG ou WEBP.");
+        return;
+      }
+
+      const options = {
+        maxSizeMB: 2,
+        maxWidthOrHeight: 1024,
+        useWebWorker: true,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setBannerImage(reader.result);
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (error) {
+        console.error("Erro ao comprimir a imagem: ", error);
+        toast.error("Erro ao processar a imagem. Tente novamente mais tarde.");
+      }
+    }
+  };
 
   const handleChange = (value) => {
     setCategory(value);
@@ -34,7 +73,14 @@ const NewStudy = () => {
     e.preventDefault();
 
     try {
-      await createStudy(title, description, content, category, tags);
+      await createStudy(
+        title,
+        description,
+        content,
+        category,
+        tags,
+        bannerImage
+      );
       navigate("/my-studies");
     } catch (error) {
       console.log("Erro ao clicar no botão de criar estudo: ", error);
@@ -49,6 +95,28 @@ const NewStudy = () => {
         <Center>
           <TitlePage text={"Criar novo estudo"} />
           <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
+            <LabelFormTitle text={"Banner"} />
+            <div className="flex items-center mb-3 gap-5 max-w-max">
+              <img
+                src={bannerImage || "./bannerImage.jpg"}
+                className="w-[200px] h-[112px] shadow-lg rounded-xl object-cover object-center"
+                alt="user profile image"
+              />
+              <div className="flex flex-col">
+                <input
+                  type="file"
+                  id="bannerImage"
+                  className="hidden"
+                  onChange={handleBannerImageChange}
+                />
+                <label
+                  className="text-sm cursor-pointer bg-cyan-600 text-primary-bg px-3 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                  htmlFor="bannerImage"
+                >
+                  Mudar imagem
+                </label>
+              </div>
+            </div>
             <LabelFormTitle text={"Título"} />
             <InputNewStudy
               onChange={(e) => setTitle(e.target.value)}

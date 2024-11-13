@@ -12,6 +12,11 @@ const studySchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    bannerImage: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     content: {
       type: String,
       required: true,

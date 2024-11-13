@@ -83,7 +83,7 @@ const MyStudies = () => {
           _id={study._id}
           category={study.category}
           createdAt={study.createdAt}
-          bannerImage={study.author.bannerImage}
+          bannerImage={study.bannerImage}
           title={study.title}
           content={study.content}
         />

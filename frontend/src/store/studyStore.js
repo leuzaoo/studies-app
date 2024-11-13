@@ -40,7 +40,14 @@ export const useStudyStore = create((set) => ({
     }
   },
 
-  createStudy: async (title, description, content, category, tags) => {
+  createStudy: async (
+    title,
+    description,
+    content,
+    category,
+    tags,
+    bannerImage
+  ) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -50,6 +57,7 @@ export const useStudyStore = create((set) => ({
         content,
         category,
         tags,
+        bannerImage,
       });
       set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");
