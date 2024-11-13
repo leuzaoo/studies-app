@@ -1,6 +1,6 @@
-import { ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import imageCompression from "browser-image-compression";
+import { ToastContainer, toast } from "react-toastify";
+import { useState, useCallback } from "react";
 import { Select } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
@@ -11,71 +11,148 @@ import Navbar from "../components/navbar/Navbar";
 import TitlePage from "../components/TitlePage";
 import Button from "../components/Button";
 import Center from "../components/Center";
+import { useNavigate } from "react-router-dom";
+
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const DEFAULT_BANNER_IMAGE = "./bannerImage.jpg";
+
+const compressImage = async (file) => {
+  const options = {
+    maxSizeMB: 2,
+    maxWidthOrHeight: 1024,
+    useWebWorker: true,
+  };
+  return await imageCompression(file, options);
+};
 
 const NewStudy = () => {
-  const [description, setDescription] = useState();
-  const [category, setCategory] = useState();
-  const [content, setContent] = useState();
-  const [title, setTitle] = useState();
-  const [tags, setTags] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    category: "",
+    content: "",
+    tags: [],
+    bannerImage: "",
+  });
 
   const { createStudy } = useStudyStore();
-  const navigate = useNavigate();
 
-  const handleChange = (value) => {
-    setCategory(value);
-  };
+  const handleInputChange = useCallback(
+    (field) => (e) => {
+      const value = e.target ? e.target.value : e;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
-  const handleTagsChange = (value) => {
-    setTags(value);
-  };
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const handleCreateStudy = async (e) => {
-    e.preventDefault();
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("O tamanho da imagem deve ser máximo de 4MB.");
+      return;
+    }
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      toast.error("Formato da imagem inválido. Use JPEG, PNG ou WEBP.");
+      return;
+    }
 
     try {
-      await createStudy(title, description, content, category, tags);
-      navigate("/my-studies");
+      const compressedFile = await compressImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, bannerImage: reader.result }));
+      };
+      reader.readAsDataURL(compressedFile);
     } catch (error) {
-      console.log("Erro ao clicar no botão de criar estudo: ", error);
+      console.error("Erro ao comprimir a imagem: ", error);
+      toast.error("Erro ao processar a imagem. Tente novamente mais tarde.");
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { title, description, content, category, tags, bannerImage } =
+      formData;
+
+    try {
+      const res = await createStudy(
+        title,
+        description,
+        content,
+        category,
+        tags,
+        bannerImage
+      );
+
+      if (res?.startsWith("2")) {
+        setTimeout(() => {
+          navigate("/my-studies");
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Erro ao criar estudo: ", error);
     }
   };
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
       <Navbar />
       <div className="max-w-4xl mx-auto">
         <Center>
-          <TitlePage text={"Criar novo estudo"} />
-          <form onSubmit={handleCreateStudy} className="mt-5 flex flex-col">
-            <LabelFormTitle text={"Título"} />
+          <TitlePage text="Criar novo estudo" />
+          <form onSubmit={handleSubmit} className="mt-5 flex flex-col">
+            <LabelFormTitle text="Banner" />
+            <div className="flex items-center mb-3 gap-5 max-w-max">
+              <img
+                src={formData.bannerImage || DEFAULT_BANNER_IMAGE}
+                className="w-[200px] h-[112px] shadow-lg rounded-xl object-cover object-center"
+                alt="Banner preview"
+              />
+              <div className="flex flex-col">
+                <input
+                  type="file"
+                  id="bannerImage"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <label
+                  className="text-sm cursor-pointer bg-cyan-600 text-primary-bg px-3 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                  htmlFor="bannerImage"
+                >
+                  Mudar imagem
+                </label>
+              </div>
+            </div>
+
+            <LabelFormTitle text="Título" />
             <InputNewStudy
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              type="text"
-              className={"mb-3"}
-              placeholder={"Escreva um título interessante"}
+              onChange={handleInputChange("title")}
+              value={formData.title}
+              placeholder="Escreva um título interessante"
+              className="mb-3"
             />
 
-            <LabelFormTitle text={"Descrição"} />
+            <LabelFormTitle text="Descrição" />
             <InputNewStudy
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              type="text"
-              className={"mb-3"}
-              placeholder={"Resuma o que você quer contar"}
+              onChange={handleInputChange("description")}
+              value={formData.description}
+              placeholder="Resuma o que você quer contar"
+              className="mb-3"
             />
 
-            <LabelFormTitle text={"Categoria"} />
+            <LabelFormTitle text="Categoria" />
             <Select
               defaultValue=""
-              style={{
-                width: 160,
-                marginBottom: 12,
-                fontSize: 20,
-              }}
-              onChange={handleChange}
+              style={{ width: 160, marginBottom: 12, fontSize: 20 }}
+              onChange={handleInputChange("category")}
               options={[
                 { value: "Política", label: "Política" },
                 { value: "Esportes", label: "Esportes" },
@@ -87,24 +164,24 @@ const NewStudy = () => {
               ]}
             />
 
-            <LabelFormTitle text={"Tags"} />
+            <LabelFormTitle text="Tags" />
             <Select
+              mode="tags"
               allowClear
               suffixIcon={null}
-              mode="tags"
-              style={{
-                width: "100%",
-                marginBottom: 14,
-              }}
-              placeholder="Termos para os usuários encontrarem o seu estudo"
-              onChange={handleTagsChange}
-              value={tags}
               notFoundContent={null}
+              style={{ width: "100%", marginBottom: 14 }}
+              placeholder="Termos para os usuários encontrarem o seu estudo"
+              onChange={handleInputChange("tags")}
+              value={formData.tags}
             />
 
-            <TextEditor value={content} onChange={setContent} />
+            <TextEditor
+              value={formData.content}
+              onChange={handleInputChange("content")}
+            />
 
-            <Button className="mt-5" type="submit" content={"Finalizar"} />
+            <Button className="mt-5" type="submit" content="Finalizar" />
           </form>
         </Center>
       </div>

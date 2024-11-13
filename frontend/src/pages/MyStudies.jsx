@@ -1,8 +1,8 @@
+import { Dropdown, Menu, Skeleton, Space } from "antd";
 import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer } from "react-toastify";
-import { Edit3, Ellipsis, Trash2 } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Dropdown, Menu, Space } from "antd";
 import { useEffect } from "react";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -57,7 +57,16 @@ const MyStudies = () => {
 
   const renderStudies = () => {
     if (isLoading) {
-      return <p>Carregando estudos...</p>;
+      return (
+        <>
+          <ul className="flex flex-col gap-12 justify-between h-full">
+            <Skeleton active />
+            <Skeleton active />
+            <Skeleton active />
+            <Skeleton active />
+          </ul>
+        </>
+      );
     }
 
     if (error) {
@@ -73,27 +82,26 @@ const MyStudies = () => {
         <MyStudiesStudyCard
           _id={study._id}
           category={study.category}
-          username={study.author.username}
           createdAt={study.createdAt}
+          bannerImage={study.bannerImage}
           title={study.title}
           content={study.content}
         />
 
         <Dropdown
           overlay={
-            <Menu>
+            <Menu className="flex flex-col space-y-1">
+              <Menu.Item key="read">
+                <Link to={`/study/${study._id}`}>Ler</Link>
+              </Menu.Item>
               <Menu.Item key="edit">
-                <Link to={`/edit-study/${study._id}`}>
-                  <Edit3 size={16} className="mr-2" />
-                  Editar
-                </Link>
+                <Link to={`/study/edit/${study._id}`}>Editar</Link>
               </Menu.Item>
               <Menu.Item
                 key="delete"
                 onClick={() => handleDelete(study._id)}
                 danger
               >
-                <Trash2 size={16} className="mr-2" />
                 Excluir
               </Menu.Item>
             </Menu>
@@ -119,10 +127,15 @@ const MyStudies = () => {
         <div className="flex items-center justify-start gap-5">
           <img
             src={`${user?.userImage || "/user.jpg"}`}
-            className="size-10 rounded-full"
+            className="size-16 rounded-full"
             alt="User image"
           />
-          <p className="text-2xl font-semibold">{user?.username}</p>
+          <div className="flex flex-col md:flex-row md:items-end space-x-2">
+            <p className="text-right text-terciary-grey font-light">
+              vendo como:
+            </p>
+            <p className="text-4xl font-semibold">{user?.username}</p>
+          </div>
         </div>
         <div className="w-full h-[1px] bg-terciary-grey opacity-10 mt-5" />
         <div className="mt-5">{renderStudies()}</div>

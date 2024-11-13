@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Skeleton } from "antd";
+
 import categories from "../../../backend/config/categories";
-import CategoryMenu from "../components/CategoryMenu";
 import { useStudyStore } from "../store/studyStore";
+
+import CategoryMenu from "../components/CategoryMenu";
 import Navbar from "../components/navbar/Navbar";
 import SearchBar from "../components/SearchBar";
 import TitlePage from "../components/TitlePage";
@@ -14,43 +17,36 @@ const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
 
-  const { fetchStudies } = useStudyStore();
+  const { fetchStudies, isLoading } = useStudyStore();
 
-  const handleSearch = async (query) => {
-    if (!query.trim()) {
-      setResults([]);
-      setIsSearchOpen(false);
-      return;
-    }
-
-    try {
-      const studies = await fetchStudies(query, selectedCategory);
-      setResults(studies);
-      setIsSearchOpen(true);
-    } catch (error) {
-      console.error(
-        "Erro ao buscar estudos:",
-        error.response?.data || error.message
-      );
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchAndSetResults = useCallback(
+    async (query = "", category = "Tudo") => {
       try {
-        const studies = await fetchStudies("", selectedCategory);
+        const studies = await fetchStudies(query, category);
         setResults(studies);
-        setIsSearchOpen(false);
+        setIsSearchOpen(!!query);
       } catch (error) {
         console.error(
           "Erro ao buscar estudos:",
           error.response?.data || error.message
         );
       }
-    };
+    },
+    [fetchStudies]
+  );
 
-    fetchData();
-  }, [selectedCategory, fetchStudies]);
+  const handleSearch = (query) => {
+    if (!query.trim()) {
+      setResults([]);
+      setIsSearchOpen(false);
+      return;
+    }
+    fetchAndSetResults(query, selectedCategory);
+  };
+
+  useEffect(() => {
+    fetchAndSetResults("", selectedCategory);
+  }, [selectedCategory, fetchAndSetResults]);
 
   return (
     <>
@@ -75,7 +71,18 @@ const Homepage = () => {
           onCategorySelect={setSelectedCategory}
         />
 
-        <Results results={results} />
+        {isLoading ? (
+          <>
+            <ul className="mt-5 flex flex-col gap-12 justify-between h-full">
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </ul>
+          </>
+        ) : (
+          <Results results={results} />
+        )}
       </Center>
     </>
   );

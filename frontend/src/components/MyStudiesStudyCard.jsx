@@ -5,15 +5,16 @@ import { formatDate } from "../utils/formatDate.js";
 const MyStudiesStudyCard = ({
   title,
   description,
-  userImage,
   bannerImage,
   _id,
-  username,
   createdAt,
 }) => {
   return (
     <>
-      <Link to={"/studies/posted/" + _id} className="flex gap-5 items-center">
+      <Link
+        to={"/study/" + _id}
+        className="flex gap-5 items-center justify-between w-full"
+      >
         <div className="flex flex-col justify-between">
           <h2 className="font-semibold text-lg md:text-xl leading-none">
             {title}
@@ -21,19 +22,13 @@ const MyStudiesStudyCard = ({
           <p className="leading-none text-sm md:text-base font-light">
             {description}
           </p>
-          <div className="flex items-center">
-            {/* <img
-              src={`${userImage || "./user.jpg"} `}
-              className="w-6 h-6 rounded-full"
-            /> */}
-            <p className="font-light text-terciary-grey text-[12px] md:text-sm mt-1">
-              Criado em {formatDate(createdAt)}
-            </p>
-          </div>
+          <p className="font-light text-terciary-grey text-[12px] md:text-sm mt-1">
+            Criado em {formatDate(createdAt)}
+          </p>
         </div>
         <img
-          src={`${bannerImage || "./banner.jpg"} `}
-          className="hidden md:block object-cover h-[80px] w-[80px] shadow-md rounded-xl"
+          src={`${bannerImage || "./banner.jpg"}`}
+          className="mr-5 object-cover min-w-[120px] max-w-[120px] h-[68px] rounded-xl shadow-lg"
         />
       </Link>
     </>

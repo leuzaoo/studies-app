@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import { toast, ToastContainer } from "react-toastify";
 import { useAuthStore } from "../store/authStore";
+import { useUserStore } from "../store/userStore";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import Navbar from "../components/navbar/Navbar";
@@ -13,7 +14,8 @@ import Center from "../components/Center";
 import Input from "../components/Input";
 
 const AboutMe = () => {
-  const { user, error, isLoading, updateUserProfile, message } = useAuthStore();
+  const { user, error, isLoading, message } = useAuthStore();
+  const { updateUserProfile } = useUserStore();
 
   const [name, setName] = useState(user?.name || "");
   const [username, setUsername] = useState(user?.username || "");
@@ -51,7 +53,7 @@ const AboutMe = () => {
           };
           reader.readAsDataURL(compressedFile);
         } catch (error) {
-          console.error("Erro ao compressar imagem:", error);
+          console.error("Erro ao comprimir imagem:", error);
           toast.error(
             "Erro ao processar a imagem. Tente novamente mais tarde."
           );
@@ -68,11 +70,11 @@ const AboutMe = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setProfilePicture(user.userImage);
       setUsername(user.username);
       setEmail(user.email);
       setAbout(user.about);
-      setProfilePicture(user.userImage);
+      setName(user.name);
     }
   }, [user]);
 
@@ -123,13 +125,6 @@ const AboutMe = () => {
                   Alterar imagem
                 </label>
               </div>
-              <button
-                type="button"
-                className="text-sm cursor-pointer md:text-base bg-red-100 text-red-600 px-2 py-2 rounded-lg hover:bg-red-200 transition-all duration-200"
-                onClick={() => setProfilePicture(null)}
-              >
-                Remover imagem
-              </button>
             </div>
           </div>
 

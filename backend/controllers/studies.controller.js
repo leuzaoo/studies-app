@@ -42,12 +42,19 @@ export const searchStudy = async (req, res) => {
 
 export const createStudy = async (req, res) => {
   try {
-    const { title, description, content, category, tags } = req.body;
+    const { title, description, content, category, tags, bannerImage } =
+      req.body;
 
-    if (!title || !content || !category || !description) {
+    if (!title || !content || !category || !description || !bannerImage) {
       return res
         .status(400)
-        .json({ message: "Preencha todos os campos obrigatórios." });
+        .json({ message: "Complete todos os campos obrigatórios." });
+    }
+
+    if (bannerImage && bannerImage.length > 2000000) {
+      return res
+        .status(400)
+        .json({ message: "A imagem deve ter menos de 4MB." });
     }
 
     const newStudy = new Study({
@@ -57,6 +64,7 @@ export const createStudy = async (req, res) => {
       category,
       tags,
       author: req.user._id,
+      bannerImage,
     });
 
     await newStudy.save();
@@ -131,6 +139,7 @@ export const updateStudy = async (req, res) => {
       "content",
       "category",
       "tags",
+      "bannerImage",
     ];
 
     const updatedData = {};

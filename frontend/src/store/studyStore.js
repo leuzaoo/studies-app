@@ -40,7 +40,14 @@ export const useStudyStore = create((set) => ({
     }
   },
 
-  createStudy: async (title, description, content, category, tags) => {
+  createStudy: async (
+    title,
+    description,
+    content,
+    category,
+    tags,
+    bannerImage
+  ) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -50,9 +57,12 @@ export const useStudyStore = create((set) => ({
         content,
         category,
         tags,
+        bannerImage,
       });
+
       set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");
+      return response.status.toString();
     } catch (error) {
       const errorMessage = handleApiError(error, "Erro ao criar o estudo");
       set({ error: errorMessage, isLoading: false });
@@ -62,9 +72,9 @@ export const useStudyStore = create((set) => ({
   fetchSingleStudy: async (id) => {
     try {
       const response = await axios.get(`${STUDIES_API_URL}/posted/${id}`);
-      // set({ study: response.data.study });
       return response.data.study;
     } catch (error) {
+      set({ isLoading: false });
       const errorMessage = handleApiError(error, "Erro ao buscar estudo");
       set({ error: errorMessage });
       throw new Error(errorMessage);
@@ -73,7 +83,6 @@ export const useStudyStore = create((set) => ({
 
   fetchUserStudies: async () => {
     set({ isLoading: true, error: null });
-
     try {
       const response = await axios.get(`${STUDIES_API_URL}/user-studies`);
       set({ studies: response.data.userStudies, isLoading: false });
