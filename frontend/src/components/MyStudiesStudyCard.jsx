@@ -11,7 +11,10 @@ const MyStudiesStudyCard = ({
 }) => {
   return (
     <>
-      <Link to={"/study/" + _id} className="flex gap-5 items-center justify-between w-full">
+      <Link
+        to={"/study/" + _id}
+        className="flex gap-5 items-center justify-between w-full"
+      >
         <div className="flex flex-col justify-between">
           <h2 className="font-semibold text-lg md:text-xl leading-none">
             {title}
@@ -24,8 +27,8 @@ const MyStudiesStudyCard = ({
           </p>
         </div>
         <img
-          src={`${bannerImage || "./banner.jpg"} `}
-          className="mr-5 hidden md:block object-cover h-[80px] w-[80px] shadow-md rounded-xl"
+          src={`${bannerImage || "./banner.jpg"}`}
+          className="mr-5 object-cover h-[80px] w-[80px] shadow-md rounded-xl"
         />
       </Link>
     </>

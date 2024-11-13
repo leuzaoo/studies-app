@@ -53,7 +53,7 @@ const AboutMe = () => {
           };
           reader.readAsDataURL(compressedFile);
         } catch (error) {
-          console.error("Erro ao compressar imagem:", error);
+          console.error("Erro ao comprimir imagem:", error);
           toast.error(
             "Erro ao processar a imagem. Tente novamente mais tarde."
           );
@@ -125,13 +125,6 @@ const AboutMe = () => {
                   Alterar imagem
                 </label>
               </div>
-              <button
-                type="button"
-                className="text-sm cursor-pointer md:text-base bg-red-100 text-red-600 px-2 py-2 rounded-lg hover:bg-red-200 transition-all duration-200"
-                onClick={() => setProfilePicture(null)}
-              >
-                Remover imagem
-              </button>
             </div>
           </div>
 

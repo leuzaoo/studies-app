@@ -12,12 +12,18 @@ const verifyToken = async (req, res, next) => {
         .json({ success: false, message: "Token ausente." });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (!decoded) {
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      if (err.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ success: false, message: "Token expirado." });
+      }
       return res
         .status(401)
-        .json({ success: false, message: "Não autorizado. Token inválido." });
+        .json({ success: false, message: "Token inválido." });
     }
 
     const user = await User.findById(decoded.userId).select("-password");
@@ -28,14 +34,23 @@ const verifyToken = async (req, res, next) => {
         .json({ success: false, message: "Usuário não encontrado." });
     }
 
-    req.user = user;
+    if (user.status && user.status !== "active") {
+      return res
+        .status(403)
+        .json({ success: false, message: "Usuário inativo ou suspenso." });
+    }
 
+    req.user = user;
     next();
   } catch (error) {
-    console.log("Erro no controlador 'verifyToken': ", error);
+    console.error(
+      "Erro no middleware 'verifyToken':",
+      error.message,
+      error.stack
+    );
     return res
       .status(500)
-      .json({ success: false, message: "Erro no servidor" });
+      .json({ success: false, message: "Erro interno do servidor." });
   }
 };
 
