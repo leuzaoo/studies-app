@@ -139,6 +139,7 @@ export const updateStudy = async (req, res) => {
       "content",
       "category",
       "tags",
+      "bannerImage",
     ];
 
     const updatedData = {};

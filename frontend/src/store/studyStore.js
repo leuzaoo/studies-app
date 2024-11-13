@@ -59,6 +59,7 @@ export const useStudyStore = create((set) => ({
         tags,
         bannerImage,
       });
+
       set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");
     } catch (error) {

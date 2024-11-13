@@ -28,7 +28,7 @@ const MyStudiesStudyCard = ({
         </div>
         <img
           src={`${bannerImage || "./banner.jpg"}`}
-          className="mr-5 object-cover h-[80px] w-[80px] shadow-md rounded-xl"
+          className="mr-5 object-cover min-w-[120px] max-w-[120px] h-[68px] rounded-xl shadow-lg"
         />
       </Link>
     </>

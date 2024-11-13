@@ -1,5 +1,6 @@
-import { ToastContainer, toast } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
+import imageCompression from "browser-image-compression";
+import { ToastContainer, toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { Select } from "antd";
 
@@ -23,21 +24,63 @@ const EditStudyPage = () => {
 
   const [loadedStudy, setLoadedStudy] = useState(null);
   const [description, setDescription] = useState("");
+  const [bannerImage, setBannerImage] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
+
+  const handleBannerImageChange = async (e) => {
+    const file = e.target.files[0];
+    const MAX_FILE_SIZE = 4 * 1024 * 1024;
+
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error("O tamanho da imagem deve ser máximo de 4MB.");
+        return;
+      }
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error("Formato da imagem inválido. Use JPEG, PNG ou WEBP.");
+        return;
+      }
+
+      if (file) {
+        const options = {
+          maxSizeMB: 4,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true,
+        };
+
+        try {
+          const compressedFile = await imageCompression(file, options);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setBannerImage(reader.result);
+          };
+          reader.readAsDataURL(compressedFile);
+        } catch (error) {
+          console.error("Erro ao comprimir imagem:", error);
+          toast.error(
+            "Erro ao processar a imagem. Tente novamente mais tarde."
+          );
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     const getStudy = async () => {
       try {
         const fetchedStudy = await fetchSingleStudy(id);
         if (fetchedStudy.author._id === userId) {
+          setDescription(fetchedStudy.description);
+          setBannerImage(fetchedStudy.bannerImage);
+          setCategory(fetchedStudy.category);
+          setContent(fetchedStudy.content);
           setLoadedStudy(fetchedStudy);
           setTitle(fetchedStudy.title);
-          setDescription(fetchedStudy.description);
-          setContent(fetchedStudy.content);
-          setCategory(fetchedStudy.category);
           setTags(fetchedStudy.tags);
         } else {
           navigate("/not-authorized");
@@ -59,6 +102,7 @@ const EditStudyPage = () => {
       content,
       category,
       tags,
+      bannerImage,
     };
 
     try {
@@ -87,6 +131,54 @@ const EditStudyPage = () => {
           <>
             <TitlePage text={"Modo de edição"} />
             <form onSubmit={handleSubmit}>
+              <div>
+                <LabelFormTitle text="Banner" />
+                <div className="flex items-center mt-2 gap-5 max-w-max">
+                  {bannerImage ? (
+                    <>
+                      <img
+                        src={bannerImage}
+                        className="object-cover object-center w-[200px] h-[112px] rounded-xl shadow-lg"
+                        alt="banner image"
+                      />
+
+                      <div className="flex flex-col">
+                        <input
+                          type="file"
+                          id="bannerImage"
+                          className="hidden"
+                          onChange={handleBannerImageChange}
+                        />
+                        <label
+                          className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                          htmlFor="bannerImage"
+                        >
+                          Alterar banner
+                        </label>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p>Estudo sem banner</p>
+                      <div className="flex flex-col">
+                        <input
+                          type="file"
+                          id="bannerImage"
+                          className="hidden"
+                          onChange={handleBannerImageChange}
+                        />
+                        <label
+                          className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                          htmlFor="bannerImage"
+                        >
+                          Adicionar
+                        </label>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
               <div className="flex flex-col my-5">
                 <LabelFormTitle text={"Título"} />
                 <InputNewStudy
@@ -141,7 +233,7 @@ const EditStudyPage = () => {
                   className={"mt-5"}
                   type="submit"
                   primary
-                  content={"Salvar"}
+                  content={"Atualizar"}
                 />
               </div>
             </form>

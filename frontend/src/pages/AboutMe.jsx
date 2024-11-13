@@ -70,11 +70,11 @@ const AboutMe = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setProfilePicture(user.userImage);
       setUsername(user.username);
       setEmail(user.email);
       setAbout(user.about);
-      setProfilePicture(user.userImage);
+      setName(user.name);
     }
   }, [user]);
 
