@@ -62,6 +62,7 @@ export const useStudyStore = create((set) => ({
 
       set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");
+      return response.status.toString();
     } catch (error) {
       const errorMessage = handleApiError(error, "Erro ao criar o estudo");
       set({ error: errorMessage, isLoading: false });
