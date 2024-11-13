@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Skeleton } from "antd";
 
 import categories from "../../../backend/config/categories";
 import { useStudyStore } from "../store/studyStore";
@@ -9,7 +10,6 @@ import SearchBar from "../components/SearchBar";
 import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
 import Center from "../components/Center";
-import { Loader2 } from "lucide-react";
 
 const Homepage = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -72,10 +72,14 @@ const Homepage = () => {
         />
 
         {isLoading ? (
-          <div className="w-full mt-5 flex flex-col items-center">
-            <p>Carregando estudos...</p>
-            <Loader2 className="animate-spin mt-3" size={40} />
-          </div>
+          <>
+            <ul className="mt-5 flex flex-col gap-12 justify-between h-full">
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </ul>
+          </>
         ) : (
           <Results results={results} />
         )}

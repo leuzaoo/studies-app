@@ -1,22 +1,24 @@
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { Skeleton } from "antd";
 
 import styles from "../assets/singleStudyPage.module.css";
 import { useStudyStore } from "../store/studyStore.js";
 import { formatDate } from "../utils/formatDate.js";
 
 import ProgressBar from "../components/ProgressBar.jsx";
-import Center from "../components/Center.jsx";
 import Navbar from "../components/navbar/Navbar.jsx";
+import Center from "../components/Center.jsx";
 
 const SingleStudyPage = () => {
   const mainRef = useRef(null);
 
   const { id } = useParams();
 
-  const { fetchSingleStudy } = useStudyStore();
+  const { fetchSingleStudy, isLoading } = useStudyStore();
   const [study, setStudy] = useState(null);
+  console.log(study);
 
   useEffect(() => {
     const getStudy = async () => {
@@ -35,9 +37,20 @@ const SingleStudyPage = () => {
 
   if (!study)
     return (
-      <div>
-        Carregando estudo. Se não carregar o estudo selecionado, avise-nos.
-      </div>
+      <>
+        <Navbar />
+        <Center>
+          <div>
+            <ul className="mt-5 mx-auto max-w-screen-sm flex flex-col gap-12 justify-between h-full">
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </ul>
+          </div>
+        </Center>
+      </>
     );
 
   return (

@@ -1,8 +1,8 @@
+import { Dropdown, Menu, Skeleton, Space } from "antd";
 import { confirmAlert } from "react-confirm-alert";
 import { ToastContainer } from "react-toastify";
-import { Edit3, Ellipsis, Trash2 } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Dropdown, Menu, Space } from "antd";
 import { useEffect } from "react";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -57,7 +57,16 @@ const MyStudies = () => {
 
   const renderStudies = () => {
     if (isLoading) {
-      return <p>Carregando estudos...</p>;
+      return (
+        <>
+          <ul className="flex flex-col gap-12 justify-between h-full">
+            <Skeleton active />
+            <Skeleton active />
+            <Skeleton active />
+            <Skeleton active />
+          </ul>
+        </>
+      );
     }
 
     if (error) {
