@@ -15,10 +15,10 @@ import {
 const router = express.Router();
 
 router.get("/user-studies", verifyToken, getUserStudies);
-router.get("/posted/:id", verifyToken, getStudyById);
-router.get("/filter", verifyToken, searchByCategory);
-router.get("/search", verifyToken, searchStudy);
-router.get("/all", verifyToken, allStudies);
+router.get("/posted/:id", getStudyById);
+router.get("/filter", searchByCategory);
+router.get("/search", searchStudy);
+router.get("/all", allStudies);
 
 router.post("/new-study", verifyToken, createStudy);
 
