@@ -3,14 +3,7 @@ import { useState } from "react";
 
 import { useAuthStore } from "../../store/authStore";
 
-import {
-  LucideMenu,
-  NotebookPen,
-  Plus,
-  PlusCircle,
-  UserCircle2Icon,
-  X,
-} from "lucide-react";
+import { LucideMenu, Plus, UserCircle2Icon, X } from "lucide-react";
 
 import MenuItems from "./MenuItems";
 
@@ -40,7 +33,9 @@ const Navbar = () => {
                     className="md:flex items-center gap-2 p-1 md:px-3 md:py-1 rounded-md bg-primary-orange"
                   >
                     <Plus strokeWidth={2} size={20} color="white" />
-                    <p className="hidden md:block text-white font-light">Novo estudo</p>
+                    <p className="hidden md:block text-white font-light">
+                      Novo estudo
+                    </p>
                   </Link>
                 )}
                 <div
