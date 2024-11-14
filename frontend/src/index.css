@@ -42,7 +42,7 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: #da4933;
 }
 

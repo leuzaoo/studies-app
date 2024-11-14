@@ -14,6 +14,14 @@ import {
 const MenuItems = ({ isMenuOpen }) => {
   const { logout, user } = useAuthStore();
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    logout();
+
+    window.location.reload();
+  };
+
   return (
     <div
       className={`fixed top-0 right-0 h-full bg-white shadow-lg w-4/5 max-w-xs transition-transform duration-300 ease-in-out z-40 ${
@@ -51,7 +59,7 @@ const MenuItems = ({ isMenuOpen }) => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={logout}
+            onClick={handleLogout}
             className="flex items-center gap-3 bg-primary-orange max-w-max px-4 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
           >
             Sair
