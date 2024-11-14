@@ -9,9 +9,9 @@ import { useStudyStore } from "../store/studyStore";
 import TextEditor from "../components/TextEditor";
 import Navbar from "../components/navbar/Navbar";
 import TitlePage from "../components/TitlePage";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Center from "../components/Center";
-import { useNavigate } from "react-router-dom";
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -37,6 +37,7 @@ const NewStudy = () => {
   });
 
   const { createStudy } = useStudyStore();
+  const navigate = useNavigate();
 
   const handleInputChange = useCallback(
     (field) => (e) => {
@@ -72,8 +73,6 @@ const NewStudy = () => {
       toast.error("Erro ao processar a imagem. Tente novamente mais tarde.");
     }
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

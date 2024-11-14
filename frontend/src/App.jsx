@@ -48,14 +48,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Homepage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/" element={<Homepage />} />
 
         <Route
           path="/signup"
@@ -84,14 +77,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/study/:id"
-          element={
-            <ProtectedRoute>
-              <SingleStudyPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/study/:id" element={<SingleStudyPage />} />
 
         <Route
           path="/study/edit/:id"
