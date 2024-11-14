@@ -7,7 +7,7 @@ import { upload } from "../middleware/uploadImage.js";
 const router = express.Router();
 
 router.put(
-  "/about-me",
+  "/settings",
   verifyToken,
   upload.single("userImage"),
   updatedProfile

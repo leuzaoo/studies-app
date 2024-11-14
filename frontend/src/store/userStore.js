@@ -16,7 +16,7 @@ export const useUserStore = create((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.put(`${USER_API_URL}/about-me`, updatedData);
+      const response = await axios.put(`${USER_API_URL}/settings`, updatedData);
       const updatedUser = response.data.user;
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
