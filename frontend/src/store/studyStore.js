@@ -27,7 +27,7 @@ export const useStudyStore = create((set) => ({
       ? `${STUDIES_API_URL}/search?q=${query}`
       : category === "Tudo"
       ? `${STUDIES_API_URL}/all`
-      : `${STUDIES_API_URL}/search?q=${category}`;
+      : `${STUDIES_API_URL}/filter?category=${encodeURIComponent(category)}`;
 
     try {
       const response = await axios.get(endpoint);
