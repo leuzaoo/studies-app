@@ -16,9 +16,8 @@ const SingleStudyPage = () => {
 
   const { id } = useParams();
 
-  const { fetchSingleStudy, isLoading } = useStudyStore();
+  const { fetchSingleStudy } = useStudyStore();
   const [study, setStudy] = useState(null);
-  console.log(study);
 
   useEffect(() => {
     const getStudy = async () => {
@@ -61,8 +60,27 @@ const SingleStudyPage = () => {
       <Center>
         <div ref={mainRef} className="max-w-screen-sm mx-auto">
           <ProgressBar target={mainRef} />
-          <p className="font-extralight text-terciary-grey">{study.category}</p>
-          <h1 className="font-bold text-2xl">{study.title}</h1>
+
+          <img
+            src={
+              study?.bannerImage && study.bannerImage.trim() !== ""
+                ? study.bannerImage
+                : "/banner.jpg"
+            }
+            className="w-full rounded-xl shadow-lg mb-5"
+            alt="Banner image"
+          />
+
+          <span className="font-extralight text-terciary-grey">
+            {study.category}
+          </span>
+
+          <h1 className="font-bold text-3xl md:text-5xl">{study.title}</h1>
+
+          <p className="font-domine my-5 text-base md:text-xl">
+            {study.description}
+          </p>
+
           <div className="mt-3 mb-5 flex gap-3 items-center justify-between">
             <div className="flex items-center gap-3">
               <img
@@ -71,13 +89,14 @@ const SingleStudyPage = () => {
                 alt="user profile image"
               />
               <div>
-                <p className="text-sm">{study.author.username}</p>
-                <span className="text-sm font-extralight text-terciary-grey">
+                <p className="text-sm md:text-base">{study.author.username}</p>
+                <span className="text-xs md:text-sm font-extralight text-terciary-grey">
                   {formatDate(study.createdAt)}
                 </span>
               </div>
             </div>
           </div>
+
           <div className="h-[1px] bg-black opacity-20 mb-5" />
           <div
             className={`${styles.content}`}
