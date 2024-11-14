@@ -44,7 +44,11 @@ export const searchByCategory = async (req, res) => {
   const { category } = req.query;
 
   try {
-    const studies = await Study.find({ category });
+    const studies = await Study.find({ category }).populate(
+      "author",
+      "username userImage"
+    );
+
     res.status(200).json({ studies });
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar estudos por categoria." });
