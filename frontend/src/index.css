@@ -23,3 +23,33 @@ body {
   border-bottom: 1px solid #c5c5c5 !important;
   border-radius: 0 !important;
 }
+
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #e6e6e6;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #da4933;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #f68a7a;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #f68a7a;
+}
