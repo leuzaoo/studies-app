@@ -13,7 +13,7 @@ import TextArea from "../components/TextArea";
 import Center from "../components/Center";
 import Input from "../components/Input";
 
-const AboutMe = () => {
+const Settings = () => {
   const { user, error, isLoading, message } = useAuthStore();
   const { updateUserProfile } = useUserStore();
 
@@ -188,4 +188,4 @@ const AboutMe = () => {
   );
 };
 
-export default AboutMe;
+export default Settings;

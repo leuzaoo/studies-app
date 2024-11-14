@@ -10,9 +10,10 @@ import SingleStudyPage from "./pages/SingleStudyPage";
 import EditStudyPage from "./pages/EditStudyPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import MyStudies from "./pages/MyStudies";
+import Settings from "./pages/Settings";
 import Homepage from "./pages/Homepage";
 import NewStudy from "./pages/NewStudy";
-import AboutMe from "./pages/AboutMe";
+import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 
@@ -89,10 +90,19 @@ function App() {
         />
 
         <Route
-          path="/about-me"
+          path="/settings"
           element={
             <ProtectedRoute>
-              <AboutMe />
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
