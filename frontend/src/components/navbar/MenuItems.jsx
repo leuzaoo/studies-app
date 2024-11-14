@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const MenuItems = ({ isMenuOpen }) => {
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore();
 
   return (
     <div
@@ -47,20 +47,24 @@ const MenuItems = ({ isMenuOpen }) => {
             Configurações
           </li>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={logout}
-          className="flex items-center gap-3 bg-primary-orange max-w-max px-4 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
-        >
-          Sair
-          <LogOut
-            size={16}
-            className="bg-transparent"
-            color="white"
-            strokeWidth={2}
-          />
-        </motion.button>
+        {user ? (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={logout}
+            className="flex items-center gap-3 bg-primary-orange max-w-max px-4 py-1 rounded-lg mx-auto text-white font-light cursor-pointer"
+          >
+            Sair
+            <LogOut
+              size={16}
+              className="bg-transparent"
+              color="white"
+              strokeWidth={2}
+            />
+          </motion.button>
+        ) : (
+          ""
+        )}
       </ul>
     </div>
   );
