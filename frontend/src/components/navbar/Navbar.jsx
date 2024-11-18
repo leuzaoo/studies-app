@@ -73,13 +73,13 @@ const Navbar = () => {
                   onClick={toggleMenu}
                   className="flex items-center space-x-4"
                 >
-                  <Link to={"/signup"}>
+                  <Link to={"/signup"} className="hidden lg:flex items-center">
                     <button className="border border-primary-orange px-3 py-1 rounded-md text-primary-orange">
                       Criar conta
                     </button>
                   </Link>
 
-                  <Link to={"/login"}>
+                  <Link to={"/login"}  className="hidden lg:flex items-center">
                     <button className="px-3 py-1 bg-primary-orange border-primary-orange border text-white rounded-md">
                       Entrar
                     </button>
@@ -89,7 +89,7 @@ const Navbar = () => {
                     size={36}
                     strokeWidth={1}
                     color="grey"
-                    className="cursor-pointer"
+                    className="cursor-pointer hidden lg:flex items-center"
                   />
 
                   <button className="relative">

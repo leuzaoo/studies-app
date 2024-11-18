@@ -73,7 +73,21 @@ const MenuItems = ({ isMenuOpen }) => {
             />
           </motion.button>
         ) : (
-          ""
+          <>
+            <div className="flex items-center gap-5 justify-center">
+              <Link to={"/signup"} className="">
+                <button className="border border-primary-orange px-3 py-1 rounded-md text-primary-orange">
+                  Criar conta
+                </button>
+              </Link>
+
+              <Link to={"/login"} className="">
+                <button className="px-3 py-1 bg-primary-orange border-primary-orange border text-white rounded-md">
+                  Entrar
+                </button>
+              </Link>
+            </div>
+          </>
         )}
       </ul>
     </div>
