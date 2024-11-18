@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import userCategories from "../components/user-page/userCategories";
 import { useUserStore } from "../store/userStore";
 
+import UserCategoryMenu from "../components/user-page/UserCategoryMenu";
 import UserInfo from "../components/user-page/UserInfo";
-import CategoryMenu from "../components/CategoryMenu";
 import Navbar from "../components/navbar/Navbar";
 import Center from "../components/Center";
 
@@ -53,7 +53,7 @@ const SingleUserPage = () => {
                 about={user.about}
               />
 
-              <CategoryMenu categories={userCategories} />
+              <UserCategoryMenu categories={userCategories} />
             </div>
           </>
         )}
