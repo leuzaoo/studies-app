@@ -31,7 +31,7 @@ const MenuItems = ({ isMenuOpen }) => {
       <ul className="flex flex-col justify-between h-full p-7">
         <div className="flex flex-col space-y-6 font-light">
           <Link
-            to={"/profile"}
+            to={`/${user.username}`}
             className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
           >
             <User strokeWidth={1} size={24} />
