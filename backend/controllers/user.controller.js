@@ -104,3 +104,22 @@ export const updatedProfile = async (req, res) => {
       .json({ success: false, message: "Erro no servidor interno." });
   }
 };
+
+export const getUserByUsername = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password"
+    );
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Usuário nao encontrado." });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error("Erro no controlador 'getUserByUsername': ", error.message);
+    res
+      .status(500)
+      .json({ success: false, message: "Erro no servidor interno." });
+  }
+};
