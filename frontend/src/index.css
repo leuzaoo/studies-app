@@ -24,6 +24,10 @@ body {
   border-radius: 0 !important;
 }
 
+.ant-popover-content {
+  width: 120px !important;
+}
+
 *::-webkit-scrollbar {
   height: 10px;
   width: 10px;

@@ -36,4 +36,13 @@ export const useUserStore = create((set) => ({
       throw error;
     }
   },
+
+  fetchUserProfile: async (username) => {
+    try {
+      const response = await axios.get(`${USER_API_URL}/${username}`);
+      return response.data.user;
+    } catch (error) {
+      throw error;
+    }
+  },
 }));

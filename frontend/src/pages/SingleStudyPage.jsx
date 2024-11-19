@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useParams } from "react-router-dom";
 import { Skeleton } from "antd";
 
 import styles from "../assets/singleStudyPage.module.css";
@@ -82,7 +82,10 @@ const SingleStudyPage = () => {
           </p>
 
           <div className="mt-3 mb-5 flex gap-3 items-center justify-between">
-            <div className="flex items-center gap-3">
+            <Link
+              to={`/${study.author.username}`}
+              className="flex items-center gap-3"
+            >
               <img
                 src={study?.author?.userImage || "/avatar2.png"}
                 className="size-10 rounded-full shadow-md"
@@ -94,7 +97,7 @@ const SingleStudyPage = () => {
                   {formatDate(study.createdAt)}
                 </span>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="h-[1px] bg-black opacity-20 mb-5" />

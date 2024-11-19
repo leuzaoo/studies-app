@@ -11,6 +11,7 @@ export default {
         "secondary-grey": "#c5c5c5",
         "terciary-grey": "#626262",
         "medium-grey": "#919191",
+        "light-grey": "#f1f1f1",
       },
       fontFamily: {
         outfit: ["Outfit", "sans-serif"],

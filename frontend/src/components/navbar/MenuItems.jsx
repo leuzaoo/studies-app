@@ -30,13 +30,23 @@ const MenuItems = ({ isMenuOpen }) => {
     >
       <ul className="flex flex-col justify-between h-full p-7">
         <div className="flex flex-col space-y-6 font-light">
-          <Link
-            to={"/profile"}
-            className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
-          >
-            <User strokeWidth={1} size={24} />
-            Perfil
-          </Link>
+          {!user ? (
+            <Link
+              to={`/login`}
+              className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
+            >
+              <User strokeWidth={1} size={24} />
+              Perfil
+            </Link>
+          ) : (
+            <Link
+              to={`/${user?.username}`}
+              className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
+            >
+              <User strokeWidth={1} size={24} />
+              Perfil
+            </Link>
+          )}
           <Link
             to={"/new-study"}
             className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
@@ -73,7 +83,21 @@ const MenuItems = ({ isMenuOpen }) => {
             />
           </motion.button>
         ) : (
-          ""
+          <>
+            <div className="flex items-center gap-5 justify-center">
+              <Link to={"/signup"} className="">
+                <button className="border border-primary-orange px-3 py-1 rounded-md text-primary-orange">
+                  Criar conta
+                </button>
+              </Link>
+
+              <Link to={"/login"} className="">
+                <button className="px-3 py-1 bg-primary-orange border-primary-orange border text-white rounded-md">
+                  Entrar
+                </button>
+              </Link>
+            </div>
+          </>
         )}
       </ul>
     </div>

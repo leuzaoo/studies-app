@@ -7,13 +7,13 @@ import LoadingSpinner from "./components/LoadingSpiner";
 import { useAuthStore } from "./store/authStore";
 
 import SingleStudyPage from "./pages/SingleStudyPage";
+import SingleUserPage from "./pages/SingleUserPage";
 import EditStudyPage from "./pages/EditStudyPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import MyStudies from "./pages/MyStudies";
 import Settings from "./pages/Settings";
 import Homepage from "./pages/Homepage";
 import NewStudy from "./pages/NewStudy";
-import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 
@@ -80,6 +80,8 @@ function App() {
 
         <Route path="/study/:id" element={<SingleStudyPage />} />
 
+        <Route path="/:username" element={<SingleUserPage />} />
+
         <Route
           path="/study/edit/:id"
           element={
@@ -94,15 +96,6 @@ function App() {
           element={
             <ProtectedRoute>
               <Settings />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
             </ProtectedRoute>
           }
         />
