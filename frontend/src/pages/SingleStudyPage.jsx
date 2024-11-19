@@ -3,26 +3,31 @@ import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Skeleton } from "antd";
 
+import { useCommentStore } from "../store/commentsStore.js";
 import styles from "../assets/singleStudyPage.module.css";
 import { useStudyStore } from "../store/studyStore.js";
-import { formatDate } from "../utils/formatDate.js";
 
 import ProgressBar from "../components/ProgressBar.jsx";
 import Navbar from "../components/navbar/Navbar.jsx";
+import { formatDate } from "../utils/formatDate.js";
 import Center from "../components/Center.jsx";
 
 const SingleStudyPage = () => {
   const mainRef = useRef(null);
-
   const { id } = useParams();
 
   const { fetchSingleStudy } = useStudyStore();
+  const { fetchComments, addComment, comments } = useCommentStore();
+
   const [study, setStudy] = useState(null);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     const getStudy = async () => {
       try {
         const fetchedStudy = await fetchSingleStudy(id);
+
+        console.log(fetchedStudy);
         setStudy(fetchedStudy);
       } catch (error) {
         console.error("Erro ao buscar estudo:", error);
@@ -31,8 +36,16 @@ const SingleStudyPage = () => {
 
     if (id) {
       getStudy();
+      fetchComments(id);
     }
-  }, [id, fetchSingleStudy]);
+  }, [id, fetchSingleStudy, fetchComments]);
+
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    await addComment(id, { content: newComment });
+    setNewComment("");
+    fetchComments(id);
+  };
 
   if (!study)
     return (
@@ -105,6 +118,39 @@ const SingleStudyPage = () => {
             className={`${styles.content}`}
             dangerouslySetInnerHTML={{ __html: study.content }}
           />
+
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold mb-4">Comentários</h2>
+            <div className="mb-5">
+              <textarea
+                className="w-full p-3 border rounded"
+                rows="3"
+                placeholder="Adicione um comentário..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <button
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={handleAddComment}
+              >
+                Comentar
+              </button>
+            </div>
+
+            {Array.isArray(comments) && comments ? (
+              comments.map((comment) => (
+                <div key={comment._id} className="mb-5 border-b pb-3">
+                  <p className="font-semibold">{comment.user.username}</p>
+                  <p>{comment.content}</p>
+                  <span className="text-xs text-gray-500">
+                    {formatDate(comment.createdAt)}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum comentário disponível.</p>
+            )}
+          </div>
         </div>
       </Center>
     </>

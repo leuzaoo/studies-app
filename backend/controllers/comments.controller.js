@@ -2,19 +2,18 @@ import Comment from "../models/comment.model.js";
 import Study from "../models/study.model.js";
 
 export const newComment = async (req, res) => {
-  const { content, userId } = req.body;
+  const { content } = req.body;
 
   try {
     const newComment = new Comment({
       study: req.params.id,
-      user: userId,
+      author: req.user._id,
       content,
     });
 
     await newComment.save();
-
     await Study.findByIdAndUpdate(req.params.id, {
-      $push: { comments: newComment._id },
+      $push: { comments: newComment.id },
     });
 
     res.status(200).json({
@@ -37,7 +36,7 @@ export const getStudyComments = async (req, res) => {
       .populate("author", "username userImage")
       .sort({ createdAt: -1 });
 
-    res.status(200).json({ comments });
+    res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({
       success: false,
