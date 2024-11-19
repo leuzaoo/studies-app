@@ -58,7 +58,7 @@ const SingleStudyPage = () => {
       <Navbar />
 
       <Center>
-        <div ref={mainRef} className="max-w-screen-sm mx-auto">
+        <div ref={mainRef} className="max-w-screen-md mx-auto">
           <ProgressBar target={mainRef} />
 
           <img
