@@ -43,14 +43,6 @@ const studySchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -60,11 +52,8 @@ const studySchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    rating: {
-      type: Number,
-      min: 1,
-      max: 5,
-    },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     timestamps: true,
