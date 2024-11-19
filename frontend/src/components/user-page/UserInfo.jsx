@@ -1,5 +1,5 @@
 import { Eye, MessageCircle, NotebookPen, ThumbsUp } from "lucide-react";
-import { Button, Popover } from "antd";
+import { Popover } from "antd";
 
 const UserInfo = ({ userImage, name, username, about }) => {
   return (
@@ -17,9 +17,11 @@ const UserInfo = ({ userImage, name, username, about }) => {
         @{username}
       </h1>
 
-      <p className="text-sm p-3 md:text-lg bg-light-grey rounded-[20px] mt-5">
-        {about}
-      </p>
+      {about && (
+        <p className="text-sm p-3 md:text-lg bg-light-grey rounded-[20px] mt-5">
+          {about}
+        </p>
+      )}
 
       <div className="mt-5 w-full flex justify-between gap-5">
         <Popover
