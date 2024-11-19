@@ -17,6 +17,10 @@ const studySchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    isPublic: {
+      type: Boolean,
+      default: false,
+    },
     content: {
       type: String,
       required: true,
@@ -51,10 +55,6 @@ const studySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    },
-    isPublished: {
-      type: Boolean,
-      default: false,
     },
     views: {
       type: Number,

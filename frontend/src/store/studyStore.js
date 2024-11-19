@@ -46,7 +46,8 @@ export const useStudyStore = create((set) => ({
     content,
     category,
     tags,
-    bannerImage
+    bannerImage,
+    isPublic
   ) => {
     set({ isLoading: true, error: null });
 
@@ -58,6 +59,7 @@ export const useStudyStore = create((set) => ({
         category,
         tags,
         bannerImage,
+        isPublic,
       });
 
       set({ isLoading: false });
