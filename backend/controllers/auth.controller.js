@@ -76,10 +76,17 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    if (!username || !password) {
+    if (!username) {
       return res.status(400).json({
         success: false,
-        message: "Preencha todos os campos.",
+        message: "Preencha o campo de nome de usuário.",
+      });
+    }
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        message: "Preencha o campo de senha.",
       });
     }
 
@@ -121,9 +128,7 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   try {
     res.clearCookie("jwt-studies");
-    res
-      .status(200)
-      .json({ success: true, message: "Logout feito com sucesso." });
+    res.status(200).json({ success: true, message: "Você saiu da sua conta." });
   } catch (error) {
     console.log("Erro no controlador de logout.", error.message);
     res

@@ -52,15 +52,25 @@ export const useStudyStore = create((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await axios.post(`${STUDIES_API_URL}/new-study`, {
-        title,
-        description,
-        content,
-        category,
-        tags,
-        bannerImage,
-        isPublic,
-      });
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      const response = await axios.post(
+        `${STUDIES_API_URL}/new-study`,
+        {
+          title,
+          description,
+          content,
+          category,
+          tags,
+          bannerImage,
+          isPublic,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       set({ isLoading: false });
       toast.success(response.data.message || "Estudo criado com sucesso");

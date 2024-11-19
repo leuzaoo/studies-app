@@ -92,7 +92,7 @@ export const useAuthStore = create((set) => ({
   },
 
   authCheck: async () => {
-    await new Promise((resolver) => setTimeout(resolver, 1000));
+    await new Promise((resolver) => setTimeout(resolver, 500));
     set({ isCheckingAuth: true, error: null });
 
     try {
