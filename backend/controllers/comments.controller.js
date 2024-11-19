@@ -33,7 +33,7 @@ export const newComment = async (req, res) => {
 export const getStudyCommentsById = async (req, res) => {
   try {
     const comments = await Comment.find({ study: req.params.id })
-      .populate("author", "username userImage")
+      .populate("author", "username userImage name")
       .sort({ createdAt: -1 });
 
     res.status(200).json(comments);
