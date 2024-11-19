@@ -59,10 +59,13 @@ export const searchByCategory = async (req, res) => {
 
 export const getStudyById = async (req, res) => {
   try {
-    const study = await Study.findById(req.params.id).populate(
-      "author",
-      "username userImage"
-    );
+    const study = await Study.findById(req.params.id)
+      .populate({
+        path: "comments",
+        populate: { path: "author", select: "username userImage" },
+      })
+      .populate("author", "username userImage");
+
     if (!study) {
       return res
         .status(404)

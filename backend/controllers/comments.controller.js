@@ -30,7 +30,7 @@ export const newComment = async (req, res) => {
   }
 };
 
-export const getStudyComments = async (req, res) => {
+export const getStudyCommentsById = async (req, res) => {
   try {
     const comments = await Comment.find({ study: req.params.id })
       .populate("author", "username userImage")

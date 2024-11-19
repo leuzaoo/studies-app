@@ -8,7 +8,9 @@ export const useCommentStore = create((set) => ({
   fetchComments: async (studyId) => {
     set({ loading: true });
     try {
-      const response = await axios.get(`/study/${studyId}/comments`);
+      const response = await axios.get(
+        `/api/v1/comments/study/${studyId}/comments`
+      );
       set({ comments: response.data, loading: false });
     } catch (error) {
       console.error("Erro ao buscar comentários:", error);
