@@ -8,6 +8,7 @@ const MyStudiesStudyCard = ({
   bannerImage,
   _id,
   createdAt,
+  isPublic,
 }) => {
   return (
     <>
@@ -22,9 +23,13 @@ const MyStudiesStudyCard = ({
           <p className="leading-none text-sm md:text-base font-light">
             {description}
           </p>
-          <p className="font-light text-terciary-grey text-[12px] md:text-sm mt-1">
-            Criado em {formatDate(createdAt)}
-          </p>
+          <div className="flex items-center gap-3 w-full">
+            <p className="font-light text-terciary-grey text-[12px] md:text-sm mt-1">
+              Criado em {formatDate(createdAt)}
+            </p>
+
+            <p className="text-[12px] md:text-sm mt-1">{isPublic}</p>
+          </div>
         </div>
         <img
           src={`${bannerImage || "./banner.jpg"}`}

@@ -34,6 +34,7 @@ const NewStudy = () => {
     content: "",
     tags: [],
     bannerImage: "",
+    isPublic: false,
   });
 
   const { createStudy } = useStudyStore();
@@ -77,8 +78,15 @@ const NewStudy = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, description, content, category, tags, bannerImage } =
-      formData;
+    const {
+      title,
+      description,
+      content,
+      category,
+      tags,
+      bannerImage,
+      isPublic,
+    } = formData;
 
     try {
       const res = await createStudy(
@@ -87,7 +95,8 @@ const NewStudy = () => {
         content,
         category,
         tags,
-        bannerImage
+        bannerImage,
+        isPublic
       );
 
       if (res?.startsWith("2")) {
@@ -175,6 +184,25 @@ const NewStudy = () => {
               value={formData.tags}
             />
 
+            <LabelFormTitle text="Visibilidade" />
+            <div className="flex flex-col items-start gap-3 mb-5">
+              <p>Gostaria de exibir para todos os usuários?</p>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="checkbox"
+                  name="isPublic"
+                  placeholder="Sim"
+                  checked={formData.isPublic}
+                  onChange={(e) => {
+                    const updatedValue = e.target.checked;
+                    setFormData({ ...formData, isPublic: updatedValue });
+                  }}
+                />
+                <span>Sim, exibir.</span>
+              </div>
+            </div>
+
+            <LabelFormTitle text="Conteúdo" />
             <TextEditor
               value={formData.content}
               onChange={handleInputChange("content")}
