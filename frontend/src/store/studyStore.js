@@ -85,6 +85,7 @@ export const useStudyStore = create((set) => ({
 
   fetchUserStudies: async () => {
     set({ isLoading: true, error: null });
+
     try {
       const response = await axios.get(`${STUDIES_API_URL}/user-studies`);
       set({ studies: response.data.userStudies, isLoading: false });
@@ -99,6 +100,11 @@ export const useStudyStore = create((set) => ({
 
   updateStudy: async (id, updatedData) => {
     set({ isLoading: true, error: null });
+
+    if (updatedData.isPublic !== undefined) {
+      updatedData.isPublic =
+        updatedData.isPublic === "true" || updatedData.isPublic === true;
+    }
 
     try {
       const response = await axios.put(

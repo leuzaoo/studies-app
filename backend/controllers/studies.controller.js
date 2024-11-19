@@ -120,10 +120,7 @@ export const createStudy = async (req, res) => {
       tags,
       author: req.user._id,
       bannerImage,
-      isPublic:
-        typeof isPublic !== "undefined"
-          ? isPublic === true || isPublic === "true"
-          : false,
+      isPublic: isPublic === "true" || isPublic === true,
     });
 
     await newStudy.save();
@@ -149,8 +146,14 @@ export const updateStudy = async (req, res) => {
     const updatedData = {};
 
     for (const field of allowedFields) {
-      if (req.body[field]) {
-        updatedData[field] = req.body[field];
+      if (req.body[field] !== undefined) {
+        // Aqui, garantimos que 'isPublic' seja tratado como booleano
+        if (field === "isPublic") {
+          updatedData[field] =
+            req.body[field] === "true" || req.body[field] === true;
+        } else {
+          updatedData[field] = req.body[field];
+        }
       }
     }
 

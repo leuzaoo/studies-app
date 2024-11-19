@@ -1,7 +1,7 @@
 import imageCompression from "browser-image-compression";
 import { ToastContainer, toast } from "react-toastify";
 import { useState, useCallback } from "react";
-import { Select } from "antd";
+import { Select, Switch } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import InputNewStudy from "../components/InputNewStudy";
@@ -186,20 +186,15 @@ const NewStudy = () => {
 
             <LabelFormTitle text="Visibilidade" />
             <div className="flex flex-col items-start gap-3 mb-5">
-              <p>Gostaria de exibir para todos os usuários?</p>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  name="isPublic"
-                  placeholder="Sim"
-                  checked={formData.isPublic}
-                  onChange={(e) => {
-                    const updatedValue = e.target.checked;
-                    setFormData({ ...formData, isPublic: updatedValue });
-                  }}
-                />
-                <span>Sim, exibir.</span>
-              </div>
+              <Switch
+                checked={formData.isPublic}
+                onChange={(checked) => {
+                  setFormData((prev) => ({ ...prev, isPublic: checked }));
+                }}
+                style={{ width: "100%", marginTop: "4px" }}
+                checkedChildren="Público"
+                unCheckedChildren="Privado"
+              />
             </div>
 
             <LabelFormTitle text="Conteúdo" />
