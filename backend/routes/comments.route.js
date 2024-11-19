@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.get("/study/:id/comments", getStudyComments);
 
-router.post("/study/:id/comment", verifyToken, newComment);
+router.post("/study/:id/new-comment", verifyToken, newComment);
 
 export default router;
