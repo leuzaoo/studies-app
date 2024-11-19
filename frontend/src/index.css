@@ -24,6 +24,10 @@ body {
   border-radius: 0 !important;
 }
 
+.ant-switch {
+  width: 80px !important;
+}
+
 .ant-popover-content {
   width: 120px !important;
 }
