@@ -26,8 +26,6 @@ const SingleStudyPage = () => {
     const getStudy = async () => {
       try {
         const fetchedStudy = await fetchSingleStudy(id);
-
-        console.log(fetchedStudy);
         setStudy(fetchedStudy);
       } catch (error) {
         console.error("Erro ao buscar estudo:", error);
@@ -137,19 +135,32 @@ const SingleStudyPage = () => {
               </button>
             </div>
 
-            {Array.isArray(comments) && comments ? (
-              comments.map((comment) => (
-                <div key={comment._id} className="mb-5 border-b pb-3">
-                  <p className="font-semibold">{comment.user.username}</p>
+            {comments.map((comment) => (
+              <div
+                key={comment._id}
+                className="flex items-center justify-start gap-3 border mb-3 p-3 rounded-md"
+              >
+                <img
+                  src={comment.author.userImage}
+                  className="size-10 rounded-full shadow-md"
+                  alt={`${comment.author.username} profile image`}
+                />
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-3">
+                    <p className="text-lg font-semibold">
+                      {comment.author.name}
+                    </p>
+                    <p className="text-sm font-light text-terciary-grey">
+                      @{comment.author.username}
+                    </p>
+                    <p className="text-sm font-light text-terciary-grey">
+                      {formatDate(comment.createdAt)}
+                    </p>
+                  </div>
                   <p>{comment.content}</p>
-                  <span className="text-xs text-gray-500">
-                    {formatDate(comment.createdAt)}
-                  </span>
                 </div>
-              ))
-            ) : (
-              <p>Nenhum comentário disponível.</p>
-            )}
+              </div>
+            ))}
           </div>
         </div>
       </Center>
