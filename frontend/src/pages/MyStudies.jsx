@@ -24,6 +24,8 @@ const MyStudies = () => {
     fetchUserStudies();
   }, [fetchUserStudies]);
 
+  console.log(studies);
+
   const handleDelete = (id) => {
     confirmAlert({
       title: "Você tem certeza que deseja excluir este conteúdo?",
@@ -86,6 +88,13 @@ const MyStudies = () => {
           bannerImage={study.bannerImage}
           title={study.title}
           content={study.content}
+          isPublic={
+            study.isPublic === true ? (
+              <p className="font-semibold text-green-600">Público</p>
+            ) : (
+              <p className="font-semibold text-red-700">Privado</p>
+            )
+          }
         />
 
         <Dropdown

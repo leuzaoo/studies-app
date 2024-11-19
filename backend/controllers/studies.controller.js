@@ -2,7 +2,7 @@ import Study from "../models/study.model.js";
 
 export const allStudies = async (req, res) => {
   try {
-    const studies = await Study.find({}).populate(
+    const studies = await Study.find({ isPublic: true }).populate(
       "author",
       "username userImage"
     );
@@ -55,41 +55,6 @@ export const searchByCategory = async (req, res) => {
   }
 };
 
-export const createStudy = async (req, res) => {
-  try {
-    const { title, description, content, category, tags, bannerImage } =
-      req.body;
-
-    if (!title || !content || !category || !description || !bannerImage) {
-      return res
-        .status(400)
-        .json({ message: "Complete todos os campos obrigatórios." });
-    }
-
-    if (bannerImage && bannerImage.length > 2000000) {
-      return res
-        .status(400)
-        .json({ message: "A imagem deve ter menos de 4MB." });
-    }
-
-    const newStudy = new Study({
-      title,
-      content,
-      description,
-      category,
-      tags,
-      author: req.user._id,
-      bannerImage,
-    });
-
-    await newStudy.save();
-    return res.status(201).json({ message: "Estudo criado com sucesso." });
-  } catch (error) {
-    console.error("Erro no controlador createStudy:", error);
-    res.status(500).json({ message: "Erro no servidor interno" });
-  }
-};
-
 export const getStudyById = async (req, res) => {
   try {
     const study = await Study.findById(req.params.id).populate(
@@ -123,25 +88,45 @@ export const getUserStudies = async (req, res) => {
   }
 };
 
-export const deleteStudy = async (req, res) => {
+export const createStudy = async (req, res) => {
   try {
-    const study = await Study.findById(req.params.id);
-    if (!study) {
+    const {
+      title,
+      description,
+      content,
+      category,
+      tags,
+      bannerImage,
+      isPublic,
+    } = req.body;
+
+    if (!title || !content || !category || !description || !bannerImage) {
       return res
-        .status(404)
-        .json({ message: "Estudo não encontrado ou inexistente." });
+        .status(400)
+        .json({ message: "Complete todos os campos obrigatórios." });
     }
 
-    if (study.author.toString() !== req.user._id.toString()) {
+    if (bannerImage && bannerImage.length > 2000000) {
       return res
-        .status(401)
-        .json({ message: "Sem permissão para excluir este conteúdo." });
+        .status(400)
+        .json({ message: "A imagem deve ter menos de 4MB." });
     }
 
-    await Study.findByIdAndDelete(req.params.id);
-    return res.status(200).json({ message: "Estudo excluído com sucesso." });
+    const newStudy = new Study({
+      title,
+      content,
+      description,
+      category,
+      tags,
+      author: req.user._id,
+      bannerImage,
+      isPublic: isPublic === "true" || isPublic === true,
+    });
+
+    await newStudy.save();
+    return res.status(201).json({ message: "Estudo criado com sucesso." });
   } catch (error) {
-    console.error("Erro no controlador deleteStudy:", error);
+    console.error("Erro no controlador createStudy:", error);
     res.status(500).json({ message: "Erro no servidor interno" });
   }
 };
@@ -155,13 +140,20 @@ export const updateStudy = async (req, res) => {
       "category",
       "tags",
       "bannerImage",
+      "isPublic",
     ];
 
     const updatedData = {};
 
     for (const field of allowedFields) {
-      if (req.body[field]) {
-        updatedData[field] = req.body[field];
+      if (req.body[field] !== undefined) {
+        // Aqui, garantimos que 'isPublic' seja tratado como booleano
+        if (field === "isPublic") {
+          updatedData[field] =
+            req.body[field] === "true" || req.body[field] === true;
+        } else {
+          updatedData[field] = req.body[field];
+        }
       }
     }
 
@@ -186,5 +178,28 @@ export const updateStudy = async (req, res) => {
   } catch (error) {
     console.error("Erro ao atualizar estudo:", error);
     res.status(500).json({ error: "Erro ao atualizar estudo" });
+  }
+};
+
+export const deleteStudy = async (req, res) => {
+  try {
+    const study = await Study.findById(req.params.id);
+    if (!study) {
+      return res
+        .status(404)
+        .json({ message: "Estudo não encontrado ou inexistente." });
+    }
+
+    if (study.author.toString() !== req.user._id.toString()) {
+      return res
+        .status(401)
+        .json({ message: "Sem permissão para excluir este conteúdo." });
+    }
+
+    await Study.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ message: "Estudo excluído com sucesso." });
+  } catch (error) {
+    console.error("Erro no controlador deleteStudy:", error);
+    res.status(500).json({ message: "Erro no servidor interno" });
   }
 };

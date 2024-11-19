@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { ToastContainer, toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import { Select } from "antd";
+import { Select, Switch } from "antd";
 
 import InputNewStudy from "../components/InputNewStudy.jsx";
 import LabelFormTitle from "../components/LabelFormTitle";
@@ -26,6 +26,7 @@ const EditStudyPage = () => {
   const [description, setDescription] = useState("");
   const [bannerImage, setBannerImage] = useState("");
   const [category, setCategory] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
@@ -78,6 +79,7 @@ const EditStudyPage = () => {
           setDescription(fetchedStudy.description);
           setBannerImage(fetchedStudy.bannerImage);
           setCategory(fetchedStudy.category);
+          setIsPublic(fetchedStudy.isPublic);
           setContent(fetchedStudy.content);
           setLoadedStudy(fetchedStudy);
           setTitle(fetchedStudy.title);
@@ -96,6 +98,8 @@ const EditStudyPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("estado de Visibibilidade", isPublic);
+
     const updatedData = {
       title,
       description,
@@ -103,6 +107,7 @@ const EditStudyPage = () => {
       category,
       tags,
       bannerImage,
+      isPublic,
     };
 
     try {
@@ -225,6 +230,15 @@ const EditStudyPage = () => {
                   onChange={handleTagsChange}
                   value={tags}
                   notFoundContent={null}
+                />
+
+                <LabelFormTitle text={"Visibibilidade"} />
+                <Switch
+                  checked={isPublic}
+                  onChange={(checked) => setIsPublic(checked)}
+                  checkedChildren="Público"
+                  unCheckedChildren="Privado"
+                  style={{ marginBottom: 12 }}
                 />
 
                 <TextEditor value={content} onChange={setContent} />

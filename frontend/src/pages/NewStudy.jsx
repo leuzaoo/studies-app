@@ -1,7 +1,7 @@
 import imageCompression from "browser-image-compression";
 import { ToastContainer, toast } from "react-toastify";
 import { useState, useCallback } from "react";
-import { Select } from "antd";
+import { Select, Switch } from "antd";
 
 import LabelFormTitle from "../components/LabelFormTitle";
 import InputNewStudy from "../components/InputNewStudy";
@@ -34,6 +34,7 @@ const NewStudy = () => {
     content: "",
     tags: [],
     bannerImage: "",
+    isPublic: false,
   });
 
   const { createStudy } = useStudyStore();
@@ -77,8 +78,15 @@ const NewStudy = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, description, content, category, tags, bannerImage } =
-      formData;
+    const {
+      title,
+      description,
+      content,
+      category,
+      tags,
+      bannerImage,
+      isPublic,
+    } = formData;
 
     try {
       const res = await createStudy(
@@ -87,7 +95,8 @@ const NewStudy = () => {
         content,
         category,
         tags,
-        bannerImage
+        bannerImage,
+        isPublic
       );
 
       if (res?.startsWith("2")) {
@@ -175,6 +184,20 @@ const NewStudy = () => {
               value={formData.tags}
             />
 
+            <LabelFormTitle text="Visibilidade" />
+            <div className="flex flex-col items-start gap-3 mb-5">
+              <Switch
+                checked={formData.isPublic}
+                onChange={(checked) => {
+                  setFormData((prev) => ({ ...prev, isPublic: checked }));
+                }}
+                style={{ width: "100%", marginTop: "4px" }}
+                checkedChildren="Público"
+                unCheckedChildren="Privado"
+              />
+            </div>
+
+            <LabelFormTitle text="Conteúdo" />
             <TextEditor
               value={formData.content}
               onChange={handleInputChange("content")}
