@@ -102,74 +102,92 @@ const Settings = () => {
       <Navbar />
       <Center>
         <TitlePage text="Sobre mim" className={"hidden"} />
+
         <form onSubmit={handleSubmit}>
           <div>
             <LabelFormTitle htmlFor="fotoPerfil" text="Foto do perfil" />
             <div className="flex items-center mt-2 gap-5 max-w-max">
-              <img
-                src={profilePicture || user?.userImage || "./avatar2.png"}
-                className="size-10 rounded-full shadow-md"
-                alt="user profile image"
-              />
-              <div className="flex flex-col">
-                <input
-                  type="file"
-                  id="fotoPerfil"
-                  className="hidden"
-                  onChange={handleProfilePictureChange}
+              <figure className="flex items-center gap-3">
+                <img
+                  src={profilePicture || user?.userImage || "./avatar2.png"}
+                  className="size-10 rounded-full shadow-md"
+                  alt="user profile image"
                 />
-                <label
-                  className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-2 py-2 rounded-lg hover:bg-cyan-500 transition-all duration-200"
-                  htmlFor="fotoPerfil"
-                >
-                  Alterar imagem
-                </label>
-              </div>
+
+                <div className="flex flex-col">
+                  <input
+                    type="file"
+                    id="fotoPerfil"
+                    className="hidden"
+                    onChange={handleProfilePictureChange}
+                  />
+                  <label
+                    className="text-sm md:text-base cursor-pointer bg-cyan-600 text-primary-bg px-3 py-1 rounded-lg hover:bg-cyan-500 transition-all duration-200"
+                    htmlFor="fotoPerfil"
+                  >
+                    Alterar imagem
+                  </label>
+                </div>
+              </figure>
             </div>
           </div>
 
-          <div className="mt-5">
-            <LabelFormTitle text="Nome pessoal" />
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-2 font-bold font-domine"
-            />
-          </div>
+          <section>
+            <h1 className="hidden">Informações pessoais</h1>
+            <section>
+              <h1 className="hidden">Nome pessoal</h1>
+              <div className="mt-5">
+                <LabelFormTitle text="Nome pessoal" />
+                <Input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-2 font-bold font-domine"
+                />
+              </div>
+            </section>
 
-          <div className="mt-5">
-            <LabelFormTitle text="Nome de usuário" />
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-2 font-bold font-domine"
-            />
-          </div>
+            <section>
+              <h1 className="hidden">Nome de usuário</h1>
+              <div className="mt-5">
+                <LabelFormTitle text="Nome de usuário" />
+                <Input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="mt-2 font-bold font-domine"
+                />
+              </div>
+            </section>
 
-          <div className="mt-5">
-            <LabelFormTitle text="Email" />
-            <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 font-bold font-domine"
-            />
-          </div>
+            <section>
+              <h1 className="hidden">Email</h1>
+              <div className="mt-5">
+                <LabelFormTitle text="Email" />
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-2 font-bold font-domine"
+                />
+              </div>
+            </section>
 
-          <div className="mt-5">
-            <LabelFormTitle text="Sobre mim" />
-            <TextArea
-              type="text"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-              className="mt-2 font-bold font-domine"
-            />
-          </div>
-
-          {error && <p className="text-red-500 mt-3">{error}</p>}
-          {message && <p className="text-green-500 mt-3">{message}</p>}
+            <section>
+            <h1 className="hidden">Sobre</h1>
+              <div className="mt-5">
+                <LabelFormTitle text="Sobre mim" />
+                <TextArea
+                  type="text"
+                  value={about}
+                  onChange={(e) => setAbout(e.target.value)}
+                  className="mt-2 font-bold font-domine"
+                />
+              </div>
+            </section>
+            {error && <p className="text-red-500 mt-3">{error}</p>}
+            {message && <p className="text-green-500 mt-3">{message}</p>}
+          </section>
 
           <div className="w-full text-right mt-5">
             <motion.button
