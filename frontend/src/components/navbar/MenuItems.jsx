@@ -23,7 +23,7 @@ const MenuItems = ({ isMenuOpen }) => {
   };
 
   return (
-    <div
+    <aside
       className={`fixed top-0 right-0 h-full bg-white shadow-lg w-4/5 max-w-xs transition-transform duration-300 ease-in-out z-40 ${
         isMenuOpen ? "translate-x-0" : "translate-x-full"
       }`}
@@ -36,7 +36,6 @@ const MenuItems = ({ isMenuOpen }) => {
               className="flex items-center gap-5 text-lg hover:text-gray-500 cursor-pointer"
             >
               <User strokeWidth={1} size={24} />
-              Perfil
             </Link>
           ) : (
             <Link
@@ -100,7 +99,7 @@ const MenuItems = ({ isMenuOpen }) => {
           </>
         )}
       </ul>
-    </div>
+    </aside>
   );
 };
 

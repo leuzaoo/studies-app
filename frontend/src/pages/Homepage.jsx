@@ -51,13 +51,13 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <Center className="font-outfit">
-        <div>
+      <Center>
+        <section>
           <TitlePage text={"Descubra"} />
           <p className="text-sm text-medium-grey">
             Selecione o tema do estudo que deseja ver
           </p>
-        </div>
+        </section>
 
         <SearchBar
           searchQuery={searchQuery}

@@ -19,9 +19,10 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
+        <div className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
+          <h1 className="hidden">Homepage</h1>
           <Link to={"/"}>
-            <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            <span className="text-3xl font-domine font-bold">studies.</span>
           </Link>
 
           {user ? (
@@ -79,7 +80,7 @@ const Navbar = () => {
                     </button>
                   </Link>
 
-                  <Link to={"/login"}  className="hidden lg:flex items-center">
+                  <Link to={"/login"} className="hidden lg:flex items-center">
                     <button className="px-3 py-1 bg-primary-orange border-primary-orange border text-white rounded-md">
                       Entrar
                     </button>
@@ -120,7 +121,7 @@ const Navbar = () => {
               onClick={toggleMenu}
             />
           )}
-        </nav>
+        </div>
       </header>
 
       <div className="h-[1px] bg-black opacity-5" />
