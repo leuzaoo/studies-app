@@ -3,7 +3,7 @@ import HomepageStudyCard from "./HomepageStudyCard";
 const Results = ({ results }) => {
   return (
     <div className="my-5">
-      <h3 className="font-semibold text-2xl">Resultados</h3>
+      <h1 className="font-semibold text-2xl">Resultados</h1>
       <ul className="list-none p-0">
         {Array.isArray(results) && results.length > 0 ? (
           results.map((study) => (

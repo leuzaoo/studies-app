@@ -20,7 +20,6 @@ const Navbar = () => {
     <>
       <header>
         <div className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
-          <h1 className="hidden">Homepage</h1>
           <Link to={"/"}>
             <span className="text-3xl font-domine font-bold">studies.</span>
           </Link>

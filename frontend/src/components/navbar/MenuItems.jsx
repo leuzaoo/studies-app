@@ -28,6 +28,18 @@ const MenuItems = ({ isMenuOpen }) => {
         isMenuOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
+      <Link to={"/profile"} className="hidden">
+        <h4>Perfil</h4>
+      </Link>
+      <Link to={"/new-study"} className="hidden">
+        <h4>Novo estudo</h4>
+      </Link>
+      <Link to={"/my-studies"} className="hidden">
+        <h4>Estudoteca</h4>
+      </Link>
+      <Link to={"/settings"} className="hidden">
+        <h4>Configurações</h4>
+      </Link>
       <ul className="flex flex-col justify-between h-full p-7">
         <div className="flex flex-col space-y-6 font-light">
           {!user ? (
