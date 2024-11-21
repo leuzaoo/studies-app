@@ -86,6 +86,7 @@ const MyStudies = () => {
           bannerImage={study.bannerImage}
           title={study.title}
           content={study.content}
+          commentsCount={study.comments.length}
           isPublic={
             study.isPublic === true ? (
               <p className="font-semibold text-green-600">Público</p>
