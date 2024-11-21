@@ -46,3 +46,20 @@ export const getStudyCommentsById = async (req, res) => {
     });
   }
 };
+
+export const deleteComment = async (req, res) => {
+  try {
+    await Comment.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      success: true,
+      message: "Comentário excluído.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message:
+        error.message ||
+        "Erro inesperado ao excluir comentário. Tente mais tarde.",
+    });
+  }
+};

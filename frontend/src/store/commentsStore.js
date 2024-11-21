@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const COMMENTS_API_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000/api/v1/comments"
+    : "/api/v1/comments";
+
 export const useCommentStore = create((set) => ({
   comments: [],
   loading: false,
@@ -9,7 +14,7 @@ export const useCommentStore = create((set) => ({
     set({ loading: true });
     try {
       const response = await axios.get(
-        `/api/v1/comments/study/${studyId}/comments`
+        `${COMMENTS_API_URL}/study/${studyId}/comments`
       );
       set({ comments: response.data, loading: false });
     } catch (error) {
@@ -21,7 +26,7 @@ export const useCommentStore = create((set) => ({
   addComment: async (studyId, commentData) => {
     try {
       const response = await axios.post(
-        `/studies/${studyId}/comment`,
+        `${COMMENTS_API_URL}/study/${studyId}/new-comment`,
         commentData
       );
       set((state) => ({
@@ -29,6 +34,17 @@ export const useCommentStore = create((set) => ({
       }));
     } catch (error) {
       console.error("Erro ao adicionar comentário:", error);
+    }
+  },
+
+  deleteComment: async (commentId) => {
+    try {
+      await axios.delete(`${COMMENTS_API_URL}/comment/${commentId}`);
+      set((state) => ({
+        comments: state.comments.filter((comment) => comment._id !== commentId),
+      }));
+    } catch (error) {
+      console.error("Erro ao excluir comentário:", error);
     }
   },
 }));
