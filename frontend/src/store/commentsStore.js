@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { create } from "zustand";
 import axios from "axios";
 
@@ -32,19 +33,35 @@ export const useCommentStore = create((set) => ({
       set((state) => ({
         comments: [response.data, ...state.comments],
       }));
+      toast.success(
+        response.data.message || "Comentário adicionado com sucesso."
+      );
     } catch (error) {
+      toast.error(
+        response.data.message ||
+          "Erro ao adicionar comentário. Tente mais tarde."
+      );
       console.error("Erro ao adicionar comentário:", error);
     }
   },
 
   deleteComment: async (commentId) => {
     try {
-      await axios.delete(`${COMMENTS_API_URL}/comment/${commentId}`);
+      const response = await axios.delete(
+        `${COMMENTS_API_URL}/comment/${commentId}`
+      );
       set((state) => ({
         comments: state.comments.filter((comment) => comment._id !== commentId),
       }));
+      toast.success(
+        response.data.message || "Comentário excluído com sucesso."
+      );
     } catch (error) {
       console.error("Erro ao excluir comentário:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Erro ao excluir comentário. Tente mais tarde."
+      );
     }
   },
 }));
