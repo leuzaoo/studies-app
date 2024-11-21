@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Skeleton } from "antd";
@@ -6,8 +7,11 @@ import { Skeleton } from "antd";
 import { useCommentStore } from "../store/commentsStore.js";
 import styles from "../assets/singleStudyPage.module.css";
 import { useStudyStore } from "../store/studyStore.js";
+import { useAuthStore } from "../store/authStore.js";
+import Button from "../components/Button.jsx";
 
 import ProgressBar from "../components/ProgressBar.jsx";
+import { Trash2, UserCircle2Icon } from "lucide-react";
 import Navbar from "../components/navbar/Navbar.jsx";
 import { formatDate } from "../utils/formatDate.js";
 import Center from "../components/Center.jsx";
@@ -16,8 +20,11 @@ const SingleStudyPage = () => {
   const mainRef = useRef(null);
   const { id } = useParams();
 
+  const { user } = useAuthStore();
+
   const { fetchSingleStudy } = useStudyStore();
-  const { fetchComments, addComment, comments } = useCommentStore();
+  const { fetchComments, addComment, comments, deleteComment } =
+    useCommentStore();
 
   const [study, setStudy] = useState(null);
   const [newComment, setNewComment] = useState("");
@@ -43,6 +50,21 @@ const SingleStudyPage = () => {
     await addComment(id, { content: newComment });
     setNewComment("");
     fetchComments(id);
+  };
+
+  const handleDeleteComment = (id) => {
+    confirmAlert({
+      title: "Deseja excluir o comentário selecionado?",
+      buttons: [
+        {
+          label: "Sim",
+          onClick: () => deleteComment(id),
+        },
+        {
+          label: "Não",
+        },
+      ],
+    });
   };
 
   if (!study)
@@ -119,49 +141,84 @@ const SingleStudyPage = () => {
 
           <div className="mt-10">
             <h2 className="text-2xl font-bold mb-4">Comentários</h2>
-            <div className="mb-5">
-              <textarea
-                className="w-full p-3 border rounded"
-                rows="3"
-                placeholder="Adicione um comentário..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-              />
-              <button
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-                onClick={handleAddComment}
-              >
-                Comentar
-              </button>
-            </div>
+            {!user ? (
+              <>
+                <div className="flex items-start gap-3">
+                  <UserCircle2Icon size={48} color="grey" strokeWidth={1} />
+                  <div className="border w-full rounded-md p-3">
+                    <p>Para comentar você precisa estar logado.</p>
+                    <Button
+                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={handleAddComment}
+                      disabled={!newComment.trim()}
+                    >
+                      Comentar
+                    </Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mb-5">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={user.userImage}
+                      className="size-12 rounded-full"
+                      alt={`${user.username} profile image`}
+                    />
+                    <textarea
+                      className="w-full p-3 border rounded max-h-20"
+                      rows="3"
+                      placeholder="Adicione um comentário..."
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                    />
+                  </div>
 
-            {comments.map((comment) => (
-              <div
-                key={comment._id}
-                className="flex items-center justify-start gap-3 border mb-3 p-3 rounded-md"
-              >
+                  <Button
+                    type="submit"
+                    className={"mt-3"}
+                    onClick={handleAddComment}
+                    primary
+                    disabled={!newComment.trim()}
+                    content={"Comentar"}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+
+          {comments.map((comment) => (
+            <div
+              key={comment._id}
+              className="flex items-center justify-between gap-3 border mb-3 p-3 rounded-md"
+            >
+              <div className="flex items-center gap-3">
                 <img
-                  src={comment.author.userImage}
+                  src={comment?.author?.userImage}
                   className="size-10 rounded-full shadow-md"
-                  alt={`${comment.author.username} profile image`}
+                  alt={`${comment?.author?.username} profile image`}
                 />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-3">
                     <p className="text-lg font-semibold">
-                      {comment.author.name}
+                      {comment?.author?.name}
                     </p>
                     <p className="text-sm font-light text-terciary-grey">
-                      @{comment.author.username}
+                      @{comment?.author?.username}
                     </p>
-                    <p className="text-sm font-light text-terciary-grey">
-                      {formatDate(comment.createdAt)}
+                    <p className="text-xs font-light text-terciary-grey">
+                      {formatDate(comment?.createdAt)}
                     </p>
                   </div>
-                  <p>{comment.content}</p>
+                  <p>{comment?.content}</p>
                 </div>
               </div>
-            ))}
-          </div>
+              <button onClick={() => handleDeleteComment(comment?._id)}>
+                <Trash2 size={20} color="red" />
+              </button>
+            </div>
+          ))}
         </div>
       </Center>
     </>
