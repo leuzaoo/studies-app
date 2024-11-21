@@ -45,27 +45,4 @@ export const useUserStore = create((set) => ({
       throw error;
     }
   },
-
-  fetchUserStudiesCount: async () => {
-    set({ isLoading: true, error: null });
-
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      const response = await axios.get(
-        `${USER_API_URL}/${user._id}/studies-count`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
-
-      set({ isLoading: false });
-      return response.data;
-    } catch (error) {
-      set({ isLoading: false });
-      throw error;
-    }
-  },
 }));
