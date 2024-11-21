@@ -17,6 +17,7 @@ const Results = ({ results }) => {
                 description={study.description}
                 username={study.author.username}
                 createdAt={study.createdAt}
+                commentsCount={study.comments.length}
               />
             </li>
           ))

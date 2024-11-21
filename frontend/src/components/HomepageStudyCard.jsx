@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { formatDate } from "../utils/formatDate.js";
+import { MessageCircle } from "lucide-react";
 
 const HomepageStudyCard = ({
   title,
@@ -10,6 +11,7 @@ const HomepageStudyCard = ({
   _id,
   username,
   createdAt,
+  commentsCount,
 }) => {
   return (
     <>
@@ -33,6 +35,10 @@ const HomepageStudyCard = ({
               <span className="mr-2">{username}</span>•
               <span className="ml-2">{formatDate(createdAt)}</span>
             </p>
+          </div>
+          <div className="flex gap-1 items-center">
+            <MessageCircle strokeWidth={2} size={16} />
+            <span className="text-sm">{commentsCount}</span>
           </div>
         </div>
         <img

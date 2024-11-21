@@ -12,9 +12,9 @@ import Results from "../components/Results";
 import Center from "../components/Center";
 
 const Homepage = () => {
+  const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
 
   const { fetchStudies, isLoading } = useStudyStore();
