@@ -11,10 +11,10 @@ import Navbar from "../components/navbar/Navbar";
 import Center from "../components/Center";
 
 const SingleUserPage = () => {
+  const [metrics, setMetrics] = useState(null);
   const [user, setUser] = useState(null);
 
-  const { fetchUserProfile } = useUserStore();
-
+  const { fetchUserProfile, fetchUserStudiesCount } = useUserStore();
   const { username } = useParams();
 
   useEffect(() => {
@@ -22,6 +22,10 @@ const SingleUserPage = () => {
       try {
         const fetchedUser = await fetchUserProfile(username);
         setUser(fetchedUser);
+
+        const userMetrics = await fetchUserStudiesCount();
+        console.log(userMetrics);
+        setMetrics(userMetrics);
       } catch (error) {
         console.error(error);
       }
@@ -30,7 +34,7 @@ const SingleUserPage = () => {
     if (username) {
       getUser();
     }
-  }, [username, fetchUserProfile]);
+  }, [username, fetchUserProfile, fetchUserStudiesCount]);
 
   return (
     <>
@@ -51,6 +55,7 @@ const SingleUserPage = () => {
                 name={user.name}
                 username={user.username}
                 about={user.about}
+                studiesCount={metrics?.totalStudies}
               />
 
               <UserCategoryMenu categories={userCategories} />

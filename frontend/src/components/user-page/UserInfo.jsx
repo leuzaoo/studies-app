@@ -1,7 +1,7 @@
 import { Eye, MessageCircle, NotebookPen, ThumbsUp } from "lucide-react";
 import { Popover } from "antd";
 
-const UserInfo = ({ userImage, name, username, about }) => {
+const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
   return (
     <section
       className="flex flex-col items-center justify-center mx-auto max-w-[440px]"
@@ -81,7 +81,7 @@ const UserInfo = ({ userImage, name, username, about }) => {
           title="Estudos"
           content={
             <span className="font-semibold text-primary-orange text-xl">
-              88
+              {studiesCount}
             </span>
           }
         >
@@ -91,7 +91,7 @@ const UserInfo = ({ userImage, name, username, about }) => {
           >
             <h1 className="hidden">Estudos</h1>
             <span className="mb-2 font-medium text-xl text-primary-orange">
-              88
+              {studiesCount}
             </span>
             <NotebookPen color="grey" size={20} />
           </article>
