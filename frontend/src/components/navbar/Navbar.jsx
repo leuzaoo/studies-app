@@ -19,9 +19,9 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
+        <div className="px-5 max-w-screen-2xl mx-auto py-3 flex items-center justify-between">
           <Link to={"/"}>
-            <h1 className="text-3xl font-domine font-bold">studies.</h1>
+            <span className="text-3xl font-domine font-bold">studies.</span>
           </Link>
 
           {user ? (
@@ -79,7 +79,7 @@ const Navbar = () => {
                     </button>
                   </Link>
 
-                  <Link to={"/login"}  className="hidden lg:flex items-center">
+                  <Link to={"/login"} className="hidden lg:flex items-center">
                     <button className="px-3 py-1 bg-primary-orange border-primary-orange border text-white rounded-md">
                       Entrar
                     </button>
@@ -95,7 +95,7 @@ const Navbar = () => {
                   <button className="relative">
                     <LucideMenu
                       size={40}
-                      className={`xl:hidden absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
+                      className={`lg:hidden absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
                         isMenuOpen ? "opacity-0" : "opacity-100"
                       }`}
                     />
@@ -120,7 +120,7 @@ const Navbar = () => {
               onClick={toggleMenu}
             />
           )}
-        </nav>
+        </div>
       </header>
 
       <div className="h-[1px] bg-black opacity-5" />

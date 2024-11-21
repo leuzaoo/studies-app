@@ -117,7 +117,7 @@ const NewStudy = () => {
         <Center>
           <TitlePage text="Criar novo estudo" />
           <form onSubmit={handleSubmit} className="mt-5 flex flex-col">
-            <LabelFormTitle text="Banner" />
+            <LabelFormTitle text="Banner*" />
             <div className="flex items-center mb-3 gap-5 max-w-max">
               <img
                 src={formData.bannerImage || DEFAULT_BANNER_IMAGE}
@@ -140,7 +140,7 @@ const NewStudy = () => {
               </div>
             </div>
 
-            <LabelFormTitle text="Título" />
+            <LabelFormTitle text="Título*" />
             <InputNewStudy
               onChange={handleInputChange("title")}
               value={formData.title}
@@ -148,7 +148,7 @@ const NewStudy = () => {
               className="mb-3"
             />
 
-            <LabelFormTitle text="Descrição" />
+            <LabelFormTitle text="Descrição*" />
             <InputNewStudy
               onChange={handleInputChange("description")}
               value={formData.description}
@@ -156,7 +156,7 @@ const NewStudy = () => {
               className="mb-3"
             />
 
-            <LabelFormTitle text="Categoria" />
+            <LabelFormTitle text="Categoria*" />
             <Select
               defaultValue=""
               style={{ width: 160, marginBottom: 12, fontSize: 20 }}
@@ -184,7 +184,7 @@ const NewStudy = () => {
               value={formData.tags}
             />
 
-            <LabelFormTitle text="Visibilidade" />
+            <LabelFormTitle text="Visibilidade*" />
             <div className="flex flex-col items-start gap-3 mb-5">
               <Switch
                 checked={formData.isPublic}
@@ -197,7 +197,7 @@ const NewStudy = () => {
               />
             </div>
 
-            <LabelFormTitle text="Conteúdo" />
+            <LabelFormTitle text="Conteúdo*" />
             <TextEditor
               value={formData.content}
               onChange={handleInputChange("content")}

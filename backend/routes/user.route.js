@@ -9,13 +9,13 @@ import {
 
 const router = express.Router();
 
+router.get("/:username", getUserByUsername);
+
 router.put(
   "/settings",
   verifyToken,
   upload.single("userImage"),
   updatedProfile
 );
-
-router.get("/:username", getUserByUsername);
 
 export default router;

@@ -12,9 +12,9 @@ import Results from "../components/Results";
 import Center from "../components/Center";
 
 const Homepage = () => {
+  const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Tudo");
   const [results, setResults] = useState([]);
 
   const { fetchStudies, isLoading } = useStudyStore();
@@ -51,13 +51,13 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <Center className="font-outfit">
-        <div>
+      <Center>
+        <section>
           <TitlePage text={"Descubra"} />
           <p className="text-sm text-medium-grey">
             Selecione o tema do estudo que deseja ver
           </p>
-        </div>
+        </section>
 
         <SearchBar
           searchQuery={searchQuery}

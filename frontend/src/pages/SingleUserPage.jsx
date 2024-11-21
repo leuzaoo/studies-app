@@ -6,15 +6,17 @@ import userCategories from "../components/user-page/userCategories";
 import { useUserStore } from "../store/userStore";
 
 import UserCategoryMenu from "../components/user-page/UserCategoryMenu";
+import { useMetricsStore } from "../store/metricsStore";
 import UserInfo from "../components/user-page/UserInfo";
 import Navbar from "../components/navbar/Navbar";
 import Center from "../components/Center";
 
 const SingleUserPage = () => {
+  const [metrics, setMetrics] = useState(null);
   const [user, setUser] = useState(null);
 
+  const { fetchSingleUserStudiesCount } = useMetricsStore();
   const { fetchUserProfile } = useUserStore();
-
   const { username } = useParams();
 
   useEffect(() => {
@@ -22,15 +24,22 @@ const SingleUserPage = () => {
       try {
         const fetchedUser = await fetchUserProfile(username);
         setUser(fetchedUser);
+
+        if (fetchedUser && fetchedUser._id) {
+          const userMetrics = await fetchSingleUserStudiesCount(
+            fetchedUser._id
+          );
+          setMetrics(userMetrics);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar dados do usuário ou métricas:", error);
       }
     };
 
     if (username) {
       getUser();
     }
-  }, [username, fetchUserProfile]);
+  }, [username, fetchUserProfile, fetchSingleUserStudiesCount]);
 
   return (
     <>
@@ -51,6 +60,7 @@ const SingleUserPage = () => {
                 name={user.name}
                 username={user.username}
                 about={user.about}
+                studiesCount={metrics?.totalStudies}
               />
 
               <UserCategoryMenu categories={userCategories} />

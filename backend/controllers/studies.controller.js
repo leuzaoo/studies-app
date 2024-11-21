@@ -1,11 +1,11 @@
 import Study from "../models/study.model.js";
+import User from "../models/user.model.js";
 
 export const allStudies = async (req, res) => {
   try {
-    const studies = await Study.find({ isPublic: true }).populate(
-      "author",
-      "username userImage"
-    );
+    const studies = await Study.find({ isPublic: true })
+      .populate("author", "username userImage")
+      .sort({ createdAt: -1 });
 
     return res.json({ studies });
   } catch (error) {
@@ -25,6 +25,7 @@ export const searchStudy = async (req, res) => {
     }
 
     const studies = await Study.find({
+      isPublic: true,
       $or: [
         { title: { $regex: searchQuery, $options: "i" } },
         { category: { $regex: searchQuery, $options: "i" } },
@@ -44,7 +45,7 @@ export const searchByCategory = async (req, res) => {
   const { category } = req.query;
 
   try {
-    const studies = await Study.find({ category }).populate(
+    const studies = await Study.find({ isPublic: true, category }).populate(
       "author",
       "username userImage"
     );
@@ -57,10 +58,13 @@ export const searchByCategory = async (req, res) => {
 
 export const getStudyById = async (req, res) => {
   try {
-    const study = await Study.findById(req.params.id).populate(
-      "author",
-      "username userImage"
-    );
+    const study = await Study.findById(req.params.id)
+      .populate({
+        path: "comments",
+        populate: { path: "author", select: "username userImage" },
+      })
+      .populate("author", "username userImage");
+
     if (!study) {
       return res
         .status(404)
@@ -76,10 +80,9 @@ export const getStudyById = async (req, res) => {
 export const getUserStudies = async (req, res) => {
   try {
     const userId = req.user._id;
-    const userStudies = await Study.find({ author: userId }).populate(
-      "author",
-      "username userImage"
-    );
+    const userStudies = await Study.find({ author: userId })
+      .populate("author", "username userImage")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({ userStudies });
   } catch (error) {
@@ -89,16 +92,17 @@ export const getUserStudies = async (req, res) => {
 };
 
 export const createStudy = async (req, res) => {
+  const { title, description, content, category, tags, bannerImage, isPublic } =
+    req.body;
+
   try {
-    const {
-      title,
-      description,
-      content,
-      category,
-      tags,
-      bannerImage,
-      isPublic,
-    } = req.body;
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Entre em sua conta para criar um estudo." });
+    }
 
     if (!title || !content || !category || !description || !bannerImage) {
       return res
@@ -118,12 +122,13 @@ export const createStudy = async (req, res) => {
       description,
       category,
       tags,
-      author: req.user._id,
+      author: user._id,
       bannerImage,
       isPublic: isPublic === "true" || isPublic === true,
     });
 
     await newStudy.save();
+
     return res.status(201).json({ message: "Estudo criado com sucesso." });
   } catch (error) {
     console.error("Erro no controlador createStudy:", error);
@@ -147,7 +152,6 @@ export const updateStudy = async (req, res) => {
 
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
-        // Aqui, garantimos que 'isPublic' seja tratado como booleano
         if (field === "isPublic") {
           updatedData[field] =
             req.body[field] === "true" || req.body[field] === true;
