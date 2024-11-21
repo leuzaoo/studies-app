@@ -95,7 +95,7 @@ const Navbar = () => {
                   <button className="relative">
                     <LucideMenu
                       size={40}
-                      className={`xl:hidden absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
+                      className={`lg:hidden absolute right-0 -top-5 transition-opacity duration-200 ease-in-out ${
                         isMenuOpen ? "opacity-0" : "opacity-100"
                       }`}
                     />
