@@ -98,8 +98,6 @@ const EditStudyPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("estado de Visibibilidade", isPublic);
-
     const updatedData = {
       title,
       description,

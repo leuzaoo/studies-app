@@ -15,7 +15,7 @@ const SingleUserPage = () => {
   const [metrics, setMetrics] = useState(null);
   const [user, setUser] = useState(null);
 
-  const { fetchUserStudiesCount } = useMetricsStore();
+  const { fetchSingleUserStudiesCount } = useMetricsStore();
   const { fetchUserProfile } = useUserStore();
   const { username } = useParams();
 
@@ -25,8 +25,7 @@ const SingleUserPage = () => {
         const fetchedUser = await fetchUserProfile(username);
         setUser(fetchedUser);
 
-        const userMetrics = await fetchUserStudiesCount();
-        console.log(userMetrics);
+        const userMetrics = await fetchSingleUserStudiesCount();
         setMetrics(userMetrics);
       } catch (error) {
         console.error(error);
@@ -36,7 +35,7 @@ const SingleUserPage = () => {
     if (username) {
       getUser();
     }
-  }, [username, fetchUserProfile, fetchUserStudiesCount]);
+  }, [username, fetchUserProfile, fetchSingleUserStudiesCount]);
 
   return (
     <>
