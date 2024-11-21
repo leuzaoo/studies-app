@@ -49,7 +49,28 @@ export const getStudyCommentsById = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   try {
-    await Comment.findByIdAndDelete(req.params.id);
+    const comment = await Comment.findById(req.params.id);
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comentário nao encontrado.",
+      });
+    }
+
+    if (comment.author.toString() !== req.user._id.toString()) {
+      return res.status(401).json({
+        success: false,
+        message: "Sem permissão para excluir este comentário.",
+      });
+    }
+
+    await Study.findByIdAndUpdate(comment.study, {
+      $pull: { comments: comment.id },
+    });
+
+    await comment.deleteOne();
+
     res.status(200).json({
       success: true,
       message: "Comentário excluído.",
