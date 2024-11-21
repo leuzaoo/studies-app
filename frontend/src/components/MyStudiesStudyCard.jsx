@@ -32,7 +32,7 @@ const MyStudiesStudyCard = ({
             <p className="text-[12px] md:text-sm mt-1">{isPublic}</p>
           </div>
           <div className="flex items-center gap-1">
-            <MessageCircle size={16} strokeWidth={2} />
+            <MessageCircle color="grey" size={16} strokeWidth={2} />
             <span className="text-sm">{commentsCount}</span>
           </div>
         </div>
