@@ -5,10 +5,11 @@ import { upload } from "../middleware/uploadImage.js";
 import {
   updatedProfile,
   getUserByUsername,
-  studiesCount,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
+
+router.get("/:username", getUserByUsername);
 
 router.put(
   "/settings",
@@ -16,8 +17,5 @@ router.put(
   upload.single("userImage"),
   updatedProfile
 );
-
-router.get("/:username", getUserByUsername);
-router.get("/:userId/studies-count", studiesCount);
 
 export default router;
