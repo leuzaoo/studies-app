@@ -19,19 +19,12 @@ export const useMetricsStore = create((set) => ({
   isLoading: false,
   error: null,
 
-  fetchSingleUserStudiesCount: async () => {
+  fetchSingleUserStudiesCount: async (id) => {
     set({ isLoading: true, error: null });
 
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
-
       const response = await axios.get(
-        `${METRICS_API_URL}/${user._id}/studies-count`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
+        `${METRICS_API_URL}/${id}/studies-count`
       );
 
       set({ isLoading: false });
@@ -39,35 +32,37 @@ export const useMetricsStore = create((set) => ({
     } catch (error) {
       const errorMessage = handleApiError(
         error,
-        "Erro ao buscar número de comentários"
+        "Erro ao buscar número de estudos."
       );
       set({ error: errorMessage, isLoading: false });
       throw new Error(errorMessage);
     }
   },
 
-  fetchSingleStudyCommentsCount: async (studyId) => {
-    try {
-      const response = await axios.get(
-        `${METRICS_API_URL}/${studyId}/comments-count`
-      );
-      set((state) => ({
-        metrics: {
-          ...state.metrics,
-          [studyId]: {
-            ...state.metrics[studyId],
-            comments: response.data.count,
-          },
-        },
-      }));
-      return response.data.count;
-    } catch (error) {
-      const errorMessage = handleApiError(
-        error,
-        "Erro ao buscar número de comentários"
-      );
-      set({ error: errorMessage });
-      throw new Error(errorMessage);
-    }
-  },
+  // transformar este codigo em fetchUserProfileComments
+
+  // fetchSingleStudyCommentsCount: async (studyId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${METRICS_API_URL}/${studyId}/comments-count`
+  //     );
+  //     set((state) => ({
+  //       metrics: {
+  //         ...state.metrics,
+  //         [studyId]: {
+  //           ...state.metrics[studyId],
+  //           comments: response.data.count,
+  //         },
+  //       },
+  //     }));
+  //     return response.data.count;
+  //   } catch (error) {
+  //     const errorMessage = handleApiError(
+  //       error,
+  //       "Erro ao buscar número de estudos."
+  //     );
+  //     set({ error: errorMessage });
+  //     throw new Error(errorMessage);
+  //   }
+  // },
 }));

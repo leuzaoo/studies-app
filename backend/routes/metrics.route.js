@@ -8,6 +8,6 @@ import {
 const router = express.Router();
 
 router.get("/:id/comments-count", getStudyCommentsCount);
-router.get("/:userId/studies-count", studiesCount);
+router.get("/:id/studies-count", studiesCount);
 
 export default router;

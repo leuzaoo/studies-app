@@ -25,10 +25,14 @@ const SingleUserPage = () => {
         const fetchedUser = await fetchUserProfile(username);
         setUser(fetchedUser);
 
-        const userMetrics = await fetchSingleUserStudiesCount();
-        setMetrics(userMetrics);
+        if (fetchedUser && fetchedUser._id) {
+          const userMetrics = await fetchSingleUserStudiesCount(
+            fetchedUser._id
+          );
+          setMetrics(userMetrics);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar dados do usuário ou métricas:", error);
       }
     };
 

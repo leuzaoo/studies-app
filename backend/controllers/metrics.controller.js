@@ -18,9 +18,7 @@ export const getStudyCommentsCount = async (req, res) => {
 
 export const studiesCount = async (req, res) => {
   try {
-    const userId = req.params.userId;
-
-    const totalStudies = await Study.countDocuments({ author: userId });
+    const totalStudies = await Study.countDocuments({ author: req.params.id });
 
     res.status(200).json({
       totalStudies,
