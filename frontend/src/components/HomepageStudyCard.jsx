@@ -38,7 +38,7 @@ const HomepageStudyCard = ({
           </div>
           <div className="flex gap-1 items-center">
             <MessageCircle strokeWidth={2} color="grey" size={16} />
-            <span className="text-sm">{commentsCount}</span>
+            <span className="text-sm text-terciary-grey font-light">{commentsCount}</span>
           </div>
         </div>
         <img

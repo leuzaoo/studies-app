@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import { Link, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { Skeleton } from "antd";
+import { Input, Skeleton } from "antd";
 
 import { useCommentStore } from "../store/commentsStore.js";
 import styles from "../assets/singleStudyPage.module.css";
@@ -174,9 +174,11 @@ const SingleStudyPage = () => {
                       className="size-12 rounded-full"
                       alt={`${user.username} profile image`}
                     />
-                    <textarea
-                      className="w-full p-3 focus:outline-none rounded max-h-20"
-                      rows="3"
+                    <Input
+                      allowClear
+                      showCount
+                      maxLength={200}
+                      className="p-3 focus:outline-none rounded-xl"
                       placeholder="Adicione um comentário..."
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
@@ -203,34 +205,45 @@ const SingleStudyPage = () => {
           {comments.map((comment) => (
             <div
               key={comment._id}
-              className="flex items-center justify-between gap-3 border mb-3 p-3 rounded-md"
+              className="flex items-start justify-between gap-3 border mb-3 p-3 rounded-md"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3 w-full">
                 <img
                   src={comment?.author?.userImage}
                   className="size-10 rounded-full shadow-md"
                   alt={`${comment?.author?.username} profile image`}
                 />
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-3">
-                    <p className="text-lg font-semibold">
-                      {comment?.author?.name}
-                    </p>
-                    <p className="text-sm font-light text-terciary-grey">
-                      @{comment?.author?.username}
-                    </p>
-                    <p className="text-xs font-light text-terciary-grey">
-                      {formatDate(comment?.createdAt)}
-                    </p>
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-col items-start">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-3 w-full">
+                        <p className="text-lg font-semibold">
+                          {comment?.author?.name}
+                        </p>
+                        <p className="text-sm font-light text-terciary-grey">
+                          @{comment?.author?.username}
+                        </p>
+                      </div>
+                      {user?.username === comment?.author?.username && (
+                        <button
+                          onClick={() => handleDeleteComment(comment?._id)}
+                        >
+                          <Trash2
+                            size={24}
+                            strokeWidth={2}
+                            color="white"
+                            className="bg-red-500 rounded-full p-1 hover:opacity-60"
+                          />
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <p>{comment?.content}</p>
+                  <p className="text-xs text-right font-light text-terciary-grey">
+                    {formatDate(comment?.createdAt)}
+                  </p>
                 </div>
               </div>
-              {user?.username === comment?.author?.username && (
-                <button onClick={() => handleDeleteComment(comment?._id)}>
-                  <Trash2 size={20} color="red" />
-                </button>
-              )}
             </div>
           ))}
         </div>
