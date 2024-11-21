@@ -6,6 +6,7 @@ import userCategories from "../components/user-page/userCategories";
 import { useUserStore } from "../store/userStore";
 
 import UserCategoryMenu from "../components/user-page/UserCategoryMenu";
+import { useMetricsStore } from "../store/metricsStore";
 import UserInfo from "../components/user-page/UserInfo";
 import Navbar from "../components/navbar/Navbar";
 import Center from "../components/Center";
@@ -14,7 +15,8 @@ const SingleUserPage = () => {
   const [metrics, setMetrics] = useState(null);
   const [user, setUser] = useState(null);
 
-  const { fetchUserProfile, fetchUserStudiesCount } = useUserStore();
+  const { fetchUserStudiesCount } = useMetricsStore();
+  const { fetchUserProfile } = useUserStore();
   const { username } = useParams();
 
   useEffect(() => {
