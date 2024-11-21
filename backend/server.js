@@ -7,6 +7,7 @@ import path from "path";
 
 import commentsRoutes from "./routes/comments.route.js";
 import studiesRoutes from "./routes/studies.route.js";
+import metricsRoutes from "./routes/metrics.route.js";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/studies", studiesRoutes);
+app.use("/api/v1/metrics", metricsRoutes);
 app.use("/api/v1/comments", commentsRoutes);
 
 if (process.env.NODE_ENV === "production") {
