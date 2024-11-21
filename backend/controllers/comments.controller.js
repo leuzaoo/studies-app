@@ -46,3 +46,18 @@ export const getStudyCommentsById = async (req, res) => {
     });
   }
 };
+
+export const getStudyCommentsCount = async (req, res) => {
+  try {
+    const study = await Study.findById(req.params.id);
+    if (!study) {
+      return res.status(404).json({ message: "Estudo não encontrado" });
+    }
+
+    const commentsCount = await Comment.countDocuments({ study });
+    res.status(200).json({ count: commentsCount });
+  } catch (error) {
+    console.error("Erro ao buscar comentários:", error);
+    res.status(500).json({ message: "Erro ao buscar comentários" });
+  }
+};
