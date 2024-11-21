@@ -24,8 +24,6 @@ const MyStudies = () => {
     fetchUserStudies();
   }, [fetchUserStudies]);
 
-  console.log(studies);
-
   const handleDelete = (id) => {
     confirmAlert({
       title: "Você tem certeza que deseja excluir este conteúdo?",
