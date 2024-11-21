@@ -147,27 +147,35 @@ const SingleStudyPage = () => {
                   <UserCircle2Icon size={48} color="grey" strokeWidth={1} />
                   <div className="border w-full rounded-md p-3">
                     <p>Para comentar você precisa estar logado.</p>
-                    <Button
-                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                      onClick={handleAddComment}
-                      disabled={!newComment.trim()}
-                    >
-                      Comentar
-                    </Button>
+                    <div className="flex itemscenter gap-3">
+                      <Link to={"/login"}>
+                        <Button
+                          className="!max-w-max px-4 mt-3 w-full cursor-pointer"
+                          content={"Entrar"}
+                          primary
+                        />
+                      </Link>
+                      <Link to={"/signup"}>
+                        <Button
+                          className="!max-w-max px-4 mt-3 w-full cursor-pointer"
+                          content={"Criar conta"}
+                        />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </>
             ) : (
               <>
-                <div className="mb-5">
-                  <div className="flex items-center gap-3">
+                <div className="mb-5 w-full">
+                  <div className="flex items-start justify-end gap-3">
                     <img
                       src={user.userImage}
                       className="size-12 rounded-full"
                       alt={`${user.username} profile image`}
                     />
                     <textarea
-                      className="w-full p-3 border rounded max-h-20"
+                      className="w-full p-3 focus:outline-none rounded max-h-20"
                       rows="3"
                       placeholder="Adicione um comentário..."
                       value={newComment}
@@ -175,14 +183,18 @@ const SingleStudyPage = () => {
                     />
                   </div>
 
-                  <Button
-                    type="submit"
-                    className={"mt-3"}
-                    onClick={handleAddComment}
-                    primary
-                    disabled={!newComment.trim()}
-                    content={"Comentar"}
-                  />
+                  <div className="flex items-end justify-end">
+                    <Button
+                      type="submit"
+                      className={
+                        "!max-w-max  w-full px-6 mt-3 disabled:cursor-not-allowed disabled:opacity-50"
+                      }
+                      onClick={handleAddComment}
+                      primary
+                      disabled={!newComment.trim()}
+                      content={"Comentar"}
+                    />
+                  </div>
                 </div>
               </>
             )}
@@ -214,9 +226,11 @@ const SingleStudyPage = () => {
                   <p>{comment?.content}</p>
                 </div>
               </div>
-              <button onClick={() => handleDeleteComment(comment?._id)}>
-                <Trash2 size={20} color="red" />
-              </button>
+              {user?.username === comment?.author?.username && (
+                <button onClick={() => handleDeleteComment(comment?._id)}>
+                  <Trash2 size={20} color="red" />
+                </button>
+              )}
             </div>
           ))}
         </div>
