@@ -1,4 +1,5 @@
 import cloudinary from "../config/cloudinary.js";
+import Study from "../models/study.model.js";
 import User from "../models/user.model.js";
 
 export const updatedProfile = async (req, res) => {
@@ -121,5 +122,20 @@ export const getUserByUsername = async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "Erro no servidor interno." });
+  }
+};
+
+export const studiesCount = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const totalStudies = await Study.countDocuments({ author: userId });
+
+    res.status(200).json({
+      totalStudies,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar métricas do usuário:", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
