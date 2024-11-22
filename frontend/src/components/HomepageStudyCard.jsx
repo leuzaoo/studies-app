@@ -1,7 +1,9 @@
 import { useMetricsStore } from "../store/metricsStore";
+import { useAuthStore } from "../store/authStore.js";
 import { MessageCircle, Heart } from "lucide-react";
 import { formatDate } from "../utils/formatDate.js";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useState } from "react";
 
 const HomepageStudyCard = ({
@@ -21,6 +23,12 @@ const HomepageStudyCard = ({
   const [liked, setLiked] = useState(hasLiked || false);
 
   const handleLike = async () => {
+    const { user } = useAuthStore();
+
+    if (!user) {
+      toast.error("Você precisa estar logado para curtir este estudo.");
+    }
+
     const newLikedState = !liked;
     const newLikesCount = newLikedState ? likes + 1 : likes - 1;
 
@@ -68,6 +76,23 @@ const HomepageStudyCard = ({
                 {commentsCount}
               </span>
             </div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleLike();
+              }}
+              className="flex gap-1 items-center"
+            >
+              <Heart
+                strokeWidth={2}
+                color={liked ? "red" : "grey"}
+                fill={liked ? "red" : "none"}
+                size={16}
+              />
+              <span className="text-sm text-terciary-grey font-light">
+                {likes}
+              </span>
+            </button>
           </div>
         </div>
         <img
@@ -75,21 +100,6 @@ const HomepageStudyCard = ({
           className="object-cover min-w-[120px] max-w-[120px] h-[68px] md:max-w-[160px] md:min-w-[200px] md:h-[112px] rounded-xl shadow-lg"
         />
       </Link>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          handleLike();
-        }}
-        className="flex gap-1 items-center"
-      >
-        <Heart
-          strokeWidth={2}
-          color={liked ? "red" : "grey"}
-          fill={liked ? "red" : "none"}
-          size={16}
-        />
-        <span className="text-sm text-terciary-grey font-light">{likes}</span>
-      </button>
     </>
   );
 };

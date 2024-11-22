@@ -20,9 +20,9 @@ const Results = ({ results }) => {
                 bannerImage={study.bannerImage}
                 username={study.author.username}
                 createdAt={study.createdAt}
-                commentsCount={study.comments.length} // Contagem de comentários
-                likesCount={study.likes.length} // Contagem de likes
-                hasLiked={study.likes.includes(user._id)} // Verificação se o usuário atual já deu "like"
+                commentsCount={study.comments.length}
+                likesCount={study.likes.length}
+                hasLiked={user ? study.likes.includes(user._id) : false}
               />
             </li>
           ))

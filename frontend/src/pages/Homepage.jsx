@@ -10,6 +10,7 @@ import SearchBar from "../components/SearchBar";
 import TitlePage from "../components/TitlePage";
 import Results from "../components/Results";
 import Center from "../components/Center";
+import { ToastContainer } from "react-toastify";
 
 const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
@@ -51,6 +52,7 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <Center>
         <section>
           <TitlePage text={"Descubra"} />
