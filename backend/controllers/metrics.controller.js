@@ -28,3 +28,28 @@ export const studiesCount = async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
+export const toggleLike = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const study = await Study.findById(id);
+
+    if (!study) {
+      return res.status(404).json({ message: "Estudo nao encontrado" });
+    }
+
+    const hasLiked = study.likes.includes(userId);
+
+    if (hasLiked) {
+      study.likes = study.likes.filter((like) => like.toString() !== userId);
+    } else {
+      study.likes.push(userId);
+    }
+
+    await study.save();
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao curtir estudo" });
+  }
+};
