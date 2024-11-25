@@ -16,7 +16,7 @@ const Results = ({ results }) => {
                 _id={study._id}
                 title={study.title}
                 description={study.description}
-                userImage={study.author.image}
+                userImage={study.author.userImage}
                 bannerImage={study.bannerImage}
                 username={study.author.username}
                 createdAt={study.createdAt}
