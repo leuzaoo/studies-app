@@ -28,7 +28,7 @@ const HomepageStudyCard = ({
   const handleLike = async () => {
     if (!user) {
       setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 60000);
+      setTimeout(() => setShowPopup(false), 1500);
       return;
     }
 
