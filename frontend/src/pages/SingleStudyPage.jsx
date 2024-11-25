@@ -164,6 +164,8 @@ const SingleStudyPage = () => {
             </Link>
           </div>
 
+          <div className="w-full h-[1px] bg-terciary-grey opacity-30" />
+
           <section className="my-3 flex items-center gap-3">
             <h2 className="hidden">Métricas</h2>
             <div className="flex items-center gap-1">
@@ -196,8 +198,10 @@ const SingleStudyPage = () => {
             </Tooltip>
           </section>
 
+          <div className="w-full h-[1px] bg-terciary-grey opacity-30" />
+
           <div
-            className={`${styles.content}`}
+            className={`${styles.content} mt-5`}
             dangerouslySetInnerHTML={{ __html: study.content }}
           />
 
