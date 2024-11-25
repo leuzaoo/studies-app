@@ -39,6 +39,16 @@ export const useMetricsStore = create((set) => ({
     }
   },
 
+  toggleStudyLike: async (studyId) => {
+    try {
+      const response = await axios.post(`${METRICS_API_URL}/${studyId}/like`);
+      return response.data;
+    } catch (error) {
+      handleApiError(error, "Erro ao curtir estudo.");
+      throw error;
+    }
+  },
+
   // transformar este codigo em fetchUserProfileComments
 
   // fetchSingleStudyCommentsCount: async (studyId) => {

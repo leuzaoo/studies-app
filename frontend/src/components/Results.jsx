@@ -1,6 +1,9 @@
+import { useAuthStore } from "../store/authStore";
 import HomepageStudyCard from "./HomepageStudyCard";
 
 const Results = ({ results }) => {
+  const { user } = useAuthStore();
+
   return (
     <div className="my-5">
       <h1 className="font-semibold text-2xl">Resultados</h1>
@@ -9,15 +12,17 @@ const Results = ({ results }) => {
           results.map((study) => (
             <li key={study._id} className="py-2 border-b">
               <HomepageStudyCard
-                _id={study._id}
                 key={study._id}
+                _id={study._id}
                 title={study.title}
-                bannerImage={study.bannerImage}
-                userImage={study.author.userImage}
                 description={study.description}
+                userImage={study.author.image}
+                bannerImage={study.bannerImage}
                 username={study.author.username}
                 createdAt={study.createdAt}
                 commentsCount={study.comments.length}
+                likesCount={study.likes.length}
+                hasLiked={user ? study.likes.includes(user._id) : false}
               />
             </li>
           ))

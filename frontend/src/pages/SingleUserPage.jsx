@@ -48,7 +48,7 @@ const SingleUserPage = () => {
       <Center>
         {user === null ? (
           <div className="w-full mx-auto text-center">
-            <p className="text-xl font-medium">
+            <p className="text-xl">
               Carregando... se demorar muito, avise-nos.
             </p>
           </div>
