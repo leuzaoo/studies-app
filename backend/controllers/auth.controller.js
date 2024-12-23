@@ -48,17 +48,6 @@ export const signup = async (req, res) => {
 
     await user.save();
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.cookie("jwt-studies", token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
-    });
-
     res.status(201).json({
       message: "Usuário criado com sucesso.",
       user: {
