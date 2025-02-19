@@ -1,5 +1,5 @@
+import { body, validationResult } from "express-validator";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 import generateTokenAndSetCookie from "../config/generateToken.js";
 import User from "../models/user.model.js";
@@ -62,6 +62,16 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  await Promise.all([
+    body("username").trim().isString().notEmpty().escape().run(req),
+    body("password").isString().notEmpty().run(req),
+  ]);
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { username, password } = req.body;
 
   try {
@@ -79,12 +89,12 @@ export const login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "Usário não encontrado." });
+        .json({ success: false, message: "Usuário não encontrado." });
     }
 
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
@@ -92,7 +102,7 @@ export const login = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(400).json({
         success: false,
-        message: "Usuário encontrado mas a senha está incorreta.",
+        message: "Usuário encontrado, mas a senha está incorreta.",
       });
     }
 

@@ -6,10 +6,10 @@ const generateTokenAndSetCookie = (userId, res) => {
   });
 
   res.cookie("jwt-studies", token, {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return token;
