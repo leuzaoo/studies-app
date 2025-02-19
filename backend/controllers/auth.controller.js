@@ -1,4 +1,5 @@
 import { body, validationResult } from "express-validator";
+import sanitizeHtml from "sanitize-html";
 import bcryptjs from "bcryptjs";
 
 import generateTokenAndSetCookie from "../config/generateToken.js";
@@ -6,7 +7,16 @@ import User from "../models/user.model.js";
 
 export const signup = async (req, res) => {
   try {
-    const { name, username, email, password } = req.body;
+    let { name, username, email, password } = req.body;
+
+    username = sanitizeHtml(username);
+    name = sanitizeHtml(name);
+
+    if (!username || !name) {
+      return res.status(400).json({
+        message: "Nome ou nome de usuário inválido ou removido por segurança.",
+      });
+    }
 
     if (!name || !username || !email || !password) {
       return res.status(400).json({ message: "Preencha todos os campos." });
@@ -69,7 +79,9 @@ export const login = async (req, res) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res
+      .status(400)
+      .json({ success: false, message: "Dados inválidos, tente novamente." });
   }
 
   const { username, password } = req.body;
