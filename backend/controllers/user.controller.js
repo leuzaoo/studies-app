@@ -1,3 +1,4 @@
+import sanitizeHtml from "sanitize-html";
 import cloudinary from "../config/cloudinary.js";
 import User from "../models/user.model.js";
 
@@ -27,7 +28,22 @@ export const updatedProfile = async (req, res) => {
       }
     }
 
+    if (updatedData.about) {
+      updatedData.about = sanitizeHtml(updatedData.about, {
+        allowedTags: ["b", "i", "em", "strong", "a"],
+        allowedAttributes: { a: ["href"] },
+      });
+    }
+
+    if (updatedData.name) {
+      updatedData.name = sanitizeHtml(updatedData.name, { allowedTags: [] });
+    }
+
     if (updatedData.username) {
+      updatedData.username = sanitizeHtml(updatedData.username, {
+        allowedTags: [],
+      });
+
       if (updatedData.username.length < 3) {
         return res
           .status(400)
