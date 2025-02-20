@@ -4,28 +4,28 @@ import { Popover } from "antd";
 const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
   return (
     <section
-      className="flex flex-col items-center justify-center mx-auto max-w-[440px]"
+      className="mx-auto flex max-w-[440px] flex-col items-center justify-center"
       aria-labelledby="user-info-title"
     >
       <figure>
         <img
           src={`${userImage || "./avatar2.png"}`}
           alt={`${name || "Avatar"}'s profile`}
-          className="w-[100px] shadow-md rounded-full mx-auto"
+          className="mx-auto w-[100px] rounded-full shadow-md"
         />
       </figure>
 
-      <h1 className="font-medium text-xl mt-5 md:text-2xl md:font-semibold">
+      <h1 className="mt-5 text-xl font-medium md:text-2xl md:font-semibold">
         {name}
       </h1>
 
-      <p className="font-light md:font-medium md:text-lg text-primary-orange">
+      <p className="font-light text-primary-orange md:text-lg md:font-medium">
         @{username}
       </p>
 
       {about && (
         <p
-          className="text-sm p-3 md:text-lg bg-light-grey rounded-[20px] mt-5"
+          className="mt-5 w-full rounded-[20px] bg-light-grey p-3 text-sm md:text-lg"
           aria-label="About user"
         >
           {about}
@@ -33,24 +33,24 @@ const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
       )}
 
       <section
-        className="mt-5 w-full flex justify-between gap-5"
+        className="mt-5 flex w-full justify-between gap-5"
         aria-label="User statistics"
       >
         <h1 className="hidden">Métricas do usuário</h1>
         <Popover
           content={
-            <span className="font-semibold text-primary-orange text-xl">
+            <span className="text-xl font-semibold text-primary-orange">
               9876
             </span>
           }
           title="Curtidas"
         >
           <article
-            className="cursor-pointer bg-light-grey rounded-[20px] w-full min-h-[72px] flex flex-col items-center justify-center"
+            className="flex min-h-[72px] w-full cursor-pointer flex-col items-center justify-center rounded-[20px] bg-light-grey"
             aria-label="User likes"
           >
             <h1 className="hidden">Curtidas</h1>
-            <span className="mb-2 font-medium text-xl text-primary-orange">
+            <span className="mb-2 text-xl font-medium text-primary-orange">
               10K
             </span>
             <ThumbsUp color="grey" size={20} />
@@ -60,17 +60,17 @@ const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
         <Popover
           title="Visualizações"
           content={
-            <span className="font-semibold text-primary-orange text-xl">
+            <span className="text-xl font-semibold text-primary-orange">
               37690
             </span>
           }
         >
           <article
-            className="cursor-pointer bg-light-grey rounded-[20px] w-full min-h-[72px] flex flex-col items-center justify-center"
+            className="flex min-h-[72px] w-full cursor-pointer flex-col items-center justify-center rounded-[20px] bg-light-grey"
             aria-label="User views"
           >
             <h1 className="hidden">Visualizações</h1>
-            <span className="mb-2 font-medium text-xl text-primary-orange">
+            <span className="mb-2 text-xl font-medium text-primary-orange">
               38K
             </span>
             <Eye color="grey" size={20} />
@@ -80,17 +80,17 @@ const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
         <Popover
           title="Estudos"
           content={
-            <span className="font-semibold text-primary-orange text-xl">
+            <span className="text-xl font-semibold text-primary-orange">
               {studiesCount}
             </span>
           }
         >
           <article
-            className="cursor-pointer bg-light-grey rounded-[20px] w-full min-h-[72px] flex flex-col items-center justify-center"
+            className="flex min-h-[72px] w-full cursor-pointer flex-col items-center justify-center rounded-[20px] bg-light-grey"
             aria-label="User studies"
           >
             <h1 className="hidden">Estudos</h1>
-            <span className="mb-2 font-medium text-xl text-primary-orange">
+            <span className="mb-2 text-xl font-medium text-primary-orange">
               {studiesCount}
             </span>
             <NotebookPen color="grey" size={20} />
@@ -100,17 +100,17 @@ const UserInfo = ({ userImage, name, username, about, studiesCount }) => {
         <Popover
           title="Comentários"
           content={
-            <span className="mb-2 font-medium text-xl text-primary-orange">
+            <span className="mb-2 text-xl font-medium text-primary-orange">
               59
             </span>
           }
         >
           <article
-            className="cursor-pointer bg-light-grey rounded-[20px] w-full min-h-[72px] flex flex-col items-center justify-center"
+            className="flex min-h-[72px] w-full cursor-pointer flex-col items-center justify-center rounded-[20px] bg-light-grey"
             aria-label="User comments"
           >
             <h1 className="hidden">Comentários no perfil</h1>
-            <span className="mb-2 font-medium text-xl text-primary-orange">
+            <span className="mb-2 text-xl font-medium text-primary-orange">
               59
             </span>
             <MessageCircle color="grey" size={20} />
