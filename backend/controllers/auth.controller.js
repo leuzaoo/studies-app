@@ -5,6 +5,8 @@ import bcryptjs from "bcryptjs";
 import generateTokenAndSetCookie from "../config/generateToken.js";
 import User from "../models/user.model.js";
 
+const failedAttempts = new Map();
+
 export const signup = async (req, res) => {
   try {
     let { name, username, email, password } = req.body;
@@ -75,49 +77,75 @@ export const login = async (req, res) => {
   await Promise.all([
     body("username").trim().isString().notEmpty().escape().run(req),
     body("password").isString().notEmpty().run(req),
+    body("captchaToken").optional().isString().run(req),
   ]);
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Dados inválidos, tente novamente." });
+    return res.status(400).json({
+      success: false,
+      message: "Dados inválidos, tente novamente.",
+    });
   }
 
-  const { username, password } = req.body;
+  const { username, password, captchaToken } = req.body;
+
+  const attemptData = failedAttempts.get(username) || {
+    count: 0,
+    captchaRequired: false,
+  };
+
+  if (attemptData.count >= 3 && attemptData.captchaRequired) {
+    if (!captchaToken) {
+      return res.status(403).json({
+        success: false,
+        captchaRequired: true,
+        message: "Por favor, resolva o captcha antes de tentar novamente.",
+      });
+    }
+
+    const isValidCaptcha = await verifyCaptcha(captchaToken);
+    if (!isValidCaptcha) {
+      return res.status(403).json({
+        success: false,
+        captchaRequired: true,
+        message: "Captcha inválido. Tente novamente.",
+      });
+    }
+
+    failedAttempts.set(username, { count: 0, captchaRequired: false });
+  }
 
   try {
-    if (!username) {
+    if (!username || !password) {
       return res.status(400).json({
         success: false,
-        message: "Preencha o campo de nome de usuário.",
+        message: "Preencha todos os campos.",
       });
     }
 
-    if (!password) {
-      return res.status(400).json({
-        success: false,
-        message: "Preencha o campo de senha.",
-      });
-    }
+    console.log("Captcha recebido:", captchaToken);
 
     const user = await User.findOne({ username });
 
     if (!user) {
+      trackFailedAttempt(username);
       return res
         .status(400)
-        .json({ success: false, message: "Usuário não encontrado." });
+        .json({ success: false, message: "Credenciais inválidas." });
     }
 
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordCorrect) {
+      trackFailedAttempt(username);
       return res.status(400).json({
         success: false,
-        message: "Usuário encontrado, mas a senha está incorreta.",
+        message: "Credenciais inválidas.",
       });
     }
 
+    failedAttempts.delete(username);
     generateTokenAndSetCookie(user.id, res);
 
     res.status(200).json({
@@ -131,8 +159,43 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log("Erro no controlador de Login:", error.message);
     res
-      .status(400)
+      .status(500)
       .json({ success: false, message: "Erro no servidor interno." });
+  }
+};
+
+const trackFailedAttempt = (username) => {
+  const attemptData = failedAttempts.get(username) || {
+    count: 0,
+    captchaRequired: false,
+  };
+
+  attemptData.count += 1;
+
+  if (attemptData.count >= 3) {
+    attemptData.captchaRequired = true;
+  }
+
+  failedAttempts.set(username, attemptData);
+};
+
+const verifyCaptcha = async (captchaToken) => {
+  try {
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const response = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {},
+      {
+        params: {
+          secret: secretKey,
+          response: captchaToken,
+        },
+      }
+    );
+    return response.data.success;
+  } catch (error) {
+    console.error("Erro ao verificar captcha:", error.message);
+    return false;
   }
 };
 

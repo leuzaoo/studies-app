@@ -44,16 +44,19 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  login: async (username, password) => {
+  login: async (username, password, captchaToken) => {
     set({ isLoading: true, error: null });
 
     try {
       const response = await axios.post(`${AUTH_API_URL}/login`, {
         username,
         password,
+        captchaToken,
       });
 
       localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      console.log("Enviando login:", { username, password, captchaToken });
 
       set({
         user: response.data.user,
@@ -63,7 +66,8 @@ export const useAuthStore = create((set) => ({
       });
     } catch (error) {
       toast.error(
-        error.response?.data?.message || "Erro ao fazer login. Tente novamente."
+        error.response?.data?.message ||
+          "Erro ao fazer login. Tente novamente.",
       );
       set({
         isLoading: false,
