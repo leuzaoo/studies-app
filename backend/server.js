@@ -16,6 +16,16 @@ dotenv.config();
 const app = express();
 
 app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "script-src": ["'self'", "example.com"],
+      },
+    },
+  })
+);
+
+app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
