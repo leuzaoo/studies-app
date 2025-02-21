@@ -17,11 +17,16 @@ dotenv.config();
 const app = express();
 
 app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        "script-src": ["'self'", "example.com"],
-      },
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "https://www.google.com",
+        "https://www.gstatic.com"
+      ],
+      frameSrc: ["'self'", "https://www.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
     },
   })
 );
