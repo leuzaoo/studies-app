@@ -13,32 +13,25 @@ import Input from "../components/Input";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [attempts, setAttempts] = useState(0);
-  const [showCaptcha, setShowCaptcha] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
 
   const { login, isLoading, error } = useAuthStore();
 
   const onCaptchaChange = (token) => {
-    console.log("Captcha resolvido, token recebido:", token);
     setCaptchaToken(token);
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (!captchaToken) {
+      alert("Por favor, resolva o CAPTCHA antes de continuar.");
+      return;
+    }
+
     const success = await login(username, password, captchaToken);
 
     if (!success) {
-      const newAttempts = attempts + 1;
-      setAttempts(newAttempts);
-
-      if (newAttempts >= 3) {
-        setShowCaptcha(true);
-      }
-    } else {
-      setAttempts(0);
-      setShowCaptcha(false);
       setCaptchaToken("");
     }
   };
@@ -87,22 +80,19 @@ const Login = () => {
               </div>
             )}
 
-            {showCaptcha && (
+            {/* reCAPTCHA */}
+            <div className="mt-4 flex justify-center">
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                 onChange={onCaptchaChange}
               />
-            )}
+            </div>
 
             <div className="mt-5 text-center">
               {isLoading ? (
                 <Button disabled primary content={"Carregando..."} />
               ) : (
-                <Button
-                  content={"Entrar"}
-                  primary
-                  disabled={showCaptcha && !captchaToken}
-                />
+                <Button content={"Entrar"} primary disabled={!captchaToken} />
               )}
 
               <p className="my-3 text-sm font-medium text-primary-dark">
